@@ -1,13 +1,12 @@
-뉴밋 _ New meet Project   [지역별 관심사별 모임개설 커뮤니티 / 플랫폼]
+뉴밋 Project   [지역별 관심사별 모임개설 커뮤니티 / 플랫폼]
 ============ 
 <a href="https://drive.google.com/file/d/1R8_19G6Vhk6zG_4ipxN6Fg7GaOCZovBI/view?usp=sharing">계획서 및 일정표</a>
  
 ----- 
-### CREATIVE_SPACE List introduce :>
-1. HTML_Typo 
-2. IDEA_PAGE
-3. JavaScript
-4. Notepad
+### 뉴밋 Flow Chart  :>
+
+<img src="https://raw.githubusercontent.com/writingR/Newmeet_project/master/1.png">
+
 
 ### CREATIVE_SPACE Link
 1. HTML_Typo 
