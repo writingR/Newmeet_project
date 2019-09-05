@@ -22,12 +22,5 @@
 
 
 
-### CREATIVE_SPACE Link
-1. HTML_Typo 
-- https://github.com/writingR/CREATIVE_SPACE/tree/master/HTML_Typo
-2. IDEA_PAGE
-- https://github.com/writingR/CREATIVE_SPACE/tree/master/IDEA_PAGE
-3. JavaScript
-- https://github.com/writingR/CREATIVE_SPACE/tree/master/JavaScript
-4. Notepad
-- https://github.com/writingR/CREATIVE_SPACE/tree/master/Notepad
+### 뉴밋 API 및 Spec
+
