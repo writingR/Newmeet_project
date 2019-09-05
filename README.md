@@ -7,6 +7,14 @@
 
 <img src="https://raw.githubusercontent.com/writingR/Newmeet_project/master/1.png">
 
+----- 
+### 뉴밋 구조 :>
+
+<img src="https://raw.githubusercontent.com/writingR/Newmeet_project/master/2.png">
+
+
+
+
 
 ### CREATIVE_SPACE Link
 1. HTML_Typo 
