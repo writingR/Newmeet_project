@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.user.main.dao.MemberInterDao">
+
+
+	<resultMap id="Member" type="com.user.main.domain.Member">
+		<result property="nidx" column="nidx"/>
+		<result property="nemail" column="nemail"/>
+		<result property="nnic" column="nnic"/>
+		<result property="npw" column="npw"/>
+     	<result property="nphoto" column="nphoto"/>
+		<result property="ntype" column="ntype"/>
+		<result property="verify" column="verify"/>
+		<result property="code" column="code"/>
+	</resultMap>
+	
+	
+
+	<select id="selectById" resultMap="Member" >
+
+		select * from newMeet_RDS.Member where nemail = #{nemail}
+
+	</select>
+
+
+	<select id="selectByIdx" resultMap="Member" >
+		select * from newMeet_RDS.Member where nidx = #{nidx}
+		<!-- select * from bitcamp.mem where id like concat(#{id}, '%') -->
+	</select>
+
+
+	<insert id="insertUser" parameterType="com.user.main.domain.Member">
+		insert into newMeet_RDS.Member (nemail, npw,code) values (#{nemail},#{npw},#{code})
+	</insert>
+
+	<update id="verify">
+		update newMeet_RDS.Member  set verify = 'Y'
+			where nemail = #{param1}
+	</update>
+
+	<select id="selectAllList" resultMap="Member">
+		select * from newMeet_RDS.Member
+		order by nidx desc
+	</select>
+	
+</mapper>	
