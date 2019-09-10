@@ -31,6 +31,8 @@
             <li><a href="#">Catalogue</a></li>
             <li><a href="#">New Arrivals</a></li>
             <li><a href="<c:url value="/newMoim" />">모임 생성</a></li>
+            <li><a href="<c:url value="/moimList" />">모임 리스트</a></li>
+            
           </ul>
         </div>
       </nav>

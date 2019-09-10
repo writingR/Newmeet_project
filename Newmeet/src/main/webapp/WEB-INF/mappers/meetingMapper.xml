@@ -3,8 +3,69 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
+<!-- interface의 full name을 namespace의 속성으로 사용 : 필수 -->
 <mapper namespace="com.xy.nm.meeting.dao.MeetingDao">
+
+	<!-- select 결과 메핑을 위한 resultMap 설정 -->
+	<!-- 대분류 카테고리 -->
+	<resultMap id="lCategoryList"
+		type="com.xy.nm.meeting.domain.MeetingLcategory">
+		<result property="big_idx" column="big_idx" />
+		<result property="big_ca" column="big_ca" />
+	</resultMap>
+	<!-- 소분류 카테고리 -->
+	<resultMap id="sCategoryList"
+		type="com.xy.nm.meeting.domain.MeetingScategory">
+		<result property="small_idx" column="small_idx" />
+		<result property="big_idx" column="big_idx" />
+		<result property="small_ca" column="small_ca" />
+	</resultMap>
+	<!-- 모임 -->
+	<resultMap id="resultMeetingInfo"
+		type="com.xy.nm.meeting.domain.MeetingInfo">
+		<result property="m_name" column="m_name" />
+		<result property="m_img" column="m_img" />
+		<result property="m_cont" column="m_cont" />
+		<result property="m_stotal" column="m_stotal" />
+		<result property="m_star" column="m_star" />
+		<result property="m_like" column="m_like" />
+		<result property="small_idx" column="small_idx" />
+	</resultMap>
+
+
+	<!-- 대분류 리스트 -->
+	<select id="lCategoryList"
+			resultMap="lCategoryList">
+		select * from newMeet_RDS.lCategory
+	
+	</select>
+	<!-- 소분류 리스트 -->
+	<select id="sCategoryList"
+			resultMap="sCategoryList">
+		select * from newMeet_RDS.sCategory where big_idx=#{big_idx}
+	
+	</select>
+<!-- 모임 생성 -->
+	<insert id="MeetingWrite"
+			parameterType="com.xy.nm.meeting.domain.MeetingInfo">
+			
+			insert into newMeet_RDS.Meeting (small_idx,m_name,m_img,m_cont) 
+			values (#{small_idx},#{m_name},#{m_img},#{m_cont})
+	
+	</insert>
+	
+	<!-- 모임 리스트 -->
+	<select id="MeetingList"
+			resultMap="resultMeetingInfo">
+		select * from newMeet_RDS.Meeting
+	
+	</select>
+	<!-- 모임 상세 정보 -->
+	<select id="MeetingInfo"
+			resultMap="resultMeetingInfo">
+		select * from newMeet_RDS.Meeting where m_idx=#{m_idx}
+		
+	</select>
 
 
 </mapper>
