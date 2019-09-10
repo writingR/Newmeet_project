@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 @RequestMapping("/cal/create")
-public class CalendarCreateController {
+public class CalCreateController {
 	
 	
 	@RequestMapping(method = RequestMethod.GET)
