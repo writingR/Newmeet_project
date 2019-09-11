@@ -31,7 +31,7 @@
 	<beans:bean id="dataSource"
 		class="org.apache.commons.dbcp2.BasicDataSource"
 		p:driverClassName="com.mysql.cj.jdbc.Driver"
-		p:url="jdbc:mysql://newmeet-rds.cx5njm1y6puv.ap-northeast-2.rds.amazonaws.com:3306/project?useUnicode=true&amp;characterEncoding=utf8&amp;serverTimezone=UTC"
+		p:url="jdbc:mysql://newmeet-rds.cx5njm1y6puv.ap-northeast-2.rds.amazonaws.com:3306/newMeet_RDS?useUnicode=true&amp;characterEncoding=utf8&amp;serverTimezone=UTC"
 		p:username="admin" 
 		p:password="bitcamp123" />
 	

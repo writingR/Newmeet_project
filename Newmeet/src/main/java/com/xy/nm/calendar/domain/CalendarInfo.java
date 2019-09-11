@@ -2,26 +2,30 @@ package com.xy.nm.calendar.domain;
 
 import java.util.Date;
 
-public class CalendarInfo {
+import org.springframework.format.annotation.DateTimeFormat;
 
+public class CalendarInfo {
+	
 	// 일정 idx
-	int c_idx;
+	private int c_idx;
 	// 유저 idx
-	int m_idx;
+	private int m_idx;
 	// 정모 이름
-	String c_title;
+	private String c_title;
 	// 참가 금액
-	int c_pay;
+	private int c_pay;
 	// 참가 인원
-	int c_count;
+	private int c_count;
 	// 장소명
-	String c_place;
+	private String c_place;
 	// 주소
-	String c_address;
+	private String c_address;
 	// 일정
-	Date c_date;
+	@DateTimeFormat(pattern = "yyyy.MM.dd"+" "+"HH:mm")
+	private Date c_date;
 	// 신청마감일
-	Date c_edate;
+	@DateTimeFormat(pattern = "yyyy.MM.dd"+" "+"HH:mm")
+	private Date c_edate;
 
 	
 	public CalendarInfo() {}

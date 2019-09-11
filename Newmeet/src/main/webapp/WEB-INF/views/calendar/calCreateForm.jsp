@@ -19,6 +19,46 @@
 
 
 
+    <style>
+.map_wrap, .map_wrap * {margin:0;padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:12px;}
+.map_wrap a, .map_wrap a:hover, .map_wrap a:active{color:#000;text-decoration: none;}
+.map_wrap {position:relative;width:100%;height:400px;}
+#menu_wrap {position:absolute;top:0;left:0;bottom:0;width:250px;margin:10px 0 30px 10px;padding:5px;overflow-y:auto;background:rgba(255, 255, 255, 0.7);z-index: 1;font-size:12px;border-radius: 10px;}
+.bg_white {background:#fff;}
+#menu_wrap hr {display: block; height: 1px;border: 0; border-top: 2px solid #5F5F5F;margin:3px 0;}
+#menu_wrap .option{text-align: center;}
+#menu_wrap .option p {margin:10px 0;}  
+#menu_wrap .option button {margin-left:5px;}
+#placesList li {list-style: none;}
+#placesList .item {position:relative;border-bottom:1px solid #888;overflow: hidden;cursor: pointer;min-height: 65px;}
+#placesList .item span {display: block;margin-top:4px;}
+#placesList .item h5, #placesList .item .info {text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
+#placesList .item .info{padding:10px 0 10px 55px;}
+#placesList .info .gray {color:#8a8a8a;}
+#placesList .info .jibun {padding-left:26px;background:url(http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_jibun.png) no-repeat;}
+#placesList .info .tel {color:#009900;}
+#placesList .item .markerbg {float:left;position:absolute;width:36px; height:37px;margin:10px 0 0 10px;background:url(http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png) no-repeat;}
+#placesList .item .marker_1 {background-position: 0 -10px;}
+#placesList .item .marker_2 {background-position: 0 -56px;}
+#placesList .item .marker_3 {background-position: 0 -102px}
+#placesList .item .marker_4 {background-position: 0 -148px;}
+#placesList .item .marker_5 {background-position: 0 -194px;}
+#placesList .item .marker_6 {background-position: 0 -240px;}
+#placesList .item .marker_7 {background-position: 0 -286px;}
+#placesList .item .marker_8 {background-position: 0 -332px;}
+#placesList .item .marker_9 {background-position: 0 -378px;}
+#placesList .item .marker_10 {background-position: 0 -423px;}
+#placesList .item .marker_11 {background-position: 0 -470px;}
+#placesList .item .marker_12 {background-position: 0 -516px;}
+#placesList .item .marker_13 {background-position: 0 -562px;}
+#placesList .item .marker_14 {background-position: 0 -608px;}
+#placesList .item .marker_15 {background-position: 0 -654px;}
+#pagination {margin:10px auto;text-align: center;}
+#pagination a {display:inline-block;margin-right:10px;}
+#pagination .on {font-weight: bold; cursor: default;color:#777;}
+</style>
+
+
 <style>
 *datepicer 버튼 롤오버 시 손가락 모양 표시*/
 .ui-datepicker-trigger{cursor: pointer;}
@@ -44,9 +84,23 @@
   display: inline-block;
   text-align: left;
   vertical-align: middle; 
-  width: 800px;
+  width: 600px;
+  margin-top: 270px;
 }
 
+.modal-title {
+	font-size: 40px;
+	font-weight: bold;
+}
+
+.inputMsg {
+	font-size: 30px;
+	
+}
+
+.modal-content {
+  height: 800px;
+}
 .modal-footer {
   margin: 0 auto;
 }
@@ -71,7 +125,7 @@ input::placeholder {
 	<%@include file="/WEB-INF/views/frame/header2.jsp"%>
 	<%@include file="/WEB-INF/views/frame/nav.jsp"%>
 
-	<form id="regform">
+<!-- 	<form id="regform"> -->
 	<!-- 버튼을 생성한다 해당하는 버튼은 데이터 토글은 모달, 데이터 타겟은 exampleModal의 아이디를 가지는 div 입니다.  -->
 	<!-- 참고로, class data-target, data-toggle과 같은것은 애트리뷰트 라고 합니다. -->
 	<button type="button" class="btn btn-primary" data-toggle="modal"
@@ -84,11 +138,11 @@ input::placeholder {
 		<!-- class를 주목하시면  여기 클레스에 modal-lg, modal-sm을 입력하시면 스몰 모달, 라지 모달로 선언이 가능 합니다. -->
 		<!-- 위에 설명 예 : <div class="modal-dialog modal-sm" role="document"> -->
 	
-		<div class="modal-dialog modal-center" role="document">
+		<div class="modal-dialog modal-center modal-lg" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
 					<!-- 모달 이름 -->
-					<h5 class="modal-title" id="calRegisLabel01">일정 등록</h5>
+					<h5 class="modal-title" id="calRegisLabel01">일정 등록 1/3</h5>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
@@ -96,7 +150,7 @@ input::placeholder {
 				</div>
 				<div class="modal-body">
 					<!-- 모달 내용 -->
-					<h5 style="text-align: center;">기본정보 입력</h5>
+					<h5 style="text-align: center;" class="inputMsg">기본정보 입력</h5>
 					<div class="progress">
 						<div class="progress-bar progress-bar-striped progress-bar-animated" style="width:30%">
 						</div>
@@ -140,11 +194,11 @@ input::placeholder {
 		aria-labelledby="calRegisLabel02" aria-hidden="true">
 		<!-- class를 주목하시면  여기 클레스에 modal-lg, modal-sm을 입력하시면 스몰 모달, 라지 모달로 선언이 가능 합니다. -->
 		<!-- 위에 설명 예 : <div class="modal-dialog modal-sm" role="document"> -->
-		<div class="modal-dialog modal-center" role="document">
+		<div class="modal-dialog modal-center modal-lg" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
 					<!-- 모달 이름 -->
-					<h5 class="modal-title" id="calRegisLabel02">일정 등록</h5>
+					<h5 class="modal-title" id="calRegisLabel02">일정 등록 2/3</h5>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
@@ -152,12 +206,37 @@ input::placeholder {
 				</div>
 				<div class="modal-body">
 					<!-- 모달 내용 -->
-					<h5 style="text-align: center;">장소를 검색하여 선택해 주세요.</h5>
+					<h5 style="text-align: center;" class="inputMsg">장소를 검색하여 선택해 주세요.</h5>
 					<div class="progress">
 						<div class="progress-bar progress-bar-striped progress-bar-animated" style="width:66%">
 						</div>
 					</div>
-					카카오맵
+						<div class="map_wrap">
+							<div id="map"
+								style="width: 100%; height: 100%; position: relative; overflow: hidden;"></div>
+
+							<div id="menu_wrap" class="bg_white">
+								<div class="option">
+									<div>
+										<form onsubmit="searchPlaces(); return false;">
+											키워드 : <input type="text" id="keyword"
+												size="15">
+											<button type="submit">검색하기</button>
+										</form>
+									</div>
+								</div>
+								<hr>
+								<ul id="placesList"></ul>
+								<div id="pagination"></div>
+							</div>
+						</div>
+						<h5 style="text-align: center;"> 선택하신 장소가 맞는지 확인해주세요. </h5>
+						<label for="c_place">장소</label>
+						<input class="cmap" id="c_place" type="text">
+						<br>
+						<label for="c_address">주소</label>
+						<input class="cmap" id="c_address" type="text">
+						
 				</div>
 				<div class="modal-footer">
 					<!-- data-dismiss="modal"를 통해 모달을 닫을수 있다. -->
@@ -171,11 +250,11 @@ input::placeholder {
 	<!-- datepicker - 날짜 시간을 입력 받는다. -->
 	<div class="modal modal-center fade" id="calRegist03" tabindex="-1" role="dialog"
 		aria-labelledby="calRegisLabel03" aria-hidden="true">
-		<div class="modal-dialog modal-center" role="document">
+		<div class="modal-dialog modal-center modal-lg" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
 					<!-- 모달 이름 -->
-					<h5 class="modal-title" id="calRegisLabel03">날짜와 시간을 선택해주세요.</h5>
+					<h5 class="modal-title" id="calRegisLabel03">일정등록 3/3</h5>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
@@ -183,7 +262,7 @@ input::placeholder {
 				</div>
 				<div class="modal-body">
 					<!-- 모달 내용 -->
-					<h5 style="text-align: center;">기본정보 입력</h5>
+					<h5 style="text-align: center;" class="inputMsg"> 날짜를 선택해 주세요.</h5>
 					<div class="progress">
 						<div class="progress-bar progress-bar-striped progress-bar-animated" style="width:90%">
 						</div>
@@ -200,30 +279,37 @@ input::placeholder {
 					<!-- data-dismiss="modal"를 통해 모달을 닫을수 있다. -->
 					<button type="button" class="btn btn-secondary" onclick="previous02()">이전</button>
 					<button type="button" class="btn btn-primary" data-toggle="modal"
-						data-target="#calRegist2">등록 완료</button>
+						data-target="#calRegist2" onclick="calRegist()">등록 완료</button>
 				</div>
 			</div>
 		</div>
 	</div>
 
-</form>
-	
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f6e7a0224aef6815285d474f26a6c0d6&libraries=services"></script>
+
 <script>
 
 
 	
-	/* 이전 버튼 클릭 시 모달 동작 */
+	/* 다음 버튼 클릭 시 모달 동작 */
 	function next01() {
 		$('#calRegist01').modal('hide');
 		$('#calRegist02').modal('show');
 	}
 	
+	/* 일정등록2 show 동작 시 카카오맵 relayout */
+	$('#calRegist02').on('shown.bs.modal', function () {
+		relayout();
+	});
+	
+	
 	function next02() {
 		$('#calRegist02').modal('hide');
 		$('#calRegist03').modal('show');
+		
 	}
 	
-	/* 다음 버튼 클릭 시 모달 동작 */
+	/* 이전 버튼 클릭 시 모달 동작 */
 	function previous01() {
 		$('#calRegist01').modal('show');
 		$('#calRegist02').modal('hide');
@@ -257,6 +343,46 @@ input::placeholder {
 		  
 		  /* inline:true */
 	});
+	
+	
+	var formData = {
+		m_idx : 1,
+		c_title : $('#c_title').val(),
+		c_pay : parseInt($('#c_pay').val()),
+		c_count : $('#c_count').val(),
+		c_place : $('#c_place').val(),
+		c_address : $('#c_address').val(),
+		c_date : $('#c_date').val(),
+		c_edate : $('#c_edate').val()
+	};
+	
+	function calRegist() {
+		
+		$.ajax({
+			
+			url: 'http://localhost:8080/nm/cal/create',
+			type: 'post',
+			data: {
+				m_idx : 100,
+				c_title : $('#c_title').val(),
+				c_pay : parseInt($('#c_pay').val()),
+				c_count : $('#c_count').val(),
+				c_place : $('#c_place').val(),
+				c_address : $('#c_address').val(),
+				c_date : $('#c_date').val(),
+				c_edate : $('#c_edate').val()
+			},
+			success : function(data) {
+				console.log(data);
+				alert(data);
+				alert('일정이 성공적으로 등록되었습니다.');
+				resetReg();
+				$('#calRegist03').modal('hide');
+				
+			}
+		});
+	}
+	
 	
 	
 	/* $('#datetimepicker').datetimepicker().data('DateTimePicker').format('HH:mm:ss'); */
@@ -296,6 +422,278 @@ input::placeholder {
 	
  */
 </script>
+
+<script>
+
+
+
+// 마커를 담을 배열입니다
+var markers = [];
+
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+    mapOption = {
+        center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
+        level: 3 // 지도의 확대 레벨
+    };  
+
+// 지도를 생성합니다    
+var map = new kakao.maps.Map(mapContainer, mapOption); 
+
+// 장소 검색 객체를 생성합니다
+var ps = new kakao.maps.services.Places();  
+
+// 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
+var infowindow = new kakao.maps.InfoWindow({zIndex:1});
+
+// 키워드로 장소를 검색합니다
+searchPlaces();
+
+// 키워드 검색을 요청하는 함수입니다
+function searchPlaces() {
+
+    var keyword = document.getElementById('keyword').value;
+
+    if (!keyword.replace(/^\s+|\s+$/g, '')) {
+        alert('키워드를 입력해주세요!');
+        return false;
+    }
+
+    // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
+    ps.keywordSearch( keyword, placesSearchCB); 
+}
+
+// 장소검색이 완료됐을 때 호출되는 콜백함수 입니다
+function placesSearchCB(data, status, pagination) {
+    if (status === kakao.maps.services.Status.OK) {
+
+        // 정상적으로 검색이 완료됐으면
+        // 검색 목록과 마커를 표출합니다
+        displayPlaces(data);
+
+        // 페이지 번호를 표출합니다
+        displayPagination(pagination);
+
+    } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
+
+        alert('검색 결과가 존재하지 않습니다.');
+        return;
+
+    } else if (status === kakao.maps.services.Status.ERROR) {
+
+        alert('검색 결과 중 오류가 발생했습니다.');
+        return;
+
+    }
+}
+
+
+// 검색 결과 목록과 마커를 표출하는 함수입니다
+function displayPlaces(places) {
+
+    var listEl = document.getElementById('placesList'), 
+    menuEl = document.getElementById('menu_wrap'),
+    fragment = document.createDocumentFragment(), 
+    bounds = new kakao.maps.LatLngBounds(), 
+    listStr = '';
+    
+    // 검색 결과 목록에 추가된 항목들을 제거합니다
+    removeAllChildNods(listEl);
+
+    // 지도에 표시되고 있는 마커를 제거합니다
+    removeMarker();
+    
+    for ( var i=0; i<places.length; i++ ) {
+
+        // 마커를 생성하고 지도에 표시합니다
+        var placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
+            marker = addMarker(placePosition, i), 
+            itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
+
+        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+        // LatLngBounds 객체에 좌표를 추가합니다
+        bounds.extend(placePosition);
+
+        // 마커와 검색결과 항목에 mouseover 했을때
+        // 해당 장소에 인포윈도우에 장소명을 표시합니다
+        // mouseout 했을 때는 인포윈도우를 닫습니다
+        (function(marker, title, address) {
+/*         	
+             kakao.maps.event.addListener(marker, 'mouseover', function() {
+                displayInfowindow(marker, title);
+            });
+
+            kakao.maps.event.addListener(marker, 'mouseout', function() {
+                infowindow.close();
+            });
+            
+            itemEl.onmouseover =  function () {
+                displayInfowindow(marker, title);
+            };
+
+            itemEl.onmouseout =  function () {
+                infowindow.close();
+            };
+             */
+            
+            kakao.maps.event.addListener(marker, 'click', function() {
+                displayInfowindow2(marker, title, address);
+            });
+                         
+            itemEl.onclick =  function () {
+                displayInfowindow2(marker, title, address);
+            };
+            
+        })(marker, places[i].place_name, places[i].road_address_name);
+
+        fragment.appendChild(itemEl);
+    }
+
+    // 검색결과 항목들을 검색결과 목록 Elemnet에 추가합니다
+    listEl.appendChild(fragment);
+    menuEl.scrollTop = 0;
+
+    // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+    map.setBounds(bounds);
+}
+
+// 검색결과 항목을 Element로 반환하는 함수입니다
+function getListItem(index, places) {
+
+    var el = document.createElement('li'),
+    itemStr = '<span class="markerbg marker_' + (index+1) + '"></span>' +
+                '<div class="info">' +
+                '   <h5>' + places.place_name + '</h5>';
+
+    if (places.road_address_name) {
+        itemStr += '    <span>' + places.road_address_name + '</span>' +
+                    '   <span class="jibun gray">' +  places.address_name  + '</span>';
+    } else {
+        itemStr += '    <span>' +  places.address_name  + '</span>'; 
+    }
+                 
+      itemStr += '  <span class="tel">' + places.phone  + '</span>' +
+                '</div>';           
+
+    el.innerHTML = itemStr;
+    el.className = 'item';
+
+    return el;
+}
+
+// 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
+function addMarker(position, idx, title) {
+    var imageSrc = 'http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
+        imageSize = new kakao.maps.Size(36, 37),  // 마커 이미지의 크기
+        imgOptions =  {
+            spriteSize : new kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기
+            spriteOrigin : new kakao.maps.Point(0, (idx*46)+10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
+            offset: new kakao.maps.Point(13, 37) // 마커 좌표에 일치시킬 이미지 내에서의 좌표
+        },
+        markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions),
+            marker = new kakao.maps.Marker({
+            position: position, // 마커의 위치
+            image: markerImage,
+            clickable: true
+        });
+
+    marker.setMap(map); // 지도 위에 마커를 표출합니다
+    markers.push(marker);  // 배열에 생성된 마커를 추가합니다
+
+    return marker;
+}
+
+// 지도 위에 표시되고 있는 마커를 모두 제거합니다
+function removeMarker() {
+    for ( var i = 0; i < markers.length; i++ ) {
+        markers[i].setMap(null);
+    }   
+    markers = [];
+}
+
+// 검색결과 목록 하단에 페이지번호를 표시는 함수입니다
+function displayPagination(pagination) {
+    var paginationEl = document.getElementById('pagination'),
+        fragment = document.createDocumentFragment(),
+        i; 
+
+    // 기존에 추가된 페이지번호를 삭제합니다
+    while (paginationEl.hasChildNodes()) {
+        paginationEl.removeChild (paginationEl.lastChild);
+    }
+
+    for (i=1; i<=pagination.last; i++) {
+        var el = document.createElement('a');
+        el.href = "#";
+        el.innerHTML = i;
+
+        if (i===pagination.current) {
+            el.className = 'on';
+        } else {
+            el.onclick = (function(i) {
+                return function() {
+                    pagination.gotoPage(i);
+                }
+            })(i);
+        }
+
+        fragment.appendChild(el);
+    }
+    paginationEl.appendChild(fragment);
+}
+
+// 검색결과 목록 또는 마커를 온오버했을 때 호출되는 함수입니다
+// 인포윈도우에 장소명을 표시합니다
+function displayInfowindow(marker, title) {
+    var content = '<div style="padding:5px;z-index:1;">' + title + '</div>';
+
+    infowindow.setContent(content);
+    infowindow.open(map, marker);
+}
+
+//검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다
+//인포윈도우에 장소명을 표시합니다
+function displayInfowindow2(marker, title, address) {
+ 	var content = '<div style="padding:5px;z-index:1; color:red; text-weith: bold;">' + title + '</div>';
+
+ 	infowindow.setContent(content);
+ 	infowindow.open(map, marker, address);
+ 
+ 	calRegist02(title, address);
+}
+
+ // 검색결과 목록의 자식 Element를 제거하는 함수입니다
+function removeAllChildNods(el) {   
+    while (el.hasChildNodes()) {
+        el.removeChild (el.lastChild);
+    }
+}
+ 
+ 
+ 
+//지도를 표시하는 div 크기를 변경하는 함수입니다
+function resizeMap() {
+    var mapContainer = document.getElementById('map');
+    mapContainer.style.width = '300px';
+    mapContainer.style.height = '300px'; 
+}
+
+function relayout() {    
+    
+    // 지도를 표시하는 div 크기를 변경한 이후 지도가 정상적으로 표출되지 않을 수도 있습니다
+    // 크기를 변경한 이후에는 반드시  map.relayout 함수를 호출해야 합니다 
+    // window의 resize 이벤트에 의한 크기변경은 map.relayout 함수가 자동으로 호출됩니다
+    map.relayout();
+}
+
+function calRegist02(title, address) {
+	
+	$('#c_place').val(title);
+	$('#c_address').val(address);
+}
+
+
+</script>
+
 <script src="<c:url value="/bootstrap/js/bootstrap.min.js" />"></script>
 	<%-- <%@include file="/WEB-INF/views/frame/sc.jsp"%> --%>
 
