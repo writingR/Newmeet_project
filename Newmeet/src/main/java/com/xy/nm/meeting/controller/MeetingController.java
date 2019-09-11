@@ -92,6 +92,8 @@ public class MeetingController {
 			
 			List<MeetingInfo> list = moimListService.getList();
 			
+			
+			
 			ResponseEntity<List<MeetingInfo>> entity =
 					new ResponseEntity<List<MeetingInfo>>(
 							list,
@@ -99,17 +101,19 @@ public class MeetingController {
 			return entity;
 		}
 		
-		// 모임 상세 페이지
-		@GetMapping("/list/{m_idx}")
-		@CrossOrigin
-		public ResponseEntity<MeetingInfo> getMoimInfo(
-				@PathVariable("m_idx") int m_idx
-				) {
-			MeetingInfo moimInfo = moimInfoService.getMoimInfo(m_idx);
-			
-			
-			return new ResponseEntity<MeetingInfo>(moimInfo, HttpStatus.OK);
-		}
+	/*
+	 * 
+	 * 
+	 * @GetMapping("/list/{m_idx}")
+	 * 
+	 * @CrossOrigin public ResponseEntity<MeetingInfo> getMoimInfo(
+	 * 
+	 * @PathVariable("m_idx") int m_idx ) { MeetingInfo moimInfo =
+	 * moimInfoService.getMoimInfo(m_idx,nidx);
+	 * 
+	 * 
+	 * return new ResponseEntity<MeetingInfo>(moimInfo, HttpStatus.OK); }
+	 */
 		
 		
 }

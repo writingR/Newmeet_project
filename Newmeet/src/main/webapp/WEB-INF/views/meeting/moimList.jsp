@@ -1,7 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="EUC-KR"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
+<%
+	session.setAttribute("loginKey",21);
+%>   
 <html>
 <head>
 <meta charset="UTF-8">
@@ -20,9 +23,7 @@
 </head>
 <body>
 <h1>모임 리스트</h1>
-	<% 
-		
-	%>
+	
 	
 		<br><br>
 		<div id="list">

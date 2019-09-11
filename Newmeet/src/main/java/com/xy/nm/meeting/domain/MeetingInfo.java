@@ -9,6 +9,21 @@ public class MeetingInfo {
 	private int m_star;        // 모임 별점참여인원
 	private int m_like;        // 모임 좋아요 개수
 	private int small_idx;     // 카테고리 소분류
+	private int l_like;
+	private int nidx;
+	
+	public int getL_like() {
+		return l_like;
+	}
+	public void setL_like(int l_like) {
+		this.l_like = l_like;
+	}
+	public int getNidx() {
+		return nidx;
+	}
+	public void setNidx(int nidx) {
+		this.nidx = nidx;
+	}
 	public int getM_idx() {
 		return m_idx;
 	}
@@ -58,14 +73,16 @@ public class MeetingInfo {
 		this.small_idx = small_idx;
 	}
 	
-	
-	
 	@Override
 	public String toString() {
 		return "MeetingInfo [m_idx=" + m_idx + ", m_name=" + m_name + ", m_img=" + m_img + ", m_cont=" + m_cont
 				+ ", m_stotal=" + m_stotal + ", m_star=" + m_star + ", m_like=" + m_like + ", small_idx=" + small_idx
-				+ "]";
+				+ ", l_like=" + l_like + ", nidx=" + nidx + "]";
 	}
+	
+	
+	
+	
 	
 	
 	

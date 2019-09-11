@@ -15,12 +15,20 @@ public class MoimInfoService {
 	@Autowired
 	private SqlSessionTemplate template;
 	
-	public MeetingInfo getMoimInfo(int m_idx) {
+	public MeetingInfo getMoimInfo(int m_idx,int nidx) {
 		dao = template.getMapper(MeetingDao.class);
 		
-		MeetingInfo moimInfo = dao.MeetingInfo(m_idx);
+		MeetingInfo moimInfo = dao.MeetingInfo(m_idx,nidx);
 		
 		return moimInfo;
+	}
+	
+	public MeetingInfo getMoimInfo2(int m_idx) {
+		dao = template.getMapper(MeetingDao.class);
+	
+		MeetingInfo moimInfo2 = dao.MeetingInfo2(m_idx);
+		
+		return moimInfo2;
 	}
 	
 	

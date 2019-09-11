@@ -23,6 +23,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 모임 -->
 	<resultMap id="resultMeetingInfo"
 		type="com.xy.nm.meeting.domain.MeetingInfo">
+		<result property="m_idx" column="m.m_idx" />
+		<result property="m_name" column="m_name" />
+		<result property="m_img" column="m_img" />
+		<result property="m_cont" column="m_cont" />
+		<result property="m_stotal" column="m_stotal" />
+		<result property="m_star" column="m_star" />
+		<result property="m_like" column="m_like" />
+		<result property="small_idx" column="small_idx" />
+		<result property="l_like" column="l_like" />
+		<result property="nidx" column="nidx" />
+	</resultMap>
+	<resultMap id="resultMeetingInfo2"
+		type="com.xy.nm.meeting.domain.MeetingInfo">
+		<result property="m_idx" column="m.m_idx" />
 		<result property="m_name" column="m_name" />
 		<result property="m_img" column="m_img" />
 		<result property="m_cont" column="m_cont" />
@@ -31,8 +45,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="m_like" column="m_like" />
 		<result property="small_idx" column="small_idx" />
 	</resultMap>
-
-
+	<!-- 좋아요 -->
+	<resultMap id="resultMeetingLike"
+		type="com.xy.nm.meeting.domain.MeetingLike">
+		<result property="l_idx" column="l_idx" />
+		<result property="m_idx" column="m_idx" />
+		<result property="nidx" column="nidx" />
+		<result property="l_like" column="l_like" />
+	</resultMap>
+	
+	
+	
+	
 	<!-- 대분류 리스트 -->
 	<select id="lCategoryList"
 			resultMap="lCategoryList">
@@ -63,9 +87,40 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 모임 상세 정보 -->
 	<select id="MeetingInfo"
 			resultMap="resultMeetingInfo">
-		select * from newMeet_RDS.Meeting where m_idx=#{m_idx}
+		select m.m_idx,m_name,m_img,m_cont,m_stotal,m_star,m_like,small_idx,l_like,nidx from newMeet_RDS.Meeting as m left join newMeet_RDS.mLike as l on m.m_idx = l.m_idx where nidx=#{param2} and m.m_idx=#{param1}
+		
+	</select>
+	<!-- 모임 상세 정보 비로그인 -->
+	<select id="MeetingInfo2"
+			resultMap="resultMeetingInfo2">
+		select m.m_idx,m_name,m_img,m_cont,m_stotal,m_star,m_like,small_idx,nidx from newMeet_RDS.Meeting as m left join newMeet_RDS.mLike as l on m.m_idx = l.m_idx where m.m_idx=#{m_idx} limit 0, 1
 		
 	</select>
 
-
+	<!-- 좋아요 기능 -->
+	<!-- 좋아요 상태 확인 있는지 없는지 -->
+	<select id="LikeCheck"
+			resultType="int">
+		select count(l_like) from newMeet_RDS.mLike where m_idx=#{m_idx} and nidx=#{nidx}
+	</select>
+	<!-- 좋아요 상태 넣기 -->
+	<insert id="LikePush" parameterType="com.xy.nm.meeting.domain.MeetingLike">
+		insert into newMeet_RDS.mLike (m_idx,l_like,nidx) values (#{m_idx},1,#{nidx})
+	</insert>
+	<!-- 좋아요 상태 확인 ( 있을때 눌럿는지 안눌럿는지) -->
+	<select id="LikeCheckPush"
+			resultType="int">
+		select l_like from newMeet_RDS.mLike where m_idx=#{m_idx} and nidx=#{nidx}
+	</select>
+	<!-- 좋아요 누르기 -->
+	<update id="Like"
+			parameterType="com.xy.nm.meeting.domain.MeetingLike">
+	update newMeet_RDS.mLike set l_like=1 where m_idx=#{m_idx} and nidx=#{nidx}
+	</update>
+	<!-- 좋아요 내리기 -->
+	<update id="Likedown"
+			parameterType="com.xy.nm.meeting.domain.MeetingLike">
+	update newMeet_RDS.mLike set l_like=0 where m_idx=#{m_idx} and nidx=#{nidx}
+	</update>
+	
 </mapper>

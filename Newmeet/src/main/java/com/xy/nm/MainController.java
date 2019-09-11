@@ -1,5 +1,7 @@
 package com.xy.nm;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -50,17 +52,61 @@ public class MainController {
 	
 	
 	@RequestMapping("/moimInfo")
-	public String moimInfo(@RequestParam(value = "m_idx") int m_idx, Model model) {
+	public String moimInfo(@RequestParam(value = "m_idx") int m_idx,HttpServletRequest request, Model model) {
 		
-		MeetingInfo meetingInfo = moimInfoService.getMoimInfo(m_idx);
-		model.addAttribute("m_name", meetingInfo.getM_name());
-		model.addAttribute("m_img", meetingInfo.getM_img());
-		model.addAttribute("m_cont", meetingInfo.getM_cont());
-		model.addAttribute("m_star", meetingInfo.getM_star());
-		model.addAttribute("m_like", meetingInfo.getM_like());
-		model.addAttribute("small_idx", meetingInfo.getSmall_idx());
+		if(request.getSession().getAttribute("loginKey")!=null) {
+		int nidx = (Integer)request.getSession().getAttribute("loginKey");
+		MeetingInfo meetingInfo = moimInfoService.getMoimInfo(m_idx,nidx);
 		
-		return "meeting/moimInfo";
+		if(meetingInfo!=null) {
+			
+			model.addAttribute("m_name", meetingInfo.getM_name());
+			model.addAttribute("m_img", meetingInfo.getM_img());
+			model.addAttribute("m_cont", meetingInfo.getM_cont());
+			model.addAttribute("m_star", meetingInfo.getM_star());
+			model.addAttribute("m_like", meetingInfo.getM_like());
+			model.addAttribute("small_idx", meetingInfo.getSmall_idx());
+			model.addAttribute("m_stotal", meetingInfo.getM_stotal());
+			model.addAttribute("m_idx", meetingInfo.getM_idx());
+			model.addAttribute("nidx", meetingInfo.getNidx());
+			model.addAttribute("l_like", meetingInfo.getL_like());
+			
+			return "meeting/moimInfo";
+		}else {
+		
+			
+			MeetingInfo meetingInfo2 = moimInfoService.getMoimInfo2(m_idx);
+			meetingInfo2.setNidx(nidx);
+			model.addAttribute("m_name", meetingInfo2.getM_name());
+			model.addAttribute("m_img", meetingInfo2.getM_img());
+			model.addAttribute("m_cont", meetingInfo2.getM_cont());
+			model.addAttribute("m_star", meetingInfo2.getM_star());
+			model.addAttribute("m_like", meetingInfo2.getM_like());
+			model.addAttribute("small_idx", meetingInfo2.getSmall_idx());
+			model.addAttribute("m_stotal", meetingInfo2.getM_stotal());
+			model.addAttribute("m_idx", meetingInfo2.getM_idx());
+			model.addAttribute("nidx", meetingInfo2.getNidx());
+			
+			return "meeting/moimInfoNot";
+		}
+		}else {
+			MeetingInfo meetingInfo2 = moimInfoService.getMoimInfo2(m_idx);
+			
+			model.addAttribute("m_name", meetingInfo2.getM_name());
+			model.addAttribute("m_img", meetingInfo2.getM_img());
+			model.addAttribute("m_cont", meetingInfo2.getM_cont());
+			model.addAttribute("m_star", meetingInfo2.getM_star());
+			model.addAttribute("m_like", meetingInfo2.getM_like());
+			model.addAttribute("small_idx", meetingInfo2.getSmall_idx());
+			model.addAttribute("m_stotal", meetingInfo2.getM_stotal());
+			model.addAttribute("m_idx", meetingInfo2.getM_idx());
+			
+			return "meeting/moimInfoNot";
+		}
+		
+		
+		
+		
 		
 	}
 	
