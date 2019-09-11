@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- interface의 full name을 namespace의 속성으로 사용 : 필수 -->
+<mapper namespace="com.xy.nm.review.dao.ReviewDaoInterface">
+
+	<!-- select 결과 메핑을 위한 resultMap 설정 -->
+	<resultMap id="resultReviewInfo"
+		type="com.xy.nm.review.domain.Review">
+		<id property="r_idx" column="r_idx" />
+		<result property="r_title" column="r_title" />
+		<result property="r_content" column="r_content" />
+		<result property="r_star" column="r_star"/> 
+		<result property="r_date" column="r_date" />
+		<result property="r_like" column="r_like" />
+		<result property="m_idx" column="m_idx" />
+		<result property="nidx" column="nidx" />
+		<result property="nphoto" column="nphoto" />
+		<result property="r_img" column="r_img" />
+	</resultMap>
+	
+	<!-- 모임 게시판 : 댓글 리스트의 개수  -->
+	<select id="getReviewCount"
+		resultType="int">
+		select count(*) from Review where m_idx=#{m_idx}
+	</select>
+
+	<!-- 후기 리스트 -->
+	<select id="getReviewList" parameterType="map"
+		resultMap="resultReviewInfo">
+		
+		select r.r_idx, r_title, r_content, r_star, r_date, r_like, m_idx, r.nidx ,nphoto, r_img , rlike_state 
+		from Review as r 
+		Left join Member as m 
+		on r.nidx = m.nidx 
+		Left join (select * from newMeet_RDS.rLike 
+		where nidx=#{nidx}) 
+		as rl 
+		on r.r_idx = rl.r_idx 
+		where m_idx= #{m_idx} 
+		order by ${sort}  
+		desc 
+		limit #{startIndex}, #{LIST_PER_PAGE}
+	</select>
+	
+	<!-- 모임 멤머 체크 -->
+	<select id="checkmmId" 
+		resultType="int">
+		select count(*) from mMember where nidx=#{nidx};
+	</select>
+
+
+
+<!-- 좋아요 시작 -->
+	<!-- 좋아요 상태 세기 -->
+	<select id="selectCountLikeState" 
+		resultType="int">
+		select count(rlike_state) from newMeet_RDS.rLike where r_idx = #{r_idx} and nidx = #{nidx}
+	</select>
+	
+	<!-- 좋아요 상태 확인 -->
+	<select id="selectLikeState" 
+		resultType="int">
+		select rlike_state from newMeet_RDS.rLike where r_idx = #{r_idx} and nidx = #{nidx}
+	</select>
+	
+	<!-- 좋아요 업데이트 -->
+	<update id="updateLike">
+		update newMeet_RDS.rLike set rlike_state = #{plus_minus} where r_idx = #{r_idx} and nidx = #{nidx}
+	</update>
+	
+	<!-- 리뷰 좋아요 업데이트 -->
+	<update id="updateReviewLike">
+		update Review set r_like = r_like+${plus_minus} where r_idx = #{r_idx}
+	</update>
+	
+	<!-- 좋아요 삽입 -->
+	<insert id="insertLike">
+		insert into newMeet_RDS.rLike(rlike_state, r_idx, nidx) values(1, #{r_idx}, #{nidx})
+	</insert>
+<!-- 좋아요 끝 -->
+
+	<!-- 리뷰 삽입 -->
+	<insert id="insertReview" parameterType="map">
+		insert into Review(r_title, r_img, r_content, r_star, m_idx, nidx) values(#{title}, #{img}, #{content},#{star},#{mNum}, #{nidx} );
+	</insert>
+
+
+
+</mapper>

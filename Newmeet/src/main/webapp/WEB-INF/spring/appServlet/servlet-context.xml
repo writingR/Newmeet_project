@@ -3,6 +3,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
@@ -14,12 +15,51 @@
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
+	<resources mapping="/css/**" location="/css/" />
+	<resources mapping="/bootstrap/**" location="/bootstrap/" />
+	<resources mapping="/uploadfile/**" location="/uploadfile/" />
+	<resources mapping="/static/**" location="/static/" />
+	
+	<!-- 파일업로드 처리를 위한 multipartResolver bean 등록 -->
+	<beans:bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="defaultEncoding">
+			<beans:value>utf-8</beans:value>
+		</beans:property>
+	</beans:bean>
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
+	
+	<beans:bean
+		id="dataSource"
+		class="org.apache.commons.dbcp2.BasicDataSource"
+		p:driverClassName="com.mysql.jdbc.Driver" 
+		p:url="jdbc:mysql://newmeet-rds.cx5njm1y6puv.ap-northeast-2.rds.amazonaws.com:3306/newMeet_RDS?characterEncoding=utf8"
+		p:username="admin"
+		p:password="bitcamp123" />
+	
+	<beans:bean
+		id="jdbcTemplate"
+		class="org.springframework.jdbc.core.JdbcTemplate"
+		p:dataSource-ref="dataSource"
+	/>
+	
+	<!-- sqlSessionFactory 설정 : mapper 위치 변경-서버 실행시 기준의 경로 -->
+	<beans:bean class="org.mybatis.spring.SqlSessionFactoryBean" 
+		id="sqlSessionFactory" 
+		p:dataSource-ref="dataSource" 
+		p:mapperLocations="/WEB-INF/mappers/*.xml"
+	/>
+	
+	<beans:bean class="org.mybatis.spring.SqlSessionTemplate" id="sqlSession">
+		<beans:constructor-arg ref="sqlSessionFactory" index="0"/>
+	</beans:bean>
+	
+	
 	
 	<context:component-scan base-package="com.xy.nm" />
 	
