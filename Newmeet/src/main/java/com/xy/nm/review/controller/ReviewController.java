@@ -49,6 +49,7 @@ public class ReviewController {
 		model.addAttribute("reviewList", reviewList);
 		model.addAttribute("count", count);
 		model.addAttribute("moimNum", mNum);
+		model.addAttribute("page", page);
 		
 		return "review/reviewList2";
 	}

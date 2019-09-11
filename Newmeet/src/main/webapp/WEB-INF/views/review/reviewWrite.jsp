@@ -61,7 +61,7 @@
     	        processData: false,
     	        success: function(url) {
     	          $(el).summernote('editor.insertImage', url);
-    	          img ='<img src="'+url+'" width="480" height="auto"/>';
+    	          img ='<img src="'+url+'" alt="Image" class="img-fluid rounded"/>';
     	          $('#images').val(img);
     	        }
     	      });

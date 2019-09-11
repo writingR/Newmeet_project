@@ -21,22 +21,35 @@
 	href="https://fonts.googleapis.com/css?family=Muli:300,400,700|Playfair+Display:400,700,900"
 	rel="stylesheet">
 
-<link rel="stylesheet" href="${pageContext.request.contextPath}/static/review/fonts/icomoon/style.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/static/review/css/bootstrap.min.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/static/review/css/magnific-popup.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/static/review/css/jquery-ui.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/static/review/css/owl.carousel.min.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/static/review/css/owl.theme.default.min.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/static/review/css/bootstrap-datepicker.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/static/review/fonts/flaticon/font/flaticon.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/static/review/css/aos.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/static/review/css/style.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/static/review/fonts/icomoon/style.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/static/review/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/static/review/css/magnific-popup.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/static/review/css/jquery-ui.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/static/review/css/owl.carousel.min.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/static/review/css/owl.theme.default.min.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/static/review/css/bootstrap-datepicker.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/static/review/fonts/flaticon/font/flaticon.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/static/review/css/aos.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/static/review/css/style.css">
+<link rel="stylesheet" type="text/css" href="http://www.shieldui.com/shared/components/latest/css/light/all.min.css" />
+	
 <%@include file="/WEB-INF/views/frame/link.jsp"%>
 </head>
 <body>
 	<%@include file="/WEB-INF/views/frame/header.jsp"%>
 	<%@include file="/WEB-INF/views/frame/nav.jsp"%>
-
+	
+ 
 	<div class="site-wrap">
 
 		<div class="py-5 bg-light">
@@ -56,282 +69,87 @@
 
 		<div class="site-section bg-white">
 			<div class="container">
+			
+			
+			
+			
 				<div class="row">
-					<div class="col-lg-4 mb-4">
-						<div class="entry2">
-							<a href="single.html"><img src="images/img_1.jpg" alt="Image"
-								class="img-fluid rounded"></a>
-							<div class="excerpt">
-								<span class="post-category text-white bg-secondary mb-3">Politics</span>
-
-								<h2>
-									<a href="single.html">The AI magically removes moving
-										objects from videos.</a>
-								</h2>
-								<div class="post-meta align-items-center text-left clearfix">
-									<figure class="author-figure mb-0 mr-3 float-left">
-										<img src="images/person_1.jpg" alt="Image" class="img-fluid">
-									</figure>
-									<span class="d-inline-block mt-1">By <a href="#">Carrol
-											Atkinson</a></span> <span>&nbsp;-&nbsp; July 19, 2019</span>
-								</div>
-
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-									Quo sunt tempora dolor laudantium sed optio, explicabo ad
-									deleniti impedit facilis fugit recusandae! Illo, aliquid, dicta
-									beatae quia porro id est.</p>
-								<p>
-									<a href="#">Read More</a>
-								</p>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-4 mb-4">
-						<div class="entry2">
-							<a href="single.html"><img src="images/img_2.jpg" alt="Image"
-								class="img-fluid rounded"></a>
-							<div class="excerpt">
-								<span class="post-category text-white bg-success mb-3">Nature</span>
-
-								<h2>
-									<a href="single.html">The AI magically removes moving
-										objects from videos.</a>
-								</h2>
-								<div class="post-meta align-items-center text-left clearfix">
-									<figure class="author-figure mb-0 mr-3 float-left">
-										<img src="images/person_1.jpg" alt="Image" class="img-fluid">
-									</figure>
-									<span class="d-inline-block mt-1">By <a href="#">Carrol
-											Atkinson</a></span> <span>&nbsp;-&nbsp; July 19, 2019</span>
-								</div>
-
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-									Quo sunt tempora dolor laudantium sed optio, explicabo ad
-									deleniti impedit facilis fugit recusandae! Illo, aliquid, dicta
-									beatae quia porro id est.</p>
-								<p>
-									<a href="#">Read More</a>
-								</p>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-4 mb-4">
-						<div class="entry2">
-							<a href="single.html"><img src="images/img_3.jpg" alt="Image"
-								class="img-fluid rounded"></a>
-							<div class="excerpt">
-								<span class="post-category text-white bg-warning mb-3">Travel</span>
-
-								<h2>
-									<a href="single.html">The AI magically removes moving
-										objects from videos.</a>
-								</h2>
-								<div class="post-meta align-items-center text-left clearfix">
-									<figure class="author-figure mb-0 mr-3 float-left">
-										<img src="images/person_1.jpg" alt="Image" class="img-fluid">
-									</figure>
-									<span class="d-inline-block mt-1">By <a href="#">Carrol
-											Atkinson</a></span> <span>&nbsp;-&nbsp; July 19, 2019</span>
-								</div>
-
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-									Quo sunt tempora dolor laudantium sed optio, explicabo ad
-									deleniti impedit facilis fugit recusandae! Illo, aliquid, dicta
-									beatae quia porro id est.</p>
-								<p>
-									<a href="#">Read More</a>
-								</p>
-							</div>
-						</div>
-					</div>
-
-
-					<div class="col-lg-4 mb-4">
-						<div class="entry2">
-							<a href="single.html"><img src="images/img_1.jpg" alt="Image"
-								class="img-fluid rounded"></a>
-							<div class="excerpt">
-								<span class="post-category text-white bg-secondary mb-3">Politics</span>
-
-								<h2>
-									<a href="single.html">The AI magically removes moving
-										objects from videos.</a>
-								</h2>
-								<div class="post-meta align-items-center text-left clearfix">
-									<figure class="author-figure mb-0 mr-3 float-left">
-										<img src="images/person_1.jpg" alt="Image" class="img-fluid">
-									</figure>
-									<span class="d-inline-block mt-1">By <a href="#">Carrol
-											Atkinson</a></span> <span>&nbsp;-&nbsp; July 19, 2019</span>
-								</div>
-
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-									Quo sunt tempora dolor laudantium sed optio, explicabo ad
-									deleniti impedit facilis fugit recusandae! Illo, aliquid, dicta
-									beatae quia porro id est.</p>
-								<p>
-									<a href="#">Read More</a>
-								</p>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-4 mb-4">
-						<div class="entry2">
-							<a href="single.html"><img src="images/img_2.jpg" alt="Image"
-								class="img-fluid rounded"></a>
-							<div class="excerpt">
-								<span class="post-category text-white bg-success mb-3">Nature</span>
-
-								<h2>
-									<a href="single.html">The AI magically removes moving
-										objects from videos.</a>
-								</h2>
-								<div class="post-meta align-items-center text-left clearfix">
-									<figure class="author-figure mb-0 mr-3 float-left">
-										<img src="images/person_1.jpg" alt="Image" class="img-fluid">
-									</figure>
-									<span class="d-inline-block mt-1">By <a href="#">Carrol
-											Atkinson</a></span> <span>&nbsp;-&nbsp; July 19, 2019</span>
-								</div>
-
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-									Quo sunt tempora dolor laudantium sed optio, explicabo ad
-									deleniti impedit facilis fugit recusandae! Illo, aliquid, dicta
-									beatae quia porro id est.</p>
-								<p>
-									<a href="#">Read More</a>
-								</p>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-4 mb-4">
-						<div class="entry2">
-							<a href="single.html"><img src="images/img_4.jpg" alt="Image"
-								class="img-fluid rounded"></a>
-							<div class="excerpt">
-								<span class="post-category text-white bg-danger mb-3">Sports</span>
-
-								<h2>
-									<a href="single.html">The AI magically removes moving
-										objects from videos.</a>
-								</h2>
-								<div class="post-meta align-items-center text-left clearfix">
-									<figure class="author-figure mb-0 mr-3 float-left">
-										<img src="images/person_1.jpg" alt="Image" class="img-fluid">
-									</figure>
-									<span class="d-inline-block mt-1">By <a href="#">Carrol
-											Atkinson</a></span> <span>&nbsp;-&nbsp; July 19, 2019</span>
-								</div>
-
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-									Quo sunt tempora dolor laudantium sed optio, explicabo ad
-									deleniti impedit facilis fugit recusandae! Illo, aliquid, dicta
-									beatae quia porro id est.</p>
-								<p>
-									<a href="#">Read More</a>
-								</p>
-							</div>
-						</div>
-					</div>
-
-
-					<div class="col-lg-4 mb-4">
-						<div class="entry2">
-							<a href="single.html"><img src="images/img_1.jpg" alt="Image"
-								class="img-fluid rounded"></a>
-							<div class="excerpt">
-								<span class="post-category text-white bg-success mb-3">Nature</span>
-
-								<h2>
-									<a href="single.html">The AI magically removes moving
-										objects from videos.</a>
-								</h2>
-								<div class="post-meta align-items-center text-left clearfix">
-									<figure class="author-figure mb-0 mr-3 float-left">
-										<img src="images/person_1.jpg" alt="Image" class="img-fluid">
-									</figure>
-									<span class="d-inline-block mt-1">By <a href="#">Carrol
-											Atkinson</a></span> <span>&nbsp;-&nbsp; July 19, 2019</span>
-								</div>
-
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-									Quo sunt tempora dolor laudantium sed optio, explicabo ad
-									deleniti impedit facilis fugit recusandae! Illo, aliquid, dicta
-									beatae quia porro id est.</p>
-								<p>
-									<a href="#">Read More</a>
-								</p>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-4 mb-4">
-						<div class="entry2">
-							<a href="single.html"><img src="images/img_2.jpg" alt="Image"
-								class="img-fluid rounded"></a>
-							<div class="excerpt">
-								<span class="post-category text-white bg-danger mb-3">Sports</span>
-								<span class="post-category text-white bg-secondary mb-3">Tech</span>
-
-								<h2>
-									<a href="single.html">The AI magically removes moving
-										objects from videos.</a>
-								</h2>
-								<div class="post-meta align-items-center text-left clearfix">
-									<figure class="author-figure mb-0 mr-3 float-left">
-										<img src="images/person_1.jpg" alt="Image" class="img-fluid">
-									</figure>
-									<span class="d-inline-block mt-1">By <a href="#">Carrol
-											Atkinson</a></span> <span>&nbsp;-&nbsp; July 19, 2019</span>
-								</div>
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-									Quo sunt tempora dolor laudantium sed optio, explicabo ad
-									deleniti impedit facilis fugit recusandae! Illo, aliquid, dicta
-									beatae quia porro id est.</p>
-								<p>
-									<a href="#">Read More</a>
-								</p>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-4 mb-4">
-						<div class="entry2">
-							<a href="single.html"><img src="images/img_4.jpg" alt="Image"
-								class="img-fluid rounded"></a>
-							<div class="excerpt">
-								<span class="post-category text-white bg-danger mb-3">Sports</span>
-								<span class="post-category text-white bg-warning mb-3">Lifestyle</span>
-
-								<h2>
-									<a href="single.html">The AI magically removes moving
-										objects from videos.</a>
-								</h2>
-								<div class="post-meta align-items-center text-left clearfix">
-									<figure class="author-figure mb-0 mr-3 float-left">
-										<img src="images/person_1.jpg" alt="Image" class="img-fluid">
-									</figure>
-									<span class="d-inline-block mt-1">By <a href="#">Carrol
-											Atkinson</a></span> <span>&nbsp;-&nbsp; July 19, 2019</span>
-								</div>
-
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-									Quo sunt tempora dolor laudantium sed optio, explicabo ad
-									deleniti impedit facilis fugit recusandae! Illo, aliquid, dicta
-									beatae quia porro id est.</p>
-								<p>
-									<a href="#">Read More</a>
-								</p>
-							</div>
-						</div>
-					</div>
+					
 				</div>
+
+
+
+				<div class="row">
+					<!-- 정렬 -->
+					
+					<div class="col-md-12 mb-5">
+						<div class="float-md-left mb-4">
+							<h2 class="text-black h5">모임 후기 ${count}</h2>
+						</div>
+						<div class="d-flex">
+							<div class="dropdown mr-1 ml-md-auto">
+								<button type="button"
+									class="btn btn-secondary btn-sm dropdown-toggle"
+									id="dropdownMenuOffset" data-toggle="dropdown"
+									aria-haspopup="true" aria-expanded="false">정렬하기</button>
+								<div class="dropdown-menu" aria-labelledby="dropdownMenuOffset">
+									<a class="dropdown-item" href="${pageContext.request.contextPath}/review?mNum=${moimNum}&sort=1">등록 순</a> <a
+										class="dropdown-item" href="${pageContext.request.contextPath}/review?mNum=${moimNum}&sort=2">좋아요 순</a> <a
+										class="dropdown-item" href="${pageContext.request.contextPath}/review?mNum=${moimNum}&sort=3">평점 순</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<!-- 정렬 -->
+				
+					<c:forEach items="${reviewList}" var="review" varStatus="stat">
+					<div class="col-lg-4 mb-4">
+						<div class="entry2">
+							<a href="single.html">${review.r_img}</a>
+							<div class="excerpt">
+								<span class="post-category text-white bg-secondary mb-3">Review</span>
+
+								<h2>
+									<a href="single.html">${review.r_title}</a>
+								</h2>
+								<div class="post-meta align-items-center text-left clearfix">
+									<figure class="author-figure mb-0 mr-3 float-left">
+										<img src="${pageContext.request.contextPath}/static/img/${review.nphoto}" alt="Image" class="img-fluid">
+									</figure>
+									<span class="d-inline-block mt-1">By <a href="#">
+											${review.nnic}</a></span> <span>&nbsp;-&nbsp; ${review.r_date}</span>
+								<div class="rating" id="rate${stat.index}" style="display:block;" title="${review.r_star}"></div>
+								</div>
+								
+								<p>${fn:substring(review.r_content.replaceAll('(<([^>]+)>)',''),0,100)}</p>
+								
+							</div>
+						</div>
+					</div>
+					</c:forEach>
+					
+					
+					
+					
+				</div>
+				
 				<div class="row text-center pt-5 border-top">
 					<div class="col-md-12">
+					
 						<div class="custom-pagination">
+							
+							<c:forEach var="변수" begin="1" end="10" step="1" >
 							<span>1</span> <a href="#">2</a> <a href="#">3</a> <a href="#">4</a>
 							<span>...</span> <a href="#">15</a>
+							</c:forEach>
+							
+							
+							<button type="button" class="btn btn-dark" style="float: right;" onclick="location.href='${pageContext.request.contextPath}/review/write?mNum=${moimNum}'">작성하기</button>
 						</div>
 					</div>
 				</div>
+				
 			</div>
 		</div>
 
@@ -340,20 +158,24 @@
 
 	<%@include file="/WEB-INF/views/frame/footer.jsp"%>
 	<%@include file="/WEB-INF/views/frame/sc.jsp"%>
-
-	<script src="${pageContext.request.contextPath}/static/review/js/jquery-3.3.1.min.js"></script>
-	<script src="${pageContext.request.contextPath}/static/review/js/jquery-migrate-3.0.1.min.js"></script>
-	<script src="${pageContext.request.contextPath}/static/review/js/jquery-ui.js"></script>
-	<script src="${pageContext.request.contextPath}/static/review/js/popper.min.js"></script>
-	<script src="${pageContext.request.contextPath}/static/review/js/bootstrap.min.js"></script>
-	<script src="${pageContext.request.contextPath}/static/review/js/owl.carousel.min.js"></script>
-	<script src="${pageContext.request.contextPath}/static/review/js/jquery.stellar.min.js"></script>
-	<script src="${pageContext.request.contextPath}/static/review/js/jquery.countdown.min.js"></script>
-	<script src="${pageContext.request.contextPath}/static/review/js/jquery.magnific-popup.min.js"></script>
-	<script src="${pageContext.request.contextPath}/static/review/js/bootstrap-datepicker.min.js"></script>
-	<script src="${pageContext.request.contextPath}/static/review/js/aos.js"></script>
-	<script src="${pageContext.request.contextPath}/static/review/js/main.js"></script>
-
+	
+<!-- you need to include the shieldui css and js assets in order for the charts to work -->
+<script type="text/javascript" src="http://www.shieldui.com/shared/components/latest/js/shieldui-all.min.js"></script>
+<script type="text/javascript">
+	var str = 'rate';	
+    initializeRatings();
+    function initializeRatings() {
+        for(var i = 0; i <= ${reviewList.size()}; i++){
+	        $('#'+str+i).shieldRating({
+	            max: 5,
+	            step: 0.1,
+	            markPreset: true,
+	            value: $('#'+str+i).attr('title') ,
+	            enabled: false
+	        });
+        }
+    }
+</script>
 
 
 </body>

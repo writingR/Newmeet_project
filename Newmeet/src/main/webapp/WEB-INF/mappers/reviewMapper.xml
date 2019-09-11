@@ -20,6 +20,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="nidx" column="nidx" />
 		<result property="nphoto" column="nphoto" />
 		<result property="r_img" column="r_img" />
+		<result property="nnic" column="nnic" />
 	</resultMap>
 	
 	<!-- 모임 게시판 : 댓글 리스트의 개수  -->
@@ -32,7 +33,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getReviewList" parameterType="map"
 		resultMap="resultReviewInfo">
 		
-		select r.r_idx, r_title, r_content, r_star, r_date, r_like, m_idx, r.nidx ,nphoto, r_img , rlike_state 
+		select r.r_idx, r_title, r_content, r_star, r_date, r_like, m_idx, r.nidx ,nphoto, r_img , rlike_state, nnic  
 		from Review as r 
 		Left join Member as m 
 		on r.nidx = m.nidx 

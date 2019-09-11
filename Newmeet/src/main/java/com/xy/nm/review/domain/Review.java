@@ -12,7 +12,16 @@ public class Review {
 	private String nphoto;
 	private String r_img;
 	private int rlike_state;
+	private String nnic;
 	
+	
+	
+	public String getNnic() {
+		return nnic;
+	}
+	public void setNnic(String nnic) {
+		this.nnic = nnic;
+	}
 	public int getRlike_state() {
 		return rlike_state;
 	}
