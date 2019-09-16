@@ -8,12 +8,12 @@
 </head>
 <script type="text/javascript">
  
-function go_pop(){
+function main_popup(){
  
  window.open("popup","new","width=420, height=500, resizable=no, scrollbars=no, status=no, location=no, directories=no;");
 }
 </script>
-<body onload="go_pop()">
+<body onload="main_popup()">
 	<%@include file="/WEB-INF/views/frame/header.jsp"%>
 	<%@include file="/WEB-INF/views/frame/nav.jsp"%>
 
