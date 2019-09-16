@@ -6,23 +6,27 @@
       <div class="site-navbar-top">
         <div class="container">
           <div class="row align-items-center">
-
+			
+			
 			<div class="col-12 mb-3 mb-md-0 col-md-4 order-1 order-md-2 text-center">
                 <!-- <a href="index.html" class="js-logo-clone">Shoppers</a> -->
-                <a href="<c:url value="/loginOk" />"><img alt="" src="bootstrap/images/logo.png" style="width:140px;height:140px;"></a>
+                <a href="<c:url value="/loginOk" />"><img alt="" src="bootstrap/images/logo.png" style="width:140px;height:140px;margin-left:510px;"></a>
             </div>
+			<%-- <div class="col-12 mb-3 mb-md-0 col-md-4 order-1 order-md-2 text-center">
+                <!-- <a href="index.html" class="js-logo-clone">Shoppers</a> -->
+                <a href="<c:url value="/loginOk" />"><img alt="" src="bootstrap/images/logo.png" style="width:140px;height:140px;"></a>
+            </div> --%>
 
-            <div class="col-6 col-md-4 order-2 order-md-1 site-search-icon text-left">
+            <!-- <div class="col-6 col-md-4 order-2 order-md-1 site-search-icon text-left">
               <form action="" class="site-block-top-search">
                 <span class="icon icon-search2"></span>
                 <input type="text" class="form-control border-0" placeholder="Search">
               </form>
-            </div>
+            </div> -->
 
-           
 
             <div class="col-6 col-md-4 order-3 order-md-3 text-right">
-              <div class="site-top-icons">
+              <div class="site-top-icons" style="width:450px;margin:0 700px;">
                 <ul>
                   <img style="width: 30px;height:30px;border-radius: 50px;" id="profile" src="/nm/uploadfile/${MemberImg}">
                   ${MemberNic} <span style="color:black;font-size:16px; font-weight:450"> 님 :></span> 
@@ -37,6 +41,15 @@
 
           </div>
         </div>
+        
+        <div class="col-6 col-md-4 order-2 order-md-1 site-search-icon text-left" style="width: 150px;margin:0 auto;">
+              <form action="" class="site-block-top-search">
+                <span class="icon icon-search2"></span>
+                <input type="text" class="form-control border-0" placeholder="Search">
+              </form>
+         </div>
+        
+        
       </div> 
       
       

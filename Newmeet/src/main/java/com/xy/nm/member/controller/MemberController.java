@@ -51,7 +51,9 @@ public class MemberController {
 	private UserVerifyService userVerifyService;
 	@Autowired
 	private UserDeleteService userDeleteService;
-
+	
+	
+	
 	// 전체리스트 출력
 	@CrossOrigin
 	@GetMapping
@@ -60,7 +62,7 @@ public class MemberController {
 		return new ResponseEntity<List<Member>>(userListService.getAllList(), HttpStatus.OK);
 
 	}
-
+	
 	@CrossOrigin
 	@PostMapping("/regist")
 	public ResponseEntity<String> getJoin(RequestMemberRegist regist, MultipartHttpServletRequest request) {

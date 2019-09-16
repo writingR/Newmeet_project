@@ -39,17 +39,20 @@
 <%-- ${sessionScope.loginKey}<h1>로그인키</h1>
  --%>
 <%@include file="/WEB-INF/views/frame/header2.jsp"%>
-<img alt="" src="static/img/banner.png">
+<img alt="" src="static/img/banner2.png">
 
 <br><br><br>
 
-<button class="show" id="my" type="button" class="btn btn-light" onclick="">좋아요</button>
+<!-- <button class="show" id="my" type="button" class="btn btn-light" onclick="">좋아요</button> -->
 <!-- <button class="show" id="my" type="button" class="btn btn-light" onclick="button_1();">내정보</button> -->
-<a id="my" href="<c:url value="/Info" />">내정보</a>
+<a id="my" href="<c:url value="/Like" />">좋아요</a></br>
+<a id="my" href="<c:url value="/Info" />">내정보</a></br>
 <!-- <button class="show1" id="my" type="button" class="btn btn-light" onclick="button_2();">프로필 관리</button> -->
-<a id="my" href="<c:url value="/Modi" />">프로필 관리</a>
-<button class="show" id="my" type="button" class="btn btn-light" onclick="">My meet</button>
-<button class="hide" id="my" type="button" class="btn btn-light">처음으로</button>
+<a id="my" href="<c:url value="/Modi" />">프로필 관리</a></br>
+<a id="my" href="<c:url value="/Meet" />">My meet</a></br>
+<a id="my" href="<c:url value="/loginOk" />">처음으로</a>
+<!-- <button class="show" id="my" type="button" class="btn btn-light" onclick="">My meet</button>
+<button class="hide" id="my" type="button" class="btn btn-light">처음으로</button> -->
 
 <div id="memInfo">
 </div>

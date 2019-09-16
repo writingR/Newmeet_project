@@ -16,7 +16,7 @@
 </head>
 <body>
 <%@include file="/WEB-INF/views/frame/header2.jsp"%>
-<img alt="" src="static/img/banner.png">
+<img alt="" src="static/img/banner2.png">
 <br><br><br>
 <h1 style="width:400px;margin:0 auto;color:black;font-size:50px;font-weight:bold;">프로필 관리</h1>
 <br>

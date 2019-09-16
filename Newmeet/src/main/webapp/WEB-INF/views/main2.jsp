@@ -3,17 +3,20 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <!DOCTYPE html>
 <html lang="UTF-8">
+<meta name="google-signin-client_id" content="814845088421-c159c01iov4sppu7rugjaroke4njeggc.apps.googleusercontent.com">
 <head>
 <%@include file="/WEB-INF/views/frame/link.jsp"%>
 </head>
+<script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
 <body>
 	<%@include file="/WEB-INF/views/frame/header2.jsp"%>
 	<%@include file="/WEB-INF/views/frame/nav.jsp"%>
 
 	
 	<div class="site-blocks-cover"
-		style="background-image: url(bootstrap/images/hero_1.jpg);" data-aos="fade">
-		<div class="container">
+		style="background-image: url(bootstrap/images/mainN.png);" data-aos="fade">
+
+<!-- 		<div class="container">
 			<div
 				class="row align-items-start align-items-md-center justify-content-end">
 				<div class="col-md-5 text-center text-md-left pt-5 pt-md-0">
@@ -28,9 +31,13 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		</div> -->
 	</div>
-
+	<div>
+	<img src="bootstrap/images/main1.png">
+	<span style="color:black;">인기모임 보러가기</span>
+	<span style="font-size:55px;font-weight:bold;color:black;font-family: 'Anton', sans-serif;"><a href="#" style="color:black;">  go!</a></span>
+	</div>
 	<div class="site-section site-section-sm site-blocks-1">
 		<div class="container">
 			<div class="row">
@@ -241,5 +248,4 @@
 
 </body>
 </html>
-
                  

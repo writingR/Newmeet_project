@@ -16,6 +16,7 @@
 
 
 <h5 style="color: black; text-align: center; padding: 100px; font-weight: bold;">이메일로 로그인</h5>
+
 	<form id="logForm" method="post">
 		<div style="width: 400px; margin: 0 auto; margin-top: -60px;">
 			<div class="form-group">
@@ -78,7 +79,6 @@
 		  
 	</script>
 
-
-
+	
 </body>
 </html>
