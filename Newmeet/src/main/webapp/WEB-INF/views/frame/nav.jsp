@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
       <nav class="site-navigation text-right text-md-center" role="navigation">
         <div class="container">
-          <ul class="site-menu js-clone-nav d-none d-md-block">
+          <ul class="site-menu js-clone-nav d-none d-md-block" style="padding:20px;">
            <!--  <li class="has-children active">
               <a href="index.html">Home</a>
               <ul class="dropdown">

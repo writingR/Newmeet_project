@@ -6,13 +6,20 @@
 <head>
 <%@include file="/WEB-INF/views/frame/link.jsp"%>
 </head>
-<body>
+<script type="text/javascript">
+ 
+function go_pop(){
+ 
+ window.open("popup","new","width=420, height=500, resizable=no, scrollbars=no, status=no, location=no, directories=no;");
+}
+</script>
+<body onload="go_pop()">
 	<%@include file="/WEB-INF/views/frame/header.jsp"%>
 	<%@include file="/WEB-INF/views/frame/nav.jsp"%>
 
 	
 	<div class="site-blocks-cover"
-		style="background-image: url(bootstrap/images/mainN.png);" data-aos="fade">
+		style="background-image: url(static/img/mainN.png);" data-aos="fade">
 
 <!-- 		<div class="container">
 			<div
@@ -32,7 +39,7 @@
 		</div> -->
 	</div>
 	<div>
-	<img src="bootstrap/images/main1.png">
+	<img src="static/img/main1.png">
 	<span style="color:black;">인기모임 보러가기</span>
 	<span style="font-size:55px;font-weight:bold;color:black;font-family: 'Anton', sans-serif;"><a href="#" style="color:black;">  go!</a></span>
 	</div>
@@ -209,6 +216,7 @@
 			</div>
 		</div>
 	</div>
+	
 
 	<div class="site-section block-8">
 		<div class="container">
@@ -243,6 +251,20 @@
 
 	<%@include file="/WEB-INF/views/frame/footer.jsp"%>
 	<%@include file="/WEB-INF/views/frame/sc.jsp"%>
+
+
+ <script type="text/javascript">
+      
+ 	jQuery(document).ready(function() {
+                $('#myModal').show();
+        });
+        //팝업 Close 기능
+        function close_pop(flag) {
+             $('#myModal').hide();
+        };
+        
+    </script>
+
 
 </body>
 </html>

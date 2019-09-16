@@ -31,7 +31,11 @@
 			</div>
 			<div class="text-center">
 				<button type="button" class="btn btn-skin btn-lg btn-block" onclick="Loginclick()">로그인</button>
-			</div>
+			</div><br>
+			<%-- <a href="<c:url value="/Welcome" />" style="margin-left:80px;color:black;">아직 뉴밋 회원이 아니세요?</a><br>
+			<a href="" style="margin-left:80px;color:black;">비밀번호를 잊어버리셨습니까?</a> --%>
+			<span>아직 뉴밋 회원이 아니세요? </span><a href="<c:url value="/Welcome" />" style="color:black;font-size:16px;font-weight:bold;">회원가입</a><span>하러 갈게요!</span><br>
+			<a href="">비밀번호를 잊어버리셨습니까?</a>
 	</form>
 
 

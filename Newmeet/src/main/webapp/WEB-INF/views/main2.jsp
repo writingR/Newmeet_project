@@ -14,7 +14,7 @@
 
 	
 	<div class="site-blocks-cover"
-		style="background-image: url(bootstrap/images/mainN.png);" data-aos="fade">
+		style="background-image: url(static/img/mainN.png);" data-aos="fade">
 
 <!-- 		<div class="container">
 			<div
@@ -34,7 +34,7 @@
 		</div> -->
 	</div>
 	<div>
-	<img src="bootstrap/images/main1.png">
+	<img src="static/img/main1.png">
 	<span style="color:black;">인기모임 보러가기</span>
 	<span style="font-size:55px;font-weight:bold;color:black;font-family: 'Anton', sans-serif;"><a href="#" style="color:black;">  go!</a></span>
 	</div>

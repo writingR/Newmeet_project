@@ -20,6 +20,11 @@ public class MainController {
 
 		}
 		
+		@RequestMapping("/popup")
+		public String popUp() {
+			return "popup";
+
+		}
 		
 		@RequestMapping("/Welcome")
 		public String getJoinSelect() {
