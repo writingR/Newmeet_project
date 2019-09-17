@@ -7,7 +7,7 @@
 
 
 <%
-	session.setAttribute("loginKey", 17);
+	session.setAttribute("MemberIdx", 17);
 %>
 
 
@@ -94,8 +94,8 @@
 									aria-haspopup="true" aria-expanded="false">정렬하기</button>
 								<div class="dropdown-menu" aria-labelledby="dropdownMenuOffset">
 									<a class="dropdown-item" href="${pageContext.request.contextPath}/review?mNum=${moimNum}&sort=1">등록 순</a> <a
-										class="dropdown-item" href="${pageContext.request.contextPath}/review?mNum=${moimNum}&sort=2">좋아요 순</a> <a
-										class="dropdown-item" href="${pageContext.request.contextPath}/review?mNum=${moimNum}&sort=3">평점 순</a>
+										class="dropdown-item" href="${pageContext.request.contextPath}/review?mNum=${moimNum}&sort=2">평점 순</a> <a
+										class="dropdown-item" href="${pageContext.request.contextPath}/review?mNum=${moimNum}&sort=3">좋아요 순</a>
 								</div>
 							</div>
 						</div>
@@ -106,7 +106,7 @@
 					<c:forEach items="${reviewList}" var="review" varStatus="stat">
 					<div class="col-lg-4 mb-4">
 						<div class="entry2">
-							<a href="single.html">${review.r_img}</a>
+							<a href="single.html"><img src="${review.r_img}" alt="Image" class="img-fluid rounded" style="width: 332px; height: 228px;"/></a>
 							<div class="excerpt">
 								<span class="post-category text-white bg-secondary mb-3">Review</span>
 
@@ -117,12 +117,21 @@
 									<figure class="author-figure mb-0 mr-3 float-left">
 										<img src="${pageContext.request.contextPath}/static/img/${review.nphoto}" alt="Image" class="img-fluid">
 									</figure>
-									<span class="d-inline-block mt-1">By <a href="#">
+									<span class="d-inline-block mt-1">By <a href="" style="pointer-events: none;">
 											${review.nnic}</a></span> <span>&nbsp;-&nbsp; ${review.r_date}</span>
 								<div class="rating" id="rate${stat.index}" style="display:block;" title="${review.r_star}"></div>
 								</div>
 								
-								<p>${fn:substring(review.r_content.replaceAll('(<([^>]+)>)',''),0,100)}</p>
+								<p>${fn:substring(review.r_content.replaceAll('(<([^>]+)>)',''),0,30)}...</p>
+								
+								<div style="float: right; width: 30px"  id="likeButton">
+									<c:set var="likeColor" value="likeWhite.png"></c:set>
+									<c:if test="${review.rlike_state eq 1}">
+										<c:set var="likeColor" value="likeDark.png"></c:set>
+									</c:if>
+									<img src="${pageContext.request.contextPath}/static/img/${likeColor}" style="float: left; margin: 3px 0px"  title="${review.r_idx}" name="${review.rlike_state}">
+									<span style="float: right;">${review.r_like}</span>
+								</div>
 								
 							</div>
 						</div>
@@ -139,11 +148,16 @@
 					
 						<div class="custom-pagination">
 							
-							<c:forEach var="변수" begin="1" end="10" step="1" >
-							<span>1</span> <a href="#">2</a> <a href="#">3</a> <a href="#">4</a>
-							<span>...</span> <a href="#">15</a>
+							<a href="${pageContext.request.contextPath}/review?mNum=${moimNum}&page=1&sort=${sort}"><<</a>
+							<c:forEach var="pNum" begin="${startPage}" end="${endPage}" step="1">
+								<c:if test="${page eq pNum}">
+									<span>${page}</span>
+								</c:if>
+								<c:if test="${page ne pNum}">
+									<a href="${pageContext.request.contextPath}/review?mNum=${moimNum}&page=${pNum}&sort=${sort}">${pNum}</a>
+								</c:if>
 							</c:forEach>
-							
+							<a href="${pageContext.request.contextPath}/review?mNum=${moimNum}&page=${totalCount}&sort=${sort}">>></a>
 							
 							<button type="button" class="btn btn-dark" style="float: right;" onclick="location.href='${pageContext.request.contextPath}/review/write?mNum=${moimNum}'">작성하기</button>
 						</div>
@@ -160,8 +174,8 @@
 	<%@include file="/WEB-INF/views/frame/sc.jsp"%>
 	
 <!-- you need to include the shieldui css and js assets in order for the charts to work -->
-<script type="text/javascript" src="http://www.shieldui.com/shared/components/latest/js/shieldui-all.min.js"></script>
-<script type="text/javascript">
+<script src="http://www.shieldui.com/shared/components/latest/js/shieldui-all.min.js"></script>
+<script>
 	var str = 'rate';	
     initializeRatings();
     function initializeRatings() {
@@ -175,6 +189,43 @@
 	        });
         }
     }
+
+	$(document).ready(function(){
+
+		var span;
+		$('#likeButton img').click(function(){
+			var element = this;
+			
+			$.ajax({
+				url : '/nm/review/like',
+				type : 'GET',
+				data : {
+					rIdx : $(this).attr('title'),
+				},
+				success : function(data) {
+					if(data==-1){
+						alert("로그인후 이용해주세요.");
+					}
+					if(data==1){
+						var text = parseInt($(element).next().text());
+						if($(element).attr('name')=='1'){							
+							$(element).attr('name',0);
+							$(element).attr('src','/nm/static/img/likeWhite.png'); 
+							$(element).next().text(text-1);
+						}else{
+							$(element).attr('name',1);
+							$(element).attr('src','/nm/static/img/likeDark.png'); 
+							$(element).next().text(text+1);
+						}
+					}
+					
+				}
+			});
+		});
+	
+	});
+    
+    
 </script>
 
 

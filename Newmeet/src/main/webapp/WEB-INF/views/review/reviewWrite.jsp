@@ -30,7 +30,8 @@
 </body>
 
 <script>
-	var img = "";
+	var img = '${pageContext.request.contextPath}/static/img/noimg.jpg';
+	$('#images').val(img);
     $(document).ready(function() {
     	$('#summernote').summernote({
     		  height: 300,
@@ -61,7 +62,7 @@
     	        processData: false,
     	        success: function(url) {
     	          $(el).summernote('editor.insertImage', url);
-    	          img ='<img src="'+url+'" alt="Image" class="img-fluid rounded"/>';
+    	          img =url;
     	          $('#images').val(img);
     	        }
     	      });

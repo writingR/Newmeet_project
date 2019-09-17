@@ -35,5 +35,6 @@ public interface ReviewDaoInterface {
 		//리뷰 작성
 		public int insertReview(Map<String, Object> param);
 		
-		
+		//최근 리스트 검색
+		public List<Review> getRecentReviewList(Map<String, Object> param);
 }

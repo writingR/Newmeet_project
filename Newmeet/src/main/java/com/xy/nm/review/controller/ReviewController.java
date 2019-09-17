@@ -39,13 +39,30 @@ public class ReviewController {
 		
 		int nidx = -1;
 		
-		if(session != null && session.getAttribute("loginKey") != null) {
-			nidx = (int)session.getAttribute("loginKey");
+		if(session != null && session.getAttribute("MemberIdx") != null) {
+			nidx = (int)session.getAttribute("MemberIdx");
 		}
 		
 		List<Review> reviewList = reviewService.getList(nidx, mNum, sort, page);
 		int count = reviewService.getCommentCount(mNum);
+		int totalCount = count/9+(count%9>0?1:0);
+		int endPage = totalCount<(page/5+1)*5?totalCount:(page/5+1)*5;
+		int startPage = 0;
+		if(page>0 && page<5) {
+			startPage = 1;
+		}else {
+			startPage = (page/5*5-1);
+		}
 		
+		//1-5 start 1
+		//5-9 start 4
+		//10-14 start 9
+		
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("startPage", startPage);
+		model.addAttribute("endPage", endPage);
+		
+		model.addAttribute("sort", sort);
 		model.addAttribute("reviewList", reviewList);
 		model.addAttribute("count", count);
 		model.addAttribute("moimNum", mNum);
@@ -66,14 +83,14 @@ public class ReviewController {
 				
 		boolean check = false;
 		
-		if(session != null && session.getAttribute("loginKey") != null) {
-			check = mmCheckService.check((int)session.getAttribute("loginKey"));
+		if(session != null && session.getAttribute("MemberIdx") != null) {
+			check = mmCheckService.check((int)session.getAttribute("MemberIdx"));
 		}
 		
 		String result = "review/invalidMember";
 		
 		if(check) {
-			result = "review/reviewWrite";
+			result = "review/reviewWrite2";
 		}
 		
 		model.addAttribute("mNum", mNum);

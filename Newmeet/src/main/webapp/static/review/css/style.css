@@ -1136,10 +1136,11 @@ h1, h2, h3, h4, h5,
   border-radius: 50%; }
 
 .custom-pagination a {
-  background: #2f89fc;
+  background: #c6e5d9;
   color: #fff; }
   .custom-pagination a:hover {
-    background: #2f89fc; }
+    background: #79bd9a; 
+    color: #fff;}
 
 .block-13, .slide-one-item {
   position: relative;

@@ -46,8 +46,8 @@ public class ReviewWriteController {
 		HttpSession session =	request.getSession(false);
 		int nidx = -1;
 		
-		if(session != null && session.getAttribute("loginKey") != null) {
-			nidx = (int)session.getAttribute("loginKey");
+		if(session != null && session.getAttribute("MemberIdx") != null) {
+			nidx = (int)session.getAttribute("MemberIdx");
 		}else {
 			return "review/invalidMember";
 		}
@@ -80,8 +80,8 @@ public class ReviewWriteController {
 		HttpSession session =	request.getSession(false);
 		int nidx = 0;
 		
-		if(session != null && session.getAttribute("loginKey") != null) {
-			nidx = (int)session.getAttribute("loginKey");
+		if(session != null && session.getAttribute("MemberIdx") != null) {
+			nidx = (int)session.getAttribute("MemberIdx");
 		}
 		
 		String url =imageService.save(nidx, request, file);

@@ -90,5 +90,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 
 
+	<!-- 최근 리스트 -->
+	<select id="getRecentReviewList" parameterType="map"
+		resultMap="resultReviewInfo">
+		select r_idx, r_title, r_content, r_star, r_date, r_like, m_idx, nidx , r_img 
+		from Review 
+		where m_idx= #{m_idx} 
+		order by r_idx 
+		desc 
+		limit #{startIndex}, #{LIST_PER_PAGE}
+	</select>
+
+
 
 </mapper>

@@ -24,7 +24,7 @@ public class ReviewService {
 		
 		dao = template.getMapper(ReviewDaoInterface.class);
 		
-		final int LIST_PER_PAGE = 10;
+		final int LIST_PER_PAGE = 9;
 		
 		Map<String, Object> params = new HashMap<String, Object>();
 		
@@ -56,6 +56,23 @@ public class ReviewService {
 		dao = template.getMapper(ReviewDaoInterface.class);
 		
 		return dao.getReviewCount(mNum);
+	}
+	
+	public List<Review> getRecentList(int nidx, int mNum) {
+		
+		dao = template.getMapper(ReviewDaoInterface.class);
+		
+		final int LIST_PER_PAGE = 3;
+		
+		Map<String, Object> params = new HashMap<String, Object>();
+				
+		int startIndex = 0;
+				
+		params.put("m_idx", mNum);
+		params.put("startIndex", startIndex);
+		params.put("LIST_PER_PAGE", LIST_PER_PAGE);
+		
+		return dao.getRecentReviewList(params);
 	}
 	
 
