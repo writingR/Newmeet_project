@@ -3,9 +3,13 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://cxf.apache.org/configuration/beans http://cxf.apache.org/schemas/configuration/cxf-beans.xsd
+		http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
@@ -19,6 +23,71 @@
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
+	</beans:bean>
+	
+	<!-- 파일업로드 처리를 위한 multipartResolver bean 등록 -->
+	<beans:bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="defaultEncoding">
+			<beans:value>utf-8</beans:value>
+		</beans:property>
+	</beans:bean>
+	
+	<beans:bean id="dataSource"
+		class="org.apache.commons.dbcp2.BasicDataSource"
+		p:driverClassName="com.mysql.jdbc.Driver"
+		p:url="jdbc:mysql://newmeet-rds.cx5njm1y6puv.ap-northeast-2.rds.amazonaws.com:3306/newMeet_RDS?characterEncoding=utf8&amp;serverTimezone=UTC"
+		p:username="admin" p:password="bitcamp123" />
+
+	<beans:bean id="jdbcTemplate"
+		class="org.springframework.jdbc.core.JdbcTemplate"
+		p:dataSource-ref="dataSource" />
+
+	<!-- PlatformTransactionManager 빈 설정 -->
+	<beans:bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<beans:property name="dataSource" ref="dataSource" />
+	</beans:bean> <!-- @Transactional 어노테이션 활성화 설정 -->
+
+	<tx:annotation-driven
+		transaction-manager="transactionManager" />
+
+	<beans:bean id="sqlSessionFactory"
+		class="org.mybatis.spring.SqlSessionFactoryBean"
+		p:dataSource-ref="dataSource"
+		p:mapperLocations="/WEB-INF/mappers/*.xml" />
+
+	<beans:bean id="sqlSession"
+		class="org.mybatis.spring.SqlSessionTemplate">
+		<beans:constructor-arg index="0"
+			ref="sqlSessionFactory" />
+	</beans:bean>
+	
+	<!-- <beans:bean id="authCheck" class="com.guafindel.mm.interceptor.AuthCheckInterceptor" 
+		/> -->
+
+	<!-- 여러개의 인터셉트를 등록할 수 있다. <interceptors> 인터셉터 생성 : 로그인 체크 <interceptor> 
+		<mapping path="/member/mypage/**" /> <mapping path="/member/memberlist/**" 
+		/> 예외 경로 설정 <exclude-mapping path="/member/mypage/help/**"/> <beans:ref bean="authCheck" 
+		/> </interceptor> </interceptors> -->
+
+
+	<beans:bean id="mailSender"
+		class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<beans:property name="host" value="smtp.gmail.com" />
+		<beans:property name="port" value="587" /><!-- 465 or 25 -->
+		<beans:property name="username"
+			value="sojongwon90@gmail.com" />
+		<beans:property name="password" value="79341818th" />
+		<beans:property name="defaultEncoding" value="utf-8" />
+		<beans:property name="javaMailProperties">
+			<beans:props>
+				<beans:prop key="mail.transport.protocol">smtp</beans:prop>
+				<beans:prop key="mail.smtp.auth">true</beans:prop>
+				<beans:prop key="mail.smtp.starttls.enable">true</beans:prop>
+				<beans:prop key="mail.debug">true</beans:prop>
+			</beans:props>
+		</beans:property>
 	</beans:bean>
 	
 	<context:component-scan base-package="com.xy.nm" />
