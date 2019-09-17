@@ -101,19 +101,15 @@ public class MeetingController {
 			return entity;
 		}
 		
-	/*
-	 * 
-	 * 
-	 * @GetMapping("/list/{m_idx}")
-	 * 
-	 * @CrossOrigin public ResponseEntity<MeetingInfo> getMoimInfo(
-	 * 
-	 * @PathVariable("m_idx") int m_idx ) { MeetingInfo moimInfo =
-	 * moimInfoService.getMoimInfo(m_idx,nidx);
-	 * 
-	 * 
-	 * return new ResponseEntity<MeetingInfo>(moimInfo, HttpStatus.OK); }
-	 */
+	
+	 @GetMapping("/list/{m_idx}")
+	 @CrossOrigin public ResponseEntity<MeetingInfo> getMoimInfo(
+	 @PathVariable("m_idx") int m_idx) {
+		 MeetingInfo moimInfo = moimInfoService.getMoimInfo3(m_idx);
+	 
+	 
+	 return new ResponseEntity<MeetingInfo>(moimInfo, HttpStatus.OK); }
+	 
 		
 		
 }

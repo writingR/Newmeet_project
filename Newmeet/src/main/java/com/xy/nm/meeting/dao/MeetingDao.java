@@ -21,6 +21,8 @@ public interface MeetingDao {
 	public MeetingInfo MeetingInfo(int m_idx,int nidx);
 	// 모임 상세 정보 비로그인
 	public MeetingInfo MeetingInfo2(int m_idx);
+	// 좋아요 조건
+	public MeetingInfo MeetingInfo3(int m_idx);
 	// 좋아요 상태 확인 ( 잇는지 없는지 )
 	public int LikeCheck(int m_idx, int nidx);
 	// 좋아요 상태 넣기
@@ -31,4 +33,12 @@ public interface MeetingDao {
 	public int Like(int m_idx,int nidx);
 	// 좋아요 내리기
 	public int Likedown(int m_idx,int nidx);
+	// 좋아요 최신화
+	public int LikeUpdate(int m_idx);
+	// 별점 주기
+	public int StarPush(int m_idx,int nidx,double ms_spoint);
+	// 별점 상태 확인
+	public int StarCheckPush(int m_idx,int nidx);
+	// 별점 최신화
+	public int StarUpdate(int m_idx,double ms_spoint);
 }

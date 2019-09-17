@@ -54,8 +54,8 @@ public class MainController {
 	@RequestMapping("/moimInfo")
 	public String moimInfo(@RequestParam(value = "m_idx") int m_idx,HttpServletRequest request, Model model) {
 		
-		if(request.getSession().getAttribute("loginKey")!=null) {
-		int nidx = (Integer)request.getSession().getAttribute("loginKey");
+		if(request.getSession().getAttribute("MemberIdx")!=null) {
+		int nidx = (Integer)request.getSession().getAttribute("MemberIdx");
 		MeetingInfo meetingInfo = moimInfoService.getMoimInfo(m_idx,nidx);
 		
 		if(meetingInfo!=null) {
@@ -86,6 +86,7 @@ public class MainController {
 			model.addAttribute("m_stotal", meetingInfo2.getM_stotal());
 			model.addAttribute("m_idx", meetingInfo2.getM_idx());
 			model.addAttribute("nidx", meetingInfo2.getNidx());
+			model.addAttribute("l_like", meetingInfo2.getL_like());
 			
 			return "meeting/moimInfoNot";
 		}
@@ -100,6 +101,7 @@ public class MainController {
 			model.addAttribute("small_idx", meetingInfo2.getSmall_idx());
 			model.addAttribute("m_stotal", meetingInfo2.getM_stotal());
 			model.addAttribute("m_idx", meetingInfo2.getM_idx());
+			model.addAttribute("l_like", meetingInfo2.getL_like());
 			
 			return "meeting/moimInfoNot";
 		}

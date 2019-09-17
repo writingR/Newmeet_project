@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <%
-	session.setAttribute("loginKey",21);
+	session.setAttribute("MemberIdx",25);
 %>   
 <html>
 <head>
@@ -43,7 +43,7 @@
 					html += '<div class="list">';
 					html += '<img src="http://localhost:8080/nm/uploadfile/' + data[i].m_img+ '" style="width: 200px; height: 150px;"><br>';
 					html += '<a href="<c:url value="/moimInfo"/>?m_idx='+ data[i].m_idx +'">'+ data[i].m_name +'</a><br>';
-					html += '<span><img src="http://localhost:8080/nm/uploadfile/like0.png"> ' + data[i].m_like +'</span><span><img src="http://localhost:8080/nm/uploadfile/star0.png">'+ data[i].m_stotal/data[i].m_star +'</span>';
+					html += '<span><img src="http://localhost:8080/nm/uploadfile/like0.png"> ' + data[i].m_like +'</span><span><img src="http://localhost:8080/nm/uploadfile/star0.png">'+ (data[i].m_stotal/data[i].m_star).toFixed(1) +'</span>';
 					html += '</div>';
 					
 					

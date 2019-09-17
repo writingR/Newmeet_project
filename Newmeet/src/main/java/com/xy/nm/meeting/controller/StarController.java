@@ -9,38 +9,47 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.xy.nm.meeting.service.LikeService;
-import com.xy.nm.meeting.service.LikeUpdateService;
+import com.xy.nm.meeting.domain.StarDomain;
+import com.xy.nm.meeting.service.StarService;
+import com.xy.nm.meeting.service.StarUpdateService;
 
 @RestController
-@RequestMapping("/like")
-public class LikeController {
+@RequestMapping("/star")
+public class StarController {
 	
 	@Autowired
-	private LikeService likeService;
+	private StarService starService;
 	@Autowired
-	private LikeUpdateService likeUpdateService;
+	private StarUpdateService starUpdateService;
 	
 	@CrossOrigin
-	@GetMapping("/{m_idx}")
-	public ResponseEntity<Integer> like(
+	@PostMapping
+	public ResponseEntity<Integer>Star(
 			HttpServletRequest request,
-			@PathVariable(value = "m_idx")int m_idx){
+			StarDomain star
+			){
+		
+		
+		
+		System.out.println(star.getMs_spoint());
 		HttpSession session = request.getSession(false);
-		
-		System.out.println("4444");
 		ResponseEntity<Integer> result = null;
-		
+		int m_idx = star.getM_idx();
+		double ms_spoint = star.getMs_spoint();
 		if(session != null & session.getAttribute("MemberIdx") != null) {
 			int nidx = (Integer)session.getAttribute("MemberIdx");
 			
 			
-			int cnt = likeService.Like(m_idx, nidx);
-			int like = likeUpdateService.likeUpate(m_idx);			
+			int cnt = starService.Star(m_idx, nidx, ms_spoint);
+			if(cnt==1) {
+			int starCnt = starUpdateService.starUpdate(m_idx, ms_spoint);
+			
+			}
 			
 			result = new ResponseEntity<Integer>(cnt>0?1:0 , HttpStatus.OK);
 		}else {
@@ -50,9 +59,7 @@ public class LikeController {
 		
 		
 		return result;
+		
 	}
-	
-	
-	
 	
 }

@@ -96,31 +96,59 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select m.m_idx,m_name,m_img,m_cont,m_stotal,m_star,m_like,small_idx,nidx from newMeet_RDS.Meeting as m left join newMeet_RDS.mLike as l on m.m_idx = l.m_idx where m.m_idx=#{m_idx} limit 0, 1
 		
 	</select>
+	<!-- 총 좋아요 데이터 조건 -->
+	<select id="MeetingInfo3"
+			resultMap="resultMeetingInfo2">
+		select * from newMeet_RDS.Meeting where m_idx=#{m_idx}
+		
+	</select>
+
 
 	<!-- 좋아요 기능 -->
 	<!-- 좋아요 상태 확인 있는지 없는지 -->
 	<select id="LikeCheck"
 			resultType="int">
-		select count(l_like) from newMeet_RDS.mLike where m_idx=#{m_idx} and nidx=#{nidx}
+		select count(l_like) from newMeet_RDS.mLike where m_idx=#{param1} and nidx=#{param2}
 	</select>
 	<!-- 좋아요 상태 넣기 -->
 	<insert id="LikePush" parameterType="com.xy.nm.meeting.domain.MeetingLike">
-		insert into newMeet_RDS.mLike (m_idx,l_like,nidx) values (#{m_idx},1,#{nidx})
+		insert into newMeet_RDS.mLike (m_idx,l_like,nidx) values (#{param1},1,#{param2})
 	</insert>
 	<!-- 좋아요 상태 확인 ( 있을때 눌럿는지 안눌럿는지) -->
 	<select id="LikeCheckPush"
 			resultType="int">
-		select l_like from newMeet_RDS.mLike where m_idx=#{m_idx} and nidx=#{nidx}
+		select l_like from newMeet_RDS.mLike where m_idx=#{param1} and nidx=#{param2}
 	</select>
 	<!-- 좋아요 누르기 -->
 	<update id="Like"
 			parameterType="com.xy.nm.meeting.domain.MeetingLike">
-	update newMeet_RDS.mLike set l_like=1 where m_idx=#{m_idx} and nidx=#{nidx}
+	update newMeet_RDS.mLike set l_like=1 where m_idx=#{param1} and nidx=#{param2}
 	</update>
 	<!-- 좋아요 내리기 -->
 	<update id="Likedown"
 			parameterType="com.xy.nm.meeting.domain.MeetingLike">
-	update newMeet_RDS.mLike set l_like=0 where m_idx=#{m_idx} and nidx=#{nidx}
+	update newMeet_RDS.mLike set l_like=0 where m_idx=#{param1} and nidx=#{param2}
+	</update>
+	<!-- 총 좋아요 최신화 -->
+	<update id="LikeUpdate"
+			parameterType="com.xy.nm.meeting.domain.MeetingLike">
+	update newMeet_RDS.Meeting set m_like=(select count(l_like) from newMeet_RDS.mLike where m_idx=#{param1} and l_like=1) where m_idx=#{param1}
 	</update>
 	
+	
+	<!-- 별점 기능 -->
+	<!-- 별점 주기 -->
+	<insert id="StarPush" parameterType="com.xy.nm.meeting.domain.MeetingStar">
+		insert into newMeet_RDS.mStar (m_idx,nidx,ms_star,ms_spoint) values (#{param1},#{param2},1,#{param3});
+	</insert>
+	<!-- 별점 상태 확인  -->
+	<select id="StarCheckPush"
+			resultType="int">
+		select count(ms_star) from newMeet_RDS.mStar where m_idx=#{param1} and nidx=#{param2}
+	</select>
+	<!-- 별점 최신화 -->
+	<update id="StarUpdate"
+			parameterType="com.xy.nm.meeting.domain.MeetingStar">
+	update newMeet_RDS.Meeting set m_stotal = m_stotal+#{param2} , m_star = m_star+1 where m_idx=#{param1};
+	</update>
 </mapper>

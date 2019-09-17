@@ -30,6 +30,12 @@ public class MoimInfoService {
 		
 		return moimInfo2;
 	}
+	public MeetingInfo getMoimInfo3(int m_idx) {
+		dao = template.getMapper(MeetingDao.class);
 	
+		MeetingInfo moimInfo3 = dao.MeetingInfo3(m_idx);
+		
+		return moimInfo3;
+	}
 	
 }

@@ -18,8 +18,9 @@ public class LikeService {
 			dao = template.getMapper(MeetingDao.class);
 			int cnt = 0;
 			
-			int likeCnt = dao.LikeCheck(m_idx, nidx);
 			
+			int likeCnt = dao.LikeCheck(m_idx, nidx);
+		
 			if(likeCnt>0) {
 				int likeStat = dao.LikeCheckPush(m_idx, nidx);
 				if(likeStat>0) {

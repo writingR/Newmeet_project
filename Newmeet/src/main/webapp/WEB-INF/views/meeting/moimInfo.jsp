@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="EUC-KR"%>
+    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
 <!DOCTYPE html>
 
@@ -9,23 +9,60 @@
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <style>
-	
+	.star1{
+    background: url('http://miuu227.godohosting.com/images/icon/ico_review.png') no-repeat -52px 0;
+    background-size: auto 100%;
+    width: 15px;
+    height: 30px;
+    float:left;
+    text-indent: -9999px;
+    cursor: pointer;
+ 	}
+	.star2{
+    background: url('http://miuu227.godohosting.com/images/icon/ico_review.png') no-repeat right 0;
+    background-size: auto 100%;
+    width: 15px;
+    height: 30px;
+    float:left;
+    text-indent: -9999px;
+    cursor: pointer;
+	}
+	.star1.on{background-position:0 0;}
+	.star2.on{background-position:-15px 0;}
 </style>
 </head>
 <body>
-<h1>¸ğÀÓ »ó¼¼Á¤º¸ ÆäÀÌÁö ÁÁ¾Æ¿ä¸¦ ÇÑ¹øÀÌ¶óµµ ´­·¯º» »ç¿ëÀÚ</h1>
+<h1>ëª¨ì„ ìƒì„¸ì •ë³´ í˜ì´ì§€ ì¢‹ì•„ìš”ë¥¼ í•œë²ˆì´ë¼ë„ ëˆŒëŸ¬ë³¸ ì‚¬ìš©ì</h1>
 	
 	
 	
+	
+	
+	
+	<div class="star">
+		<span class="star1" onclick="star(0.5)">ë³„1_ì™¼ìª½</span>
+		<span class="star2" onclick="star(1)">ë³„1_ì˜¤ë¥¸ìª½</span>
+		<span class="star1" onclick="star(1.5)">ë³„2_ì™¼ìª½</span>
+		<span class="star2" onclick="star(2)">ë³„2_ì˜¤ë¥¸ìª½</span>
+		<span class="star1" onclick="star(2.5)">ë³„3_ì™¼ìª½</span>
+		<span class="star2" onclick="star(3)">ë³„3_ì˜¤ë¥¸ìª½</span>
+		<span class="star1" onclick="star(3.5)">ë³„4_ì™¼ìª½</span>
+		<span class="star2" onclick="star(4)">ë³„4_ì˜¤ë¥¸ìª½</span>
+		<span class="star1" onclick="star(4.5)">ë³„5_ì™¼ìª½</span>
+		<span class="star2" onclick="star(5)">ë³„5_ì˜¤ë¥¸ìª½</span>
+	</div>
+	<form id="form">
+	<table>
+	<tr>
+		<td><span id="star"></span></td>
+		<td><input type="submit" value="ë³„ì  ì£¼ê¸°"></td>
+	</tr>
+	</table>
+	</form>
+	<br><br><br>
 	<div>
 		${m_cont}
 	</div>
-	
-	
-	
-	
-	
-	
 	
 	
 	<br>
@@ -38,9 +75,9 @@
 </body>
 <script>
 $(document).ready(function(){
-	
+	var m_idx = ${m_idx};
 	$.ajax({
-		url : 'http://localhost:8080/nm/meeting/list',
+		url : 'http://localhost:8080/nm/meeting/list/'+ m_idx,
 		type : 'GET',
 		success : function(data) {
 			var html = '';
@@ -49,12 +86,11 @@ $(document).ready(function(){
 				html += '<img src="http://localhost:8080/nm/uploadfile/${m_img}" style="width: 200px; height: 150px;"> <br>';
 				html += '<br><br><hr>';
 				
-				html += '<h2>${nidx}¹ø»ç¿ëÀÚ</h2>${m_stotal}${m_star}';
-				html += 'º°Á¡ ÁØ »ç¶÷ ¼ö : ${m_star}  <br>';
-				html += 'º°Á¡ Æò±Õ : ${m_stotal/m_star} <img src="http://localhost:8080/nm/uploadfile/star0.png"><br>';
-				html += 'ÁÁ¾Æ¿ä ÃÑ ¼ö : ${m_like} <img onclick="like()" src="http://localhost:8080/nm/uploadfile/like0.png"><br>';
-				html += 'Ä«Å×°í¸® : ${small_idx} <br>';
-				html += 'ÇöÀç ÁÁ¾Æ¿ä »óÅÂ : ';
+				html += '<h2>${nidx}ë²ˆì‚¬ìš©ì</h2>';
+				html += 'ë³„ì  ì¤€ ì‚¬ëŒ ìˆ˜ : '+ data.m_star +'  <br>';
+				html += 'ë³„ì  í‰ê·  : '+(data.m_stotal/data.m_star).toFixed(1)+' <img src="http://localhost:8080/nm/uploadfile/star0.png"><span>ë³„ì  ì´ : '+data.m_stotal+'</span><br>';
+				html += 'ì¹´í…Œê³ ë¦¬ : ${small_idx} <br>';
+				html += 'ì¢‹ì•„ìš” ì´ ìˆ˜ : '+ data.m_like +' ';
 				html += '<c:if test="${l_like == 0}">';
 				html += '<img onclick="like(${m_idx})" src="http://localhost:8080/nm/uploadfile/like0.png">';
 				html += '</c:if>';
@@ -69,30 +105,65 @@ $(document).ready(function(){
 	});
 	
 	});
-	function like(m_idx){
-		var m_idx = m_idx;
-		alert('1');
+	function star(star){
+		var star = star;
+		var html = '';
+		html += '<input type="hidden" value="${m_idx}" id="m_idx" name="m_idx">';
+		html += '<input type="hidden" step="0.1" value="'+ star +'" id="ms_spoint" name="ms_spoint">';
+		
+		$('#star').html(html);
+		
+	}
+	function like(){
+		var m_idx = ${m_idx};
+		
 		$.ajax({
-			url : 'http://localhost:8080/nm/like',
+			url : 'http://localhost:8080/nm/like/'+ m_idx,
 			type : 'GET',
 			success : function(data) {
-				alert('2');
-				var html = '';
+				
 				if(data == -1){
-					alert('·Î±×ÀÎÇØ¶ó');
+					alert('ë¡œê·¸ì¸í•´ë¼');
 				}else if(data == 0){
-					alert('Àß¾È´ï');
+					alert('ì˜ì•ˆëŒ');
 				}else if(data == 1){
-					alert('¼º°øÀû');
+					alert('ì„±ê³µì ');
+					location.reload();
 					
 				}
-					
-					
-				
-					
+		
 			}
 		});
 	}
+	
+	$('.star span').click(function(){
+		  $(this).parent().children('span').removeClass('on');
+		  $(this).addClass('on').prevAll('span').addClass('on');
+		  return false;
+		});
+	
+	$('#form').submit(function(){
+		
+		$.ajax({
+			url : 'http://localhost:8080/nm/star',
+			type : 'POST',
+			data : $('#form').serialize(),
+			success : function(data) {
+				
+				if(data == -1){
+					alert('ë¡œê·¸ì¸ í•´ë¼');
+				}else if(data == 0){
+					alert('ë³„ì ì€ í•œë²ˆë§Œ ì¤„ìˆ˜ì‡ìŒ');
+				}else if(data == 1){
+					alert('ë³„ì  ì£¼ê¸° ì™„ë£Œ');
+					location.reload();
+					
+				}
+			}
+			
+		});
+		return false; 		
+	});
 	
 
 </script>

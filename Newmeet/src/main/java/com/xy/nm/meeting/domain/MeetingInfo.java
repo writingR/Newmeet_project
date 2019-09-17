@@ -5,7 +5,7 @@ public class MeetingInfo {
 	private String m_name;	   // 모임 제목
 	private String m_img;      // 모임 대표이미지
 	private String m_cont;     // 모임 소개글
-	private int m_stotal;      // 모임 별점 총합
+	private double m_stotal;      // 모임 별점 총합
 	private int m_star;        // 모임 별점참여인원
 	private int m_like;        // 모임 좋아요 개수
 	private int small_idx;     // 카테고리 소분류
@@ -48,10 +48,10 @@ public class MeetingInfo {
 	public void setM_cont(String m_cont) {
 		this.m_cont = m_cont;
 	}
-	public int getM_stotal() {
+	public double getM_stotal() {
 		return m_stotal;
 	}
-	public void setM_stotal(int m_stotal) {
+	public void setM_stotal(double m_stotal) {
 		this.m_stotal = m_stotal;
 	}
 	public int getM_star() {
