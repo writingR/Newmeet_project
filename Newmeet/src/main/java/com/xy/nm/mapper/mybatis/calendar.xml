@@ -25,4 +25,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		values (#{m_idx}, #{c_title}, #{c_pay}, #{c_count}, #{c_place}, #{c_address}, #{c_date}, #{c_edate})
 	</insert>
 
+	<select id="calList" resultMap="resultCalendarInfo">
+		select * from Calendar order by c_date
+	</select>
+
+
+	<select id="selectCalByIdx" resultMap="resultCalendarInfo">
+		select * from Calendar where c_idx=#{c_idx}
+	</select>
+	
+	<delete id="deleteCalendar">
+		delete from Calendar where c_idx=#{c_idx}
+	</delete>
+	
+	<update id="updateCalendar" parameterType="com.xy.nm.calendar.domain.CalendarInfo">
+		update Calendar set c_title=#{c_title}, c_pay=#{c_pay}, c_count=#{c_count}, c_place=#{c_place}, c_address=#{c_address}, c_date=#{c_date}, c_edate=#{c_edate}
+		where c_idx=#{c_idx}
+	</update>
+	
+	
 </mapper>

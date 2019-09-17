@@ -6,10 +6,9 @@ import org.springframework.stereotype.Service;
 
 import com.xy.nm.calendar.dao.CalDaoInterface;
 import com.xy.nm.calendar.domain.CalendarInfo;
-import com.xy.nm.calendar.domain.RequestCalendar;
 
-@Service("createService")
-public class CalCreateService {
+@Service("detailService")
+public class CalDetailService {
 
 	
 	private CalDaoInterface dao;
@@ -17,16 +16,13 @@ public class CalCreateService {
 	@Autowired
 	private SqlSessionTemplate template;
 	
-	public int calCreate(RequestCalendar rCal) {
+	
+	public CalendarInfo getDetailData(int c_idx) {
 		
 		dao = template.getMapper(CalDaoInterface.class);
 		
-		CalendarInfo calInfo = rCal.toCalendarInfo();
+		CalendarInfo calInfo = dao.selectCalByIdx(c_idx);
 		
-		int rCnt = dao.createCalendar(calInfo);
-		
-		
-		return rCnt;
+		return calInfo;
 	}
-	
 }

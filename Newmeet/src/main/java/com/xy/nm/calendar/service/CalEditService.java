@@ -8,25 +8,35 @@ import com.xy.nm.calendar.dao.CalDaoInterface;
 import com.xy.nm.calendar.domain.CalendarInfo;
 import com.xy.nm.calendar.domain.RequestCalendar;
 
-@Service("createService")
-public class CalCreateService {
+@Service("editService")
+public class CalEditService {
 
-	
 	private CalDaoInterface dao;
 	
 	@Autowired
 	private SqlSessionTemplate template;
 	
-	public int calCreate(RequestCalendar rCal) {
+	
+//	
+//	public CalendarInfo getEditFormData(int c_idx) {
+//		
+//		dao = template.getMapper(CalDaoInterface.class);
+//		
+//		CalendarInfo calInfo = dao.selectCalByIdx(c_idx);
+//		
+//		return calInfo;
+//	}
+	
+	public int calEdit(int c_idx, RequestCalendar reqCal) {
 		
 		dao = template.getMapper(CalDaoInterface.class);
 		
-		CalendarInfo calInfo = rCal.toCalendarInfo();
+		CalendarInfo calInfo = reqCal.toCalendarInfo();
 		
-		int rCnt = dao.createCalendar(calInfo);
+		calInfo.setC_idx(c_idx);
 		
+		int rCnt = dao.updateCalendar(calInfo);
 		
 		return rCnt;
 	}
-	
 }

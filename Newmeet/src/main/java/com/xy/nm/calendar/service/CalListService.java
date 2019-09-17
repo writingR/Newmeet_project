@@ -1,15 +1,17 @@
 package com.xy.nm.calendar.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.xy.nm.calendar.dao.CalDaoInterface;
 import com.xy.nm.calendar.domain.CalendarInfo;
-import com.xy.nm.calendar.domain.RequestCalendar;
 
-@Service("createService")
-public class CalCreateService {
+@Service("listService")
+public class CalListService {
 
 	
 	private CalDaoInterface dao;
@@ -17,16 +19,14 @@ public class CalCreateService {
 	@Autowired
 	private SqlSessionTemplate template;
 	
-	public int calCreate(RequestCalendar rCal) {
+	public List<CalendarInfo> list() {
 		
 		dao = template.getMapper(CalDaoInterface.class);
 		
-		CalendarInfo calInfo = rCal.toCalendarInfo();
+		List<CalendarInfo> calList = new ArrayList<CalendarInfo>();
 		
-		int rCnt = dao.createCalendar(calInfo);
+		calList = dao.calList();
 		
-		
-		return rCnt;
+		return calList;
 	}
-	
 }

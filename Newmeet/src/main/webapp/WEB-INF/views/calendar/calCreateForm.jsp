@@ -119,6 +119,46 @@ input::placeholder {
 	
 }
 
+#calSidebar {
+	width: 500px;
+	border: 1px solid #ddd;
+	height: 780px;
+
+}
+
+#calLists {
+	text-align: center;
+	width: 450px;
+	margin: 0 auto;
+	height: 700px;
+	overflow: scroll;
+	
+}
+
+.calList>h4 {
+	color: black;
+	font-weight: bold;
+	
+}
+
+.calList:hover {
+	background-color: #ddd;
+	border: 1px solid black;
+}
+
+#detailInfo tr>td {
+	padding: 10px;
+
+}
+
+
+#detailInfo tr>td:nth-child(1) {
+	color: #9E9E9E;
+}
+
+#detailInfo tr>td:nth-child(2) {
+	color: black;
+}
 </style>
 </head>
 <body>
@@ -128,8 +168,51 @@ input::placeholder {
 <!-- 	<form id="regform"> -->
 	<!-- 버튼을 생성한다 해당하는 버튼은 데이터 토글은 모달, 데이터 타겟은 exampleModal의 아이디를 가지는 div 입니다.  -->
 	<!-- 참고로, class data-target, data-toggle과 같은것은 애트리뷰트 라고 합니다. -->
+	
+	<div id="calSidebar">
+	<div id="calLists">
+	
+	</div>
+	
 	<button type="button" class="btn btn-primary" data-toggle="modal"
-		data-target="#calRegist01">일정 등록</button>
+		data-target="#calRegist01" style="width:300px; margin-left:90px;">일정 등록</button>
+	</div>
+	
+	<div class="modal modal-center fade" id="calDetail" tabindex="-1" role="dialog"
+		aria-labelledby="calDetailLabel" aria-hidden="true">
+	
+		<div class="modal-dialog modal-center modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<!-- 모달 이름 -->
+					<h5 class="modal-title" id="calDetail">일정 상세</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body" id="detailModal">
+					<!-- 모달 내용 -->
+					<h5 style="text-align: center;" class="">상세 정보</h5>
+					<input id="c_Didx"><br>
+					<input id="m_Didx"><br>
+					<input id="c_Dtitle"><br>
+					<input id="c_Dpay"><br>
+					<input id="c_Dcount"><br>
+					<input id="c_Dplace"><br>
+					<input id="c_Daddress"><br>
+					<input id="c_Ddate"><br>
+					<input id="c_Dedate"><br>
+					
+				</div>
+				
+				<div class="modal-footer" id="detail-footer">
+					<!-- data-dismiss="modal"를 통해 모달을 닫을수 있다. -->
+
+				</div>
+			</div>
+		</div>
+	</div>
 	
 	<!-- 기본정보 - 정모 이름, 참가비, 참가인원 입력 받는다. -->
 	<!-- class를 통해 모달을 선언하고 투명에서 밝아지는 효과(fade)를 준다. 여기서 가장 중요한거는 id 입니다. 위에 타겟과 동일해야 합니다. #은 아이디 .은 클래스 -->
@@ -285,10 +368,54 @@ input::placeholder {
 		</div>
 	</div>
 
+
+	<div class="modal modal-center fade" id="calEditForm" tabindex="-1" role="dialog"
+		aria-labelledby="calEditFormLabel" aria-hidden="true">
+	
+		<div class="modal-dialog modal-center modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<!-- 모달 이름 -->
+					<h5 class="modal-title" id="calEditForm">일정 수정</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body" id="edit-body">
+					<!-- 모달 내용 -->
+					<h5 style="text-align: center;" class="">상세 정보</h5>
+
+ 					<input id="c_Eidx"><br>
+					<input id="m_Eidx"><br>
+					<input id="c_Etitle"><br>
+					<input id="c_Epay"><br>
+					<input id="c_Ecount"><br>
+					<input id="c_Eplace"><br>
+					<input id="c_Eaddress"><br>
+					<input id="c_Edate"><br>
+					<input id="c_Eedate"><br>
+ 					
+				</div>
+				
+				<div class="modal-footer" id="edit-footer">
+					<!-- data-dismiss="modal"를 통해 모달을 닫을수 있다. -->
+
+				</div>
+			</div>
+		</div>
+	</div>
+	
+
+
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f6e7a0224aef6815285d474f26a6c0d6&libraries=services"></script>
 
 <script>
 
+	$(document).ready(function(){
+		calList();
+    
+	});
 
 	
 	/* 다음 버튼 클릭 시 모달 동작 */
@@ -344,23 +471,14 @@ input::placeholder {
 		  /* inline:true */
 	});
 	
-	
-	var formData = {
-		m_idx : 1,
-		c_title : $('#c_title').val(),
-		c_pay : parseInt($('#c_pay').val()),
-		c_count : $('#c_count').val(),
-		c_place : $('#c_place').val(),
-		c_address : $('#c_address').val(),
-		c_date : $('#c_date').val(),
-		c_edate : $('#c_edate').val()
-	};
-	
+
+	 
+	 // 일정등록 마지막 단계 finish 누르면 입력한 폼데이터로 ajax 처리
 	function calRegist() {
 		
 		$.ajax({
 			
-			url: 'http://localhost:8080/nm/cal/create',
+			url: 'http://localhost:8080/nm/cal',
 			type: 'post',
 			data: {
 				m_idx : 100,
@@ -372,17 +490,245 @@ input::placeholder {
 				c_date : $('#c_date').val(),
 				c_edate : $('#c_edate').val()
 			},
+            /* dataType : 'json', */
 			success : function(data) {
 				console.log(data);
-				alert(data);
-				alert('일정이 성공적으로 등록되었습니다.');
-				resetReg();
-				$('#calRegist03').modal('hide');
-				
+				if(data=='success') {
+					alert('일정이 성공적으로 등록되었습니다.');
+					$('#calRegist03').modal('hide');
+
+					/* resetReg(); */
+					calList();
+					
+				}
 			}
 		});
 	}
 	
+	 // 일정 리스트 ajax 불러오기
+	function calList() {
+		
+		var html = '';
+		
+		$.ajax({
+			
+			url: 'http://localhost:8080/nm/cal',
+			type: 'get',
+			dataType: 'json',
+			success: function(data) {
+				
+				for(var i=0; i<data.length; i++) {
+					
+					var sysdate = new Date(data[i].c_date);
+					var enddate = new Date(data[i].c_edate);
+					
+					/* document.write(sysdate.toISOString()); */
+					
+					html += '<div class="calList" style="cursor:pointer" id="calList" onclick="calDetail('+ data[i].c_idx + ')">\n';
+					html += '<h4>' + data[i].c_title +'</h4>\n';
+					html += '<h5>' + '일정\t' + sysdate.toLocaleDateString() +'</h5>\n';
+					html += '<h6>' + '참가 인원 : ' + data[i].c_count + '\t신청마감일 : ' + enddate.toLocaleDateString() + '</h6>\n';
+					html += '</div><br>\n'; 
+					
+					
+				}
+			
+				$('#calLists').html(html);
+				
+			}
+			
+		});
+		
+	}
+	
+	// 일정 클릭 시 해당 일정에 대한 상세 페이지 모달 보기
+	function calDetail(c_idx) {
+		
+		$('#calDetail').modal('show');
+		
+		var btn = '';
+		var content = '';
+		
+		$.ajax({
+			
+			url: 'http://localhost:8080/nm/cal/'+c_idx,
+			type: 'get',
+			dataType: 'json',
+			success: function(data) {
+				
+				content += '<div id=""><br>\n';
+				content += '<h4>No. '+c_idx +'</h4><br>\n';
+				content += '<h3>모임 날짜</h3><br>\n';
+				content += '<hr>';
+				content += '<table id="detailInfo">';
+				content += '<tr>';
+				content += '<td><h5>모임예정일</h5></td>';
+				content += '<td><h5>'+data.c_date+'</h5></td>';
+				content += '</tr>';
+				content += '<tr>';
+				content += '<td><h5>신청마감일</h5></td>';
+				content += '<td><h5>'+data.c_edate+'</h5></td>';
+				content += '</tr>';
+				content += '<tr>';
+				content += '<td><h5>모임이름</h5></td>';
+				content += '<td><h5>'+data.c_title+'</h5></td>';
+				content += '</tr>';
+				content += '<tr>';
+				content += '<td><h5>참가비용</h5></td>';
+				content += '<td><h5>'+data.c_pay+' 원</h5></td>';
+				content += '</tr>';
+				content += '<tr>';
+				content += '<td><h5>참가인원</h5></td>';
+				content += '<td><h5>'+data.c_count+'</h5></td>';
+				content += '</tr>';
+				content += '<tr>';
+				content += '<td><h5>모임장소</h5></td>';
+				content += '<td><h5>'+data.c_place+'</h5></td>';
+				content += '</tr>';
+				content += '<tr>';
+				content += '<td><h5>주소</h5></td>';
+				content += '<td><h5>'+data.c_address+'</h5></td>';
+				content += '</tr>';
+				
+				content += '</table>';
+				content += '</div>'
+				
+				/* 
+				$('#c_Didx').val(c_idx);
+				$('#m_Didx').val(data.m_idx);
+				$('#c_Dtitle').val(data.c_title);
+				$('#c_Dpay').val(data.c_pay);
+				$('#c_Dcount').val(data.c_count);
+				$('#c_Dplace').val(data.c_place);
+				$('#c_Daddress').val(data.c_address);
+				$('#c_Ddate').val(data.c_date);
+				$('#c_Dedate').val(data.c_edate); 
+				*/
+				
+				
+				btn += "<button type='button' class='btn btn-secondary' onclick="+"(calEditForm("+c_idx+"))"+">수정</button>"
+				btn += "<button type='button' class='btn btn-primary' onclick="+"(calDelete("+c_idx+"))"+">삭제</button>"
+	
+				$('#detailModal').html(content);
+				$('#detail-footer').html(btn);
+			}
+			
+		});
+		
+	}
+	
+	// 일정 상세 페이지에서 삭제 버튼 클릭시 ajax 처리
+	function calDelete(c_idx) {
+		
+		var delconfirm = confirm('정말 삭제하시겠습니까?');
+		
+		if(delconfirm) {
+			
+			$.ajax({
+			
+				url: 'http://localhost:8080/nm/cal/'+c_idx,
+				type: 'delete',
+				/* dataType: 'json', */
+				success: function(data) {
+					if(data=='success') {
+						alert('삭제되었습니다.');
+						$('#calDetail').modal('hide');
+						calList();
+						
+					}
+				}
+			
+			
+			});
+		}
+	}
+	
+	
+
+	// 일정 상세 페이지에서 수정 버튼 클릭시 ajax 수정폼 불러오기
+	function calEditForm(c_idx) {
+		
+		$('#calEditForm').modal('show');
+		
+		var btn = '';
+		var editData = '';
+		
+		
+		$.ajax({
+			
+			url: 'http://localhost:8080/nm/cal/'+c_idx,
+			type: 'get',
+			dataType: 'json',
+			success: function(data) {
+/* 				
+				editData += '<div id="editData>"\n';
+				editData += '<form id="editForm>"\n';
+				editData += '<h5>'+c_idx+'</h5>\n';
+				editData += '<h5>'+data.m_idx+'</h5>\n';
+				editData += '<h5>'+data.c_title+'</h5>\n';
+				editData += '<h5>'+data.c_pay+'</h5>\n';
+				editData += '<h5>'+data.c_count+'</h5>\n';
+				editData += '<h5>'+data.c_place+'</h5>\n';
+				editData += '<h5>'+data.c_address+'</h5>\n';
+				editData += '<h5>'+data.c_date+'</h5>\n';
+				editData += '<h5>'+data.c_edate+'</h5>\n';
+				editData += '</form>\n';
+				editData += '</div>\n'; */
+ 				$('#c_Eidx').val(c_idx);
+				$('#m_Eidx').val(data.m_idx);
+				$('#c_Etitle').val(data.c_title);
+				$('#c_Epay').val(data.c_pay);
+				$('#c_Ecount').val(data.c_count);
+				$('#c_Eplace').val(data.c_place);
+				$('#c_Eaddress').val(data.c_address);
+				$('#c_Edate').val(data.c_date);
+				$('#c_Eedate').val(data.c_edate); 
+				btn += "<button type='button' class='btn btn-primary' onclick="+"(calEdit("+c_idx+"))"+">수정</button>"
+				btn += "<button type='button' class='btn btn-secondary'>이전</button>"
+	
+				$('#edit-footer').html(btn);
+				/* $('#edit-body').html(editData); */
+			}
+			
+		});
+	}
+	
+
+
+	
+	 
+	 
+	// 일정 수정폼에서 수정 버튼 클릭시 ajax 수정처리
+	function calEdit(c_idx) {
+		
+		
+		$.ajax({
+			
+			url: 'http://localhost:8080/nm/cal/'+c_idx,
+			type: 'put',
+			data: JSON.stringify({
+				m_idx : $('#m_Eidx').val(),
+				c_title : $('#c_Etitle').val(),
+				c_pay : $('#c_Epay').val(),
+				c_count : $('#c_Ecount').val(),
+				c_place : $('#c_Eplace').val(),
+				c_address : $('#c_Eaddress').val(),
+				c_date : $('#c_Edate').val(),
+				c_edate : $('#c_Eedate').val()
+			}),
+			contentType: "application/json; charset=UTF-8",
+			success: function(data) {
+				if(data=='success') {
+					alert('수정되었습니다.');
+					calList();
+					$('#calEditForm').modal('hide');
+					
+				}
+				
+			}
+			
+		});
+	}
 	
 	
 	/* $('#datetimepicker').datetimepicker().data('DateTimePicker').format('HH:mm:ss'); */
@@ -454,7 +800,7 @@ function searchPlaces() {
     var keyword = document.getElementById('keyword').value;
 
     if (!keyword.replace(/^\s+|\s+$/g, '')) {
-        alert('키워드를 입력해주세요!');
+        /* alert('키워드를 입력해주세요!'); */
         return false;
     }
 

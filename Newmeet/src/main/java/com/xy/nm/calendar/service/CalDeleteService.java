@@ -5,28 +5,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.xy.nm.calendar.dao.CalDaoInterface;
-import com.xy.nm.calendar.domain.CalendarInfo;
-import com.xy.nm.calendar.domain.RequestCalendar;
 
-@Service("createService")
-public class CalCreateService {
+@Service("deleteService")
+public class CalDeleteService {
 
-	
 	private CalDaoInterface dao;
 	
 	@Autowired
 	private SqlSessionTemplate template;
 	
-	public int calCreate(RequestCalendar rCal) {
+	public int calDelete(int c_idx) {
 		
 		dao = template.getMapper(CalDaoInterface.class);
 		
-		CalendarInfo calInfo = rCal.toCalendarInfo();
-		
-		int rCnt = dao.createCalendar(calInfo);
-		
-		
-		return rCnt;
+		return dao.deleteCalendar(c_idx);
 	}
 	
 }
