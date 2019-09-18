@@ -43,5 +43,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where c_idx=#{c_idx}
 	</update>
 	
+	<insert id="createCalMember" parameterType="int">
+		insert into cMember (c_idx, nidx)
+		values (#{param1}, #{param2})
+	</insert>
+	
 	
 </mapper>

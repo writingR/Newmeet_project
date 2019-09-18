@@ -17,6 +17,6 @@ public class TestController {
 	public String home(Locale locale, Model model) {
 		
 		
-		return "calendar/calCreateForm";
+		return "calendar/calendar";
 	}
 }

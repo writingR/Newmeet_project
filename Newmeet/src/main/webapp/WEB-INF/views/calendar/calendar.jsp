@@ -120,19 +120,22 @@ input::placeholder {
 }
 
 #calSidebar {
-	width: 500px;
+	width: 450px;
 	border: 1px solid #ddd;
 	height: 780px;
 
 }
 
 #calLists {
-	text-align: center;
-	width: 450px;
+	width: 430px;
 	margin: 0 auto;
 	height: 700px;
 	overflow: scroll;
 	
+}
+
+.calList {
+	padding: 10px;
 }
 
 .calList>h4 {
@@ -159,23 +162,30 @@ input::placeholder {
 #detailInfo tr>td:nth-child(2) {
 	color: black;
 }
+
+#listdown:hover {
+	background-color: #ddd;
+}
+
 </style>
 </head>
 <body>
 	<%@include file="/WEB-INF/views/frame/header2.jsp"%>
 	<%@include file="/WEB-INF/views/frame/nav.jsp"%>
 
+
 <!-- 	<form id="regform"> -->
 	<!-- 버튼을 생성한다 해당하는 버튼은 데이터 토글은 모달, 데이터 타겟은 exampleModal의 아이디를 가지는 div 입니다.  -->
 	<!-- 참고로, class data-target, data-toggle과 같은것은 애트리뷰트 라고 합니다. -->
 	
 	<div id="calSidebar">
+	<p id="choiceChk" style="display:none;"></p>
 	<div id="calLists">
 	
 	</div>
+	<div id="calListFooter">
 	
-	<button type="button" class="btn btn-primary" data-toggle="modal"
-		data-target="#calRegist01" style="width:300px; margin-left:90px;">일정 등록</button>
+	</div>
 	</div>
 	
 	<div class="modal modal-center fade" id="calDetail" tabindex="-1" role="dialog"
@@ -193,16 +203,7 @@ input::placeholder {
 				</div>
 				<div class="modal-body" id="detailModal">
 					<!-- 모달 내용 -->
-					<h5 style="text-align: center;" class="">상세 정보</h5>
-					<input id="c_Didx"><br>
-					<input id="m_Didx"><br>
-					<input id="c_Dtitle"><br>
-					<input id="c_Dpay"><br>
-					<input id="c_Dcount"><br>
-					<input id="c_Dplace"><br>
-					<input id="c_Daddress"><br>
-					<input id="c_Ddate"><br>
-					<input id="c_Dedate"><br>
+					
 					
 				</div>
 				
@@ -315,10 +316,10 @@ input::placeholder {
 						</div>
 						<h5 style="text-align: center;"> 선택하신 장소가 맞는지 확인해주세요. </h5>
 						<label for="c_place">장소</label>
-						<input class="cmap" id="c_place" type="text">
+						<input class="cmap" id="c_place" type="text" class="basic">
 						<br>
 						<label for="c_address">주소</label>
-						<input class="cmap" id="c_address" type="text">
+						<input class="cmap" id="c_address" type="text" class="basic">
 						
 				</div>
 				<div class="modal-footer">
@@ -351,11 +352,11 @@ input::placeholder {
 						</div>
 					</div>
 					    <label for="c_date">모임 날짜</label> 
-					    <input type="text" id="c_date">
+					    <input type="text" id="c_date" class="basic">
 					    
 						<br>
-    					<label for="c_edate">신청 마감일</label>
-    					<input type="text" id="c_edate">
+    					<label for="c_edate">신청 마감</label>
+    					<input type="text" id="c_edate" class="basic">
 						
 				</div>
 				<div class="modal-footer">
@@ -509,6 +510,8 @@ input::placeholder {
 	function calList() {
 		
 		var html = '';
+		var btn = '';
+		
 		
 		$.ajax({
 			
@@ -522,19 +525,26 @@ input::placeholder {
 					var sysdate = new Date(data[i].c_date);
 					var enddate = new Date(data[i].c_edate);
 					
+					var dateArray = (sysdate.toLocaleString().slice(0,-3)).split('.');
+					var edate = (enddate.toLocaleString().slice(0,-3));
+					
 					/* document.write(sysdate.toISOString()); */
 					
 					html += '<div class="calList" style="cursor:pointer" id="calList" onclick="calDetail('+ data[i].c_idx + ')">\n';
 					html += '<h4>' + data[i].c_title +'</h4>\n';
-					html += '<h5>' + '일정\t' + sysdate.toLocaleDateString() +'</h5>\n';
-					html += '<h6>' + '참가 인원 : ' + data[i].c_count + '\t신청마감일 : ' + enddate.toLocaleDateString() + '</h6>\n';
+					html += '<h5>' + '일정\t' + dateArray[0]+'년'+dateArray[1]+'월'+dateArray[2]+'일'+dateArray[3]+'</h5>\n';
+					html += '<h6>' + '참가 인원 : ' + data[i].c_count + '\t|\t신청마감일 : ' + edate + '</h6>\n';
 					html += '</div><br>\n'; 
 					
 					
+					
 				}
-			
-				$('#calLists').html(html);
 				
+				btn += '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#calRegist01" style="width:300px; margin-left: 60px; margin-top: 10px;" >일정 등록</button>';
+				btn += '<button type="button" class="btn btn-primary" data-toggle="modal" style="width:300px; margin-left: 60px; margin-top: 10px;" onclick="(calJoin())">참여 하기</button>';
+				
+				$('#calLists').html(html);
+				$('#calListFooter').html(btn);
 			}
 			
 		});
@@ -556,22 +566,30 @@ input::placeholder {
 			dataType: 'json',
 			success: function(data) {
 				
+				var sysdate = new Date(data.c_date);
+				var enddate = new Date(data.c_edate);
+				
+				var dateArray = (sysdate.toLocaleString().slice(0,-3)).split('.');
+				var edate = (enddate.toLocaleString().slice(0,-3));
+				
+				
+				
 				content += '<div id=""><br>\n';
-				content += '<h4>No. '+c_idx +'</h4><br>\n';
-				content += '<h3>모임 날짜</h3><br>\n';
+				content += '<h4 id="c_Didx">'+c_idx+'</h4><br>\n';
+				content += '<h3>모임 정보</h3><br>\n';
 				content += '<hr>';
 				content += '<table id="detailInfo">';
 				content += '<tr>';
 				content += '<td><h5>모임예정일</h5></td>';
-				content += '<td><h5>'+data.c_date+'</h5></td>';
+				content += '<td><h5 id="c_Ddate">'+dateArray[0]+'년'+dateArray[1]+'월'+dateArray[2]+'일'+dateArray[3]+'</h5></td>';
 				content += '</tr>';
 				content += '<tr>';
 				content += '<td><h5>신청마감일</h5></td>';
-				content += '<td><h5>'+data.c_edate+'</h5></td>';
+				content += '<td><h5 id="c_Dedate">'+edate+'</h5></td>';
 				content += '</tr>';
 				content += '<tr>';
 				content += '<td><h5>모임이름</h5></td>';
-				content += '<td><h5>'+data.c_title+'</h5></td>';
+				content += '<td><h5 id="c_Dtitle">'+data.c_title+'</h5></td>';
 				content += '</tr>';
 				content += '<tr>';
 				content += '<td><h5>참가비용</h5></td>';
@@ -579,7 +597,7 @@ input::placeholder {
 				content += '</tr>';
 				content += '<tr>';
 				content += '<td><h5>참가인원</h5></td>';
-				content += '<td><h5>'+data.c_count+'</h5></td>';
+				content += '<td><h5 id="c_Dcount">'+data.c_count+'</h5></td>';
 				content += '</tr>';
 				content += '<tr>';
 				content += '<td><h5>모임장소</h5></td>';
@@ -608,6 +626,8 @@ input::placeholder {
 				
 				btn += "<button type='button' class='btn btn-secondary' onclick="+"(calEditForm("+c_idx+"))"+">수정</button>"
 				btn += "<button type='button' class='btn btn-primary' onclick="+"(calDelete("+c_idx+"))"+">삭제</button>"
+				
+				btn += "<button type='button' class='btn btn-primary' onclick="+"(calChoice())"+">선택</button>"
 	
 				$('#detailModal').html(content);
 				$('#detail-footer').html(btn);
@@ -674,6 +694,7 @@ input::placeholder {
 				editData += '<h5>'+data.c_edate+'</h5>\n';
 				editData += '</form>\n';
 				editData += '</div>\n'; */
+				
  				$('#c_Eidx').val(c_idx);
 				$('#m_Eidx').val(data.m_idx);
 				$('#c_Etitle').val(data.c_title);
@@ -694,10 +715,6 @@ input::placeholder {
 	}
 	
 
-
-	
-	 
-	 
 	// 일정 수정폼에서 수정 버튼 클릭시 ajax 수정처리
 	function calEdit(c_idx) {
 		
@@ -716,7 +733,7 @@ input::placeholder {
 				c_date : $('#c_Edate').val(),
 				c_edate : $('#c_Eedate').val()
 			}),
-			contentType: "application/json; charset=UTF-8",
+			contentType: 'application/json; charset=UTF-8',
 			success: function(data) {
 				if(data=='success') {
 					alert('수정되었습니다.');
@@ -728,6 +745,72 @@ input::placeholder {
 			}
 			
 		});
+	}
+	
+	/* 일정 미선택시 #choiceChk 태그의 값을 초기화 */
+	function calChoiceChk() {
+		
+		$('#choiceChk').text('');
+	}
+	
+	/* 일정 상세페이지에서 선택 시 일정 리스트에 해당 일정만 표시 */
+	/* choiceChk 태그에 'chkChkSuccess' 텍스트를 입력
+	리스트로 돌아갈 시 choiceChk 태그 값 초기화 */
+	function calChoice() {
+ 		
+		var html = '';
+		$('#choiceChk').text('chkSuccess');
+		
+		html += '<div class="calList" style="background-color: #ddd;" id="calList">\n';
+		html += '<h4>' + $('#c_Dtitle').text() + '</h4>\n';
+		html += '<img id="listdown" src="<c:url value="/static/img/listdown.png" />" onclick="calChoiceChk(); calList();" style="float:right; cursor:pointer;">\n';
+		html += '<h5>' + $('#c_Ddate').text() + '</h5>\n';
+		html += '<h6>' + '참가 인원 : ' + $('#c_Dcount').text() + '\t|\t신청마감일 : ' + $('#c_Dedate').text() + '</h6>\n';
+		html += '</div><br>\n';
+		
+		
+		$('#calLists').html(html);
+		$('#calDetail').modal('hide');
+	}
+	
+
+	
+	/* 일정 참여하기 시 일정 멤버 목록에 추가 */
+	function calJoin() {
+		
+		sessionStorage.setItem("MemberIdx", "100");
+		
+		var c_idx = $('#c_Didx').text();
+		var nidx = sessionStorage.getItem("MemberIdx");
+		
+		if(nidx==null) {
+			alert('로그인이 필요한 서비스 입니다.');
+			
+		} else if(($('#choiceChk').text())=='') {
+			alert('일정을 선택해주세요.');
+			
+		} else {
+			
+			$.ajax({
+			
+				url: 'http://localhost:8080/nm/calMember',
+				type: 'post',
+				data: {
+					c_idx : c_idx,
+					nidx : nidx
+				},
+				success: function(data) {
+					if(data=='success') {
+						alert('참가신청이 완료되었습니다.');
+					
+					}
+				
+				}
+			
+			});
+		
+		} 
+		
 	}
 	
 	

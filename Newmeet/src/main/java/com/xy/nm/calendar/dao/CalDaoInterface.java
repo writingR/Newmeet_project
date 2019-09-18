@@ -16,4 +16,6 @@ public interface CalDaoInterface {
 	public int deleteCalendar(int c_idx);
 	
 	public int updateCalendar(CalendarInfo calInfo);
+	
+	public int createCalMember(int c_idx, int nidx);
 }
