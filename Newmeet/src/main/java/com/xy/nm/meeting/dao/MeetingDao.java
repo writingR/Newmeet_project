@@ -15,12 +15,18 @@ public interface MeetingDao {
 	public List<MeetingScategory> sCategoryList(int big_idx);
 	// 모임 생성
 	public int MeetingWrite(MeetingInfo meetingInfo);
+	// 모임 생성후 m_idx 뽑아오기
+	public int SelectMidx(String m_name);
 	// 모임 리스트
 	public List<MeetingInfo> MeetingList();
 	// 모임 상세 정보 로그인
 	public MeetingInfo MeetingInfo(int m_idx,int nidx);
 	// 모임 상세 정보 비로그인
 	public MeetingInfo MeetingInfo2(int m_idx);
+	// 모임 회원인지 아닌지 확인
+	public int MoimMember(int m_idx,int nidx);
+	// 모임장인지 그냥 회원인지 확인
+	public int MoimJang(int m_idx,int nidx);
 	// 좋아요 조건
 	public MeetingInfo MeetingInfo3(int m_idx);
 	// 좋아요 상태 확인 ( 잇는지 없는지 )

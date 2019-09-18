@@ -60,10 +60,21 @@ public class MeetingWriteService {
 					// 데이터베이스 저장을 하기위한 파일 이름 set
 					meetingInfo.setM_img(newFileName);
 				}
-				resultCnt = dao.MeetingWrite(meetingInfo);
 				
-				System.out.println("6  "+resultCnt);
-				return resultCnt;
+				
+				resultCnt = dao.MeetingWrite(meetingInfo);
+				if(resultCnt > 0) {
+					System.out.println("모임은생성됫고");
+					int select = dao.SelectMidx(regist.getM_name());
+					System.out.println(select);
+					return select;
+				}
+				
+				
+				
+				System.out.println("모임만 생성됨");
+				
+				return 0;
 			}
 			
 			

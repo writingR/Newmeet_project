@@ -32,7 +32,7 @@
 </style>
 </head>
 <body>
-<h1>모임 상세정보 페이지 좋아요를 안눌러보거나 비로그인</h1>
+<h1>모임 상세정보 페이지 좋아요를 한번이라도 눌러본 사용자</h1>
 	
 	
 	
@@ -71,6 +71,9 @@
 		
 		<div id="list">
 		</div>
+		<div id="button">
+		
+		</div>
                 	
 </body>
 <script>
@@ -101,6 +104,38 @@ $(document).ready(function(){
 				$('#list').html(html);
 			
 				
+		}
+	});
+	
+	$.ajax({
+		url : 'http://localhost:8080/nm/meeting/button/'+ m_idx,
+		type : 'GET',
+		success : function(data) {
+			var html = '';
+			if(data == 2){
+				//alert('넌 모임장이지');
+				html += '<input type="button" value="수정">';
+				html += '<input type="button" value="삭제">';
+				
+				$('#button').html(html);
+			}else if(data == 1){
+				//alert('넌 모임원');
+				html += '<input type="button" value="모임 탈퇴">';
+				
+				$('#button').html(html);
+			}else if(data == 0){
+				//alert('넌 비모임원');
+				html += '<input type="button" value="모임 신청">';
+				
+				$('#button').html(html);
+			}else if(data == -1){
+				//alert('넌 로그인도안함');
+				
+				html += '<input type="button" value="로그인해라">';
+				
+				$('#button').html(html);
+			}
+			
 		}
 	});
 	

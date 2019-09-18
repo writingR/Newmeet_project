@@ -77,7 +77,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			values (#{small_idx},#{m_name},#{m_img},#{m_cont})
 	
 	</insert>
+	<!-- 모임생성후 midx 추출 -->
+	<select id="SelectMidx"
+			resultType="int">
+		select m_idx from newMeet_RDS.Meeting where m_name = #{m_name}
 	
+	</select>
 	<!-- 모임 리스트 -->
 	<select id="MeetingList"
 			resultMap="resultMeetingInfo">
@@ -96,6 +101,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select m.m_idx,m_name,m_img,m_cont,m_stotal,m_star,m_like,small_idx,nidx from newMeet_RDS.Meeting as m left join newMeet_RDS.mLike as l on m.m_idx = l.m_idx where m.m_idx=#{m_idx} limit 0, 1
 		
 	</select>
+	
+	<!-- 모임의 회원인지 아닌지확인 -->
+	<select id="MoimMember"
+			resultType="int">
+	select count(mm_level) from newMeet_RDS.mMember where m_idx=#{param1} and nidx=#{param2}
+	</select>
+	 <!-- 모임원인지 모임장인지 확인 -->
+	 
+	<select id="MoimJang"
+			resultType="int">
+	select mm_level from newMeet_RDS.mMember where m_idx=#{param1} and nidx=#{param2}
+	</select>
+	
+	
 	<!-- 총 좋아요 데이터 조건 -->
 	<select id="MeetingInfo3"
 			resultMap="resultMeetingInfo2">

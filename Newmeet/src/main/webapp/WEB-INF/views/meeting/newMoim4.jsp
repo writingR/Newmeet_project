@@ -71,8 +71,11 @@
            processData: false,
            contentType: false,
 			success : function(data) {
-				alert('모임 생성 완료~^_★');
-				location.href="/nm/main";
+				sessionStorage.setItem("m_idx",data);
+				
+				alert(data+':정확하게 추출');
+				location.href="/nm/newMoim5";
+				
 			}
 			
 		});

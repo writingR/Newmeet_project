@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <%
-	session.setAttribute("MemberIdx",25);
+	session.setAttribute("MemberIdx",107);
 %>   
 <html>
 <head>

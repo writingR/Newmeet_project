@@ -2,6 +2,9 @@ package com.xy.nm.meeting.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +24,7 @@ import com.xy.nm.meeting.service.CategoryListService;
 import com.xy.nm.meeting.service.MeetingWriteService;
 import com.xy.nm.meeting.service.MoimInfoService;
 import com.xy.nm.meeting.service.MoimListService;
+import com.xy.nm.meeting.service.MoimMemberService;
 
 
 @RestController
@@ -35,7 +39,8 @@ public class MeetingController {
 	private MoimListService moimListService;
 	@Autowired
 	private MoimInfoService moimInfoService;
-	
+	@Autowired
+	private MoimMemberService moimMemberService;
 	
 	
 	// 대분류 리스트
@@ -71,15 +76,17 @@ public class MeetingController {
 	// 모임 생성
 		@CrossOrigin
 		@PostMapping
-		public ResponseEntity<String> write(
+		public ResponseEntity<Integer> write(
 				RequestMeetingWrite regRequest,
 				MultipartHttpServletRequest request
 				) {
 			
 			System.out.println("2  "+ request.getFile("m_img").getOriginalFilename());
+			int m_idx = meetingWriteService.write(request, regRequest);
 			
-			return new ResponseEntity<String>(
-					meetingWriteService.write(request, regRequest)>0? "success": "fail",
+			
+			return new ResponseEntity<Integer>(
+					m_idx >0? m_idx : 0,
 					HttpStatus.OK
 					);
 			
@@ -103,13 +110,50 @@ public class MeetingController {
 		
 	
 	 @GetMapping("/list/{m_idx}")
-	 @CrossOrigin public ResponseEntity<MeetingInfo> getMoimInfo(
+	 @CrossOrigin 
+	 public ResponseEntity<MeetingInfo> getMoimInfo(
 	 @PathVariable("m_idx") int m_idx) {
 		 MeetingInfo moimInfo = moimInfoService.getMoimInfo3(m_idx);
 	 
 	 
 	 return new ResponseEntity<MeetingInfo>(moimInfo, HttpStatus.OK); }
 	 
+	 
+	 // 버튼 
+	 @GetMapping("/button/{m_idx}")
+	 @CrossOrigin
+	 public ResponseEntity<Integer> getButton(
+			 @PathVariable("m_idx") int m_idx,
+			 HttpServletRequest request
+			 ){
+		 HttpSession session = request.getSession(false);
+		 ResponseEntity<Integer> result = null;
+		 int member = 0;
+		 int cnt = 0;
+		 if(session != null & session.getAttribute("MemberIdx") != null) {
+			 int nidx = (Integer)session.getAttribute("MemberIdx");
+			 
+			 member = moimMemberService.moimMember(m_idx, nidx);
+			 // 0보다 크면 회원 아니면 비회원
+			 if(member>0) {
+				 
+				  cnt = moimMemberService.moimJang(m_idx, nidx);
+				 
+				 result = new ResponseEntity<Integer>(cnt>0?2:1 , HttpStatus.OK);
+				 
+			 }else {
+				 return new ResponseEntity<Integer>(0, HttpStatus.OK);
+			 }
+			
+		 }else {
+			 return new ResponseEntity<Integer>(-1, HttpStatus.OK);
+		 }
+		 
+		 
+		
+		 
+		return result;
+	 }
 		
 		
 }
