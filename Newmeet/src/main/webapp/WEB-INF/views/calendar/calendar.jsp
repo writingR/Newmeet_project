@@ -136,6 +136,7 @@ input::placeholder {
 
 .calList {
 	padding: 10px;
+	border-bottom: 1px solid #ddd;
 }
 
 .calList>h4 {
@@ -149,8 +150,11 @@ input::placeholder {
 	border: 1px solid black;
 }
 
+#detailDiv {
+}
+
 #detailInfo tr>td {
-	padding: 10px;
+	padding: 7px;
 
 }
 
@@ -165,6 +169,14 @@ input::placeholder {
 
 #listdown:hover {
 	background-color: #ddd;
+}
+
+#calJoinListLabel {
+	font-size: 16px;
+}
+
+#calJoinModal {
+	height: 400px;
 }
 
 </style>
@@ -203,8 +215,6 @@ input::placeholder {
 				</div>
 				<div class="modal-body" id="detailModal">
 					<!-- 모달 내용 -->
-					
-					
 				</div>
 				
 				<div class="modal-footer" id="detail-footer">
@@ -407,6 +417,33 @@ input::placeholder {
 		</div>
 	</div>
 	
+	<div class="modal modal-center fade" id="calJoinList" tabindex="-1" role="dialog"
+		aria-labelledby="calJoinListLabel" aria-hidden="true">
+	
+		<div class="modal-dialog modal-center modal-sm" role="document">
+			<div class="modal-content" id="calJoinModal">
+				<div class="modal-header">
+					<!-- 모달 이름 -->
+					<h5 class="modal-title" id="calJoinListLabel">참여자 목록</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body" id="joinlistModal">
+					<!-- 모달 내용 -->
+					
+					
+				</div>
+				
+				<div class="modal-footer">
+					<!-- data-dismiss="modal"를 통해 모달을 닫을수 있다. -->
+
+				</div>
+			</div>
+		</div>
+	</div>
+	
 
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f6e7a0224aef6815285d474f26a6c0d6&libraries=services"></script>
@@ -414,7 +451,7 @@ input::placeholder {
 <script>
 
 	$(document).ready(function(){
-		calList();
+		calList(100);
     
 	});
 
@@ -499,7 +536,7 @@ input::placeholder {
 					$('#calRegist03').modal('hide');
 
 					/* resetReg(); */
-					calList();
+					calList($('#m_Didx').text());
 					
 				}
 			}
@@ -507,15 +544,17 @@ input::placeholder {
 	}
 	
 	 // 일정 리스트 ajax 불러오기
-	function calList() {
+	function calList(m_idx) {
 		
 		var html = '';
 		var btn = '';
 		
+		var today = new Date();
+		
 		
 		$.ajax({
 			
-			url: 'http://localhost:8080/nm/cal',
+			url: 'http://localhost:8080/nm/cal/'+m_idx,
 			type: 'get',
 			dataType: 'json',
 			success: function(data) {
@@ -529,13 +568,20 @@ input::placeholder {
 					var edate = (enddate.toLocaleString().slice(0,-3));
 					
 					/* document.write(sysdate.toISOString()); */
-					
-					html += '<div class="calList" style="cursor:pointer" id="calList" onclick="calDetail('+ data[i].c_idx + ')">\n';
-					html += '<h4>' + data[i].c_title +'</h4>\n';
-					html += '<h5>' + '일정\t' + dateArray[0]+'년'+dateArray[1]+'월'+dateArray[2]+'일'+dateArray[3]+'</h5>\n';
-					html += '<h6>' + '참가 인원 : ' + data[i].c_count + '\t|\t신청마감일 : ' + edate + '</h6>\n';
-					html += '</div><br>\n'; 
-					
+					if(today>data[i].c_date || today>data[i].c_edate) {
+						html += '<div class="calList" id="calList" onclick="calDetail('+ data[i].c_idx + ')" style="background-color:#F8EFBA;">\n';
+						html += '<h4>마감 | ' + data[i].c_title +'</h4>\n';
+						html += '<h5>' + '일정\t' + dateArray[0]+'년'+dateArray[1]+'월'+dateArray[2]+'일'+dateArray[3]+'</h5>\n';
+						html += '<h6>' + '참가 인원 : ' + data[i].c_count + '\t|\t신청마감일 : ' + edate + '</h6>\n';
+						html += '</div><br>\n'; 
+							
+					} else {
+						html += '<div class="calList" style="cursor:pointer" id="calList" onclick="calDetail('+ data[i].c_idx + ')">\n';
+						html += '<h4>' + data[i].c_title +'</h4>\n';
+						html += '<h5>' + '일정\t' + dateArray[0]+'년'+dateArray[1]+'월'+dateArray[2]+'일'+dateArray[3]+'</h5>\n';
+						html += '<h6>' + '참가 인원 : ' + data[i].c_count + '\t|\t신청마감일 : ' + edate + '</h6>\n';
+						html += '</div><br>\n'; 
+					}
 					
 					
 				}
@@ -561,7 +607,7 @@ input::placeholder {
 		
 		$.ajax({
 			
-			url: 'http://localhost:8080/nm/cal/'+c_idx,
+			url: 'http://localhost:8080/nm/cal/ByIdx/'+c_idx,
 			type: 'get',
 			dataType: 'json',
 			success: function(data) {
@@ -574,30 +620,13 @@ input::placeholder {
 				
 				
 				
-				content += '<div id=""><br>\n';
-				content += '<h4 id="c_Didx">'+c_idx+'</h4><br>\n';
-				content += '<h3>모임 정보</h3><br>\n';
-				content += '<hr>';
 				content += '<table id="detailInfo">';
-				content += '<tr>';
-				content += '<td><h5>모임예정일</h5></td>';
-				content += '<td><h5 id="c_Ddate">'+dateArray[0]+'년'+dateArray[1]+'월'+dateArray[2]+'일'+dateArray[3]+'</h5></td>';
-				content += '</tr>';
-				content += '<tr>';
-				content += '<td><h5>신청마감일</h5></td>';
-				content += '<td><h5 id="c_Dedate">'+edate+'</h5></td>';
-				content += '</tr>';
+				content += '<tr>'
+				content += '<td colspan="2"><h3>모임 정보</h3></td>\n<br>';
+				content += '</tr>'
 				content += '<tr>';
 				content += '<td><h5>모임이름</h5></td>';
 				content += '<td><h5 id="c_Dtitle">'+data.c_title+'</h5></td>';
-				content += '</tr>';
-				content += '<tr>';
-				content += '<td><h5>참가비용</h5></td>';
-				content += '<td><h5>'+data.c_pay+' 원</h5></td>';
-				content += '</tr>';
-				content += '<tr>';
-				content += '<td><h5>참가인원</h5></td>';
-				content += '<td><h5 id="c_Dcount">'+data.c_count+'</h5></td>';
 				content += '</tr>';
 				content += '<tr>';
 				content += '<td><h5>모임장소</h5></td>';
@@ -607,9 +636,32 @@ input::placeholder {
 				content += '<td><h5>주소</h5></td>';
 				content += '<td><h5>'+data.c_address+'</h5></td>';
 				content += '</tr>';
-				
+				content += '<tr>';
+				content += '<td><h5>모임예정일</h5></td>';
+				content += '<td><h5 id="c_Ddate">'+dateArray[0]+'년'+dateArray[1]+'월'+dateArray[2]+'일'+dateArray[3]+'</h5></td>';
+				content += '</tr>';
+				content += '<tr>';
+				content += '<td><h5>신청마감일</h5></td>';
+				content += '<td><h5 id="c_Dedate">'+edate+'</h5></td>';
+				content += '</tr>';
+				content += '<tr>'
+				content += '<td colspan="2" id="joinInfoMsg"><h3>참가 정보</h3></td>\n<br>';
+				content += '</tr>'
+				content += '<tr>';
+				content += '<td><h5>참가비용</h5></td>';
+				content += '<td><h5>'+data.c_pay+' 원</h5></td>';
+				content += '</tr>';
+				content += '<tr>';
+				content += '<td><h5>참가인원</h5></td>';
+				content += '<td><h5 id="c_Dcount">'+data.c_count+'</h5></td>';
+				content += '</tr>';
+				content += '<tr>';
+				content += '<td><h5>참여자 목록</h5></td>';
+				content += '<td><h5 onclick="(calJoinList('+data.c_idx+'))" style="cursor:pointer">보기</h5></td>';
+				content += '</tr>';
 				content += '</table>';
-				content += '</div>'
+				content += '<h4 id="c_Didx" style="display:none;">'+c_idx+'</h4><br>\n';
+				content += '<h4 id="m_Didx" style="display:none;">'+data.m_idx+'</h4><br>\n';
 				
 				/* 
 				$('#c_Didx').val(c_idx);
@@ -635,6 +687,33 @@ input::placeholder {
 			
 		});
 		
+	}
+	
+	function calJoinList(c_idx) {
+		
+		$('#calJoinList').modal('show');
+		
+		var content = '';
+		
+		$.ajax({
+			
+			url: 'http://localhost:8080/nm/calMember/'+c_idx,
+			type: 'get',
+			dataType: 'json',
+			success: function(data) {
+				
+				content += '<h5> 총 참여자 수: '+ data.length + '<h5><br>';
+				
+				for(var i=0; i<data.length; i++) {
+					content += '<h5>' + data[i].nemail +'\t'+ data[i].nnic + '</h5>\n';
+						
+				}
+
+				$('#joinlistModal').html(content);
+			}
+			
+			
+		});
 	}
 	
 	// 일정 상세 페이지에서 삭제 버튼 클릭시 ajax 처리
@@ -676,7 +755,7 @@ input::placeholder {
 		
 		$.ajax({
 			
-			url: 'http://localhost:8080/nm/cal/'+c_idx,
+			url: 'http://localhost:8080/nm/cal/ByIdx/'+c_idx,
 			type: 'get',
 			dataType: 'json',
 			success: function(data) {
@@ -763,7 +842,7 @@ input::placeholder {
 		
 		html += '<div class="calList" style="background-color: #ddd;" id="calList">\n';
 		html += '<h4>' + $('#c_Dtitle').text() + '</h4>\n';
-		html += '<img id="listdown" src="<c:url value="/static/img/listdown.png" />" onclick="calChoiceChk(); calList();" style="float:right; cursor:pointer;">\n';
+		html += '<img id="listdown" src="<c:url value="/static/img/listdown.png" />" onclick="calChoiceChk(); calList('+$('#m_Didx').text()+');" style="float:right; cursor:pointer;">\n';
 		html += '<h5>' + $('#c_Ddate').text() + '</h5>\n';
 		html += '<h6>' + '참가 인원 : ' + $('#c_Dcount').text() + '\t|\t신청마감일 : ' + $('#c_Dedate').text() + '</h6>\n';
 		html += '</div><br>\n';
@@ -803,6 +882,9 @@ input::placeholder {
 					if(data=='success') {
 						alert('참가신청이 완료되었습니다.');
 					
+					} else {
+						
+						alert('이미 참여한 일정입니다.');
 					}
 				
 				}

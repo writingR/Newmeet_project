@@ -63,10 +63,11 @@ public class CalRestFulController {
 	}
 	
 	@CrossOrigin
-	@GetMapping
-	public ResponseEntity<List<CalendarInfo>> getAllList() {
+	@GetMapping("/{m_idx}")
+	public ResponseEntity<List<CalendarInfo>> getAllList(@PathVariable("m_idx") int m_idx) {
 		
-		List<CalendarInfo> list = listService.list();
+		List<CalendarInfo> list = listService.list(m_idx);
+		
 		
 		ResponseEntity<List<CalendarInfo>> entity = new ResponseEntity<List<CalendarInfo>>(list, HttpStatus.OK);
 		
@@ -74,7 +75,7 @@ public class CalRestFulController {
 	}
 	
 	@CrossOrigin
-	@GetMapping("/{c_idx}")
+	@GetMapping("/ByIdx/{c_idx}")
 	public ResponseEntity<CalendarInfo> getCalInfo(@PathVariable("c_idx") int c_idx){
 		
 		CalendarInfo info = detailService.getDetailData(c_idx);

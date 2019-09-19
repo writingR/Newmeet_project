@@ -16,9 +16,17 @@ public class CalCreateMemberService {
 	
 	public int calMemberCreate(int c_idx, int nidx) {
 		
+		int rCnt = 0;
+		
 		dao = template.getMapper(CalDaoInterface.class);
 		
-		int rCnt = dao.createCalMember(c_idx, nidx);
+		rCnt = dao.selectCalMember(c_idx, nidx);
+		
+		if(rCnt>0) {
+			rCnt = 0;
+		} else {
+			rCnt = dao.createCalMember(c_idx, nidx);
+		}
 		
 		return rCnt;
 	}

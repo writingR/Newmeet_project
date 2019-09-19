@@ -20,13 +20,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="c_edate" column="c_edate" />
 	</resultMap>
 	
+	
 	<insert id="createCalendar" parameterType="com.xy.nm.calendar.domain.CalendarInfo">
 		insert into Calendar (m_idx, c_title, c_pay, c_count, c_place, c_address, c_date, c_edate)
 		values (#{m_idx}, #{c_title}, #{c_pay}, #{c_count}, #{c_place}, #{c_address}, #{c_date}, #{c_edate})
 	</insert>
 
 	<select id="calList" resultMap="resultCalendarInfo">
-		select * from Calendar order by c_date
+		select * from Calendar where m_idx=#{m_idx} order by c_date
 	</select>
 
 
@@ -48,5 +49,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		values (#{param1}, #{param2})
 	</insert>
 	
+	<select id="countCalMember" resultType="int">
+		select * from cMember where c_idx=#{c_idx}
+	</select>
+	
+	<select id="joinCalMember" resultType="com.xy.nm.calendar.domain.CalJoinMember">
+		select * from Member m inner join cMember c on m.nidx=c.nidx where c.c_idx=#{c_idx}
+	</select>
+	
+	<select id="selectCalMember" resultType="int">
+		select count(*) from cMember where c_idx=#{param1} and nidx=#{param2}
+	</select>
 	
 </mapper>
