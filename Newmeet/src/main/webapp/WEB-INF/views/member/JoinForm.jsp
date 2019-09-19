@@ -84,7 +84,7 @@
 			 	regformData.append("npw",$('#npw').val());
 			 	regformData.append("nnic",$('#nnic').val()); 
 				$.ajax({
-					url : '/nm/mem/regist',
+					url : '/nm/regist',
 					type : 'post',
 					data :regformData,
 					processData: false,
@@ -92,7 +92,7 @@
 					success : function(data) {
 						if (data == 'success') {
 							alert('회원가입에 성공하였습니다.');
-							location.replace('main')
+							location.replace('main');
 						} else if (data == 'fail') {
 							alert('오류가 발생하였습니다.');
 						} 
@@ -107,7 +107,7 @@
 		$('#nemail').focusout(function(){
 				
 				$.ajax({
-					url: '/nm/mem/idCheck',
+					url: '/nm/idCheck',
 					type: 'get',
 					data: {nemail: $(this).val() },
 					success: function(data){
@@ -138,7 +138,7 @@
 		$('#nnic').focusout(function(){
 			
 			$.ajax({
-				url: '/nm/mem/nicCheck',
+				url: '/nm/nicCheck',
 				type: 'get',
 				data: {nnic: $(this).val() },
 				success: function(data){

@@ -10,6 +10,12 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <%@include file="/WEB-INF/views/frame/link.jsp"%>
 </head>
+<script>
+function findPw(){
+	 
+	 window.open("FindPw","new","width=470, height=200, resizable=no, scrollbars=no, status=no, location=no, directories=no;");
+	}
+</script>
 <body>
 
 <%@include file="/WEB-INF/views/frame/header.jsp"%>
@@ -35,7 +41,7 @@
 			<%-- <a href="<c:url value="/Welcome" />" style="margin-left:80px;color:black;">아직 뉴밋 회원이 아니세요?</a><br>
 			<a href="" style="margin-left:80px;color:black;">비밀번호를 잊어버리셨습니까?</a> --%>
 			<span>아직 뉴밋 회원이 아니세요? </span><a href="<c:url value="/Welcome" />" style="color:black;font-size:16px;font-weight:bold;">회원가입</a><span>하러 갈게요!</span><br>
-			<a href="">비밀번호를 잊어버리셨습니까?</a>
+			<a href="" onclick="findPw()">비밀번호를 잊어버리셨습니까?</a>
 	</form>
 
 
@@ -44,7 +50,7 @@
    
 		  function Loginclick() {
 				$.ajax({
-					url : '/nm/mem/login',
+					url : '/nm/login',
 					type : 'POST',
 					data : JSON.stringify({
 						nemail : $('#Nemail').val(),
@@ -60,7 +66,7 @@
 							console.log(data);
 						} else if (data != null) {
 							console.log(data);
-							var session = sessionStorage.getItem("loginKey");
+							var session = sessionStorage.getItem("MemberIdx");
 							console.log(session);
 							console.log(typeof session);
 							alert('로그인 되었습니다.');

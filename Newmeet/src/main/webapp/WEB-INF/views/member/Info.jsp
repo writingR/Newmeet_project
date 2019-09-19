@@ -20,7 +20,7 @@ border-radius: 50px;
 </head>
 <body>
 <%@include file="/WEB-INF/views/frame/header2.jsp"%>
-<img alt="" src="static/img/banner2.png">
+<img alt="" src="${pageContext.request.contextPath}/static/img/banner2.png">
 <br><br><br>
 <%-- 		<h1
 			style="width: 400px; margin: 0 auto; color: black; font-size: 50px; font-weight: bold;">내정보</h1>
@@ -34,23 +34,26 @@ border-radius: 50px;
 		<br>
 		<br>
 	</div> --%>
-
+	
+	
+	 
 	<div class="card text-center" style="width:1000px;margin:0 auto;">
 		<div class="card-header">내정보</div>
 		<div class="card-body">
 			<!-- <h5 class="card-title">Special title treatment</h5>
 			<p class="card-text">With supporting text below as a natural
 				lead-in to additional content.</p> -->
-			<img id="profile" src="/nm/uploadfile/${MemberImg}">
+			
+			<img id="profile" src="/nm/uploadfile/${MemberInfo.nphoto}">
 			<br> <span style="color: black; font-weight: bold;vertical-align:10px;">이메일 :
-			</span><span style="vertical-align:10px;">${MemberEmail}</span><br>
+			</span><span style="vertical-align:10px;">${MemberInfo.nemail}</span><br>
 			<span style="color: black; font-weight: bold;">닉네임:
-			</span><span>${MemberNic}</span><br>	
+			</span><span>${MemberInfo.nnic}</span><br>	
 			<a href="<c:url value="/Mypage" />" class="btn btn-light">마이페이지로 가기</a>
 		</div>
 		<div class="card-footer text-muted">수정을 원하시면 프로필관리로 가시면 됩니다!!!</div>
 	</div><br><br>
-
+	
 	
 
 
@@ -80,6 +83,6 @@ border-radius: 50px;
 	</script> -->
 	
 	<%@include file="/WEB-INF/views/frame/footer.jsp"%>
-
+	<%@include file="/WEB-INF/views/frame/sc.jsp"%>
 </body>
 </html>

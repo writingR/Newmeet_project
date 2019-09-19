@@ -36,15 +36,15 @@
 			<!-- <button type="button" class="btn btn-primary" data-toggle="modal" onclick="edit1('+ data[i].cidx + ')"
 			data-target="#exampleModal" data-whatever="@fat">수정</button> -->
 			<tr>
-				<th scope="row1">${MemberIdx}</th>
-				<th scope="row2">${MemberImg}</th>
-				<th scope="row3">${MemberEmail}</th>
-				<th scope="row4">${MemberNic}</th>
-				<th scope="row5">${MemberPw}</th>
+				<th scope="row1">${MemberInfo.nidx}</th>
+				<th scope="row2">${MemberInfo.nphoto}</th>
+				<th scope="row3">${MemberInfo.nemail}</th>
+				<th scope="row4">${MemberInfo.nnic}</th>
+				<th scope="row5">${MemberInfo.npw}</th>
 				<th scope="row6"><button type="button" class="btn btn-primary" data-toggle="modal" onclick="edit1(${MemberIdx})"
 				data-target="#exampleModal" data-whatever="@fat">수정</button></th>
 				<th scope="row7"><button type="button" class="btn btn-danger"
-						onclick="delete1('+ data.nidx + ')">삭제</button></th>
+						onclick="delete1(${MemberInfo.nidx})">삭제</button></th>
 			</tr>
 		</tbody>
 	</table>
@@ -94,20 +94,20 @@
 	<script>
 		$(document).ready(function() {
 			/* var nidx = session.getAttribute("loginKey"); */
-			var nidx = '${MemberIdx}';
+			var nidx = '${MemberInfo.nidx}';
 			/* var nemail = session.getAttribute("MemberEmail"); */
-			var nemail = '${MemberEmail}';
+			var nemail = '${MemberInfo.nemail}';
 			/* var nnic = session.getAttribute("MemberNic"); */
-			var nnic = '${MemberNic}';
+			var nnic = '${MemberInfo.nnic}';
 			/* var npw = session.getAttribute("MemberPw"); */
-			var npw = '${MemberPw}';
+			var npw = '${MemberInfo.npw}';
 		});				
 		function edit1(nidx) {
 			
 			if (confirm('수정하시겠습니까?')) {
 				
 				$.ajax({
-							url : '/nm/mem/user/'+ nidx,
+							url : '/nm/user/'+ nidx,
 							type : 'GET',
 							success : function(data) {
 								
@@ -122,21 +122,21 @@
 		
 		function editOk() {
 			var editformData = new FormData();
-			editformData.append("idx",$('#idx').val());
+			editformData.append("nidx",$('#idx').val());
 		//	editformData.append("Nemail",$('#email').val());//
-			editformData.append("nic",$('#nic').val());
+			editformData.append("nnic",$('#nic').val());
 			/* editformData.set("nic",$('#nic').val()); */
-			editformData.append("pw",$('#pw').val());
+			editformData.append("npw",$('#pw').val());
 			
 			$.ajax({
-					url : '/nm/mem/edit/'+ $('#idx').val(),
+					url : '/nm/edit/'+ $('#idx').val(),
 					type : 'POST',
 					data :editformData,
 					processData: false,
 					contentType: false,
 					success : function(data) {
 						
-						alert(editformData.get('pw'));
+						/* alert(editformData.get('pw')); */
 						//alert(editformData.get('nic'));
 						
 						alert('수정되었습니다.');
@@ -152,11 +152,12 @@
 		function delete1(nidx) {
 			if (confirm('정말 삭제하시겠습니까?')) {
 				$.ajax({  
-							url : '/nm/mem/'+ nidx,
+							url : '/nm/'+ nidx,
 							type : 'DELETE',
 							success : function(data) {
 								alert('삭제가 완료되었습니다.');
-								location.reload();
+								/* location.reload(); */
+								location.replace('main');
 							}
 						});
 			} else {

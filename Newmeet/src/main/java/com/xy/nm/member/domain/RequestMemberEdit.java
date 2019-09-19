@@ -55,10 +55,11 @@ public class RequestMemberEdit {
 	public Member toMember() {
 		
 		Member info = new Member();
+		info.setNidx(nidx);
 		info.setNemail(nemail);
 		info.setNpw(npw);
 		info.setNnic(nnic);
-		
+
 		return info;
 		
 	}

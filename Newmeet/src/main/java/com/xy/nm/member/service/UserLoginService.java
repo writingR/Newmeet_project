@@ -36,9 +36,9 @@ public class UserLoginService {
 			} else if(mem.getVerify() == 'Y') {
 				loginChk = 2;
 				HttpSession session = request.getSession(true);
-				session.setAttribute("loginKey", mem.getNidx());
+				session.setAttribute("MemberIdx", mem.getNidx());
 				System.out.println(session);
-				System.out.println(session.getAttribute("loginKey"));
+				System.out.println(session.getAttribute("MemberIdx"));
 			}
 			
 		}
@@ -69,9 +69,12 @@ public class UserLoginService {
 				HttpSession session = request.getSession(true);
 				session.setAttribute("MemberIdx", mem.getNidx());
 				session.setAttribute("MemberImg", mem.getNphoto());
-				session.setAttribute("MemberEmail", mem.getNemail());
-				session.setAttribute("MemberPw", mem.getNpw());
-				session.setAttribute("MemberNic", mem.getNnic());
+				/*
+				 * session.setAttribute("MemberImg", mem.getNphoto());
+				 * session.setAttribute("MemberEmail", mem.getNemail());
+				 * session.setAttribute("MemberPw", mem.getNpw());
+				 * session.setAttribute("MemberNic", mem.getNnic());
+				 */
 				
 				System.out.println(session);
 				/* System.out.println(session.getAttribute("loginKey")); */
@@ -82,6 +85,18 @@ public class UserLoginService {
 		return loginChk;
 
 	}
+	
+	/*
+	 * public Member findPw(String npw) {
+	 * 
+	 * dao = template.getMapper(MemberInterDao.class);
+	 * 
+	 * Member temp = null;
+	 * 
+	 * temp = dao.getPw(npw);
+	 * 
+	 * return temp; }
+	 */
 	
 	
 }

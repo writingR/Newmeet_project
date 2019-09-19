@@ -8,7 +8,7 @@
 
 			<div class="col-12 mb-3 mb-md-0 col-md-4 order-1 order-md-2 text-center">
                 <!-- <a href="index.html" class="js-logo-clone">Shoppers</a> -->
-                <a href="<c:url value="/" />"><img alt="" src="static/img/logo.png" style="width:140px;height:140px;margin-left:510px;"></a>
+                <a href="<c:url value="/" />"><img alt="" src="${pageContext.request.contextPath}/static/img/logo.png" style="width:140px;height:140px;margin-left:510px;"></a>
             </div>
 
      <!--        <div class="col-6 col-md-4 order-2 order-md-1 site-search-icon text-left">

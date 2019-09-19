@@ -46,7 +46,7 @@
                 <li class="phone"><a href="tel://23923929210">+2 392 3929 210</a></li>
                 <li class="email">emailaddress@domain.com</li>
               </ul> -->
-              <img src="bootstrap/images/logo.png" style="width: 80x;height: 80px;">
+              <img src="${pageContext.request.contextPath}/static/img/logo.png" style="width: 80x;height: 80px;">
               <h5 style="color: black">Contact</h5>
               <p>test0062500@gmail.com</p>
             </div>

@@ -5,9 +5,11 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +22,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.xy.nm.member.dao.MemberInterDao;
+import com.xy.nm.member.domain.Email;
 import com.xy.nm.member.domain.Member;
 import com.xy.nm.member.domain.RequestMemberEdit;
 import com.xy.nm.member.domain.RequestMemberLogin;
@@ -28,13 +33,14 @@ import com.xy.nm.member.domain.RequestMemberRegist;
 import com.xy.nm.member.service.MailSenderService;
 import com.xy.nm.member.service.UserDeleteService;
 import com.xy.nm.member.service.UserEditService;
+import com.xy.nm.member.service.UserInfoService;
 import com.xy.nm.member.service.UserJoinService;
 import com.xy.nm.member.service.UserListService;
 import com.xy.nm.member.service.UserLoginService;
 import com.xy.nm.member.service.UserVerifyService;
 
 @RestController
-@RequestMapping("/mem")
+@RequestMapping
 public class MemberController {
 
 	@Autowired
@@ -51,8 +57,12 @@ public class MemberController {
 	private UserVerifyService userVerifyService;
 	@Autowired
 	private UserDeleteService userDeleteService;
+	@Autowired
+	private UserInfoService userInfoService;
 	
-	
+	private MemberInterDao dao;
+	@Autowired
+	private SqlSessionTemplate template;
 	
 	// 전체리스트 출력
 	@CrossOrigin
@@ -121,7 +131,73 @@ public class MemberController {
 		return "인증확인 ---->" + result;
 
 	}
-
+	
+	// 내정보
+	@RequestMapping(value ="/Info", method= RequestMethod.GET)
+	public ModelAndView getInfo(Member mem, HttpServletRequest request, Model model) {
+		
+		System.out.println(mem.toString());
+		HttpSession session = request.getSession();
+		
+		
+		mem.setNidx((int)session.getAttribute("MemberIdx"));
+		Member memberInfo = userInfoService.getInfo(mem);
+		model.addAttribute("MemberInfo", memberInfo);
+		
+		return new ModelAndView("member/Info");
+		
+	}
+	
+	
+	// 마이페이지
+		@RequestMapping(value ="/Mypage", method= RequestMethod.GET)
+		public ModelAndView getMypage(Member mem, HttpServletRequest request, Model model) {
+			
+			System.out.println(mem.toString());
+			HttpSession session = request.getSession();
+			
+			mem.setNidx((int)session.getAttribute("MemberIdx"));
+			Member memberInfo = userInfoService.getInfo(mem);
+			model.addAttribute("MemberInfo", memberInfo);
+			
+			return new ModelAndView("member/Mypage");
+			
+	}
+	
+	
+	// 프로필사진
+	@RequestMapping(value ="/loginOk", method= RequestMethod.GET)
+	public ModelAndView getProfile(Member mem, HttpServletRequest request, Model model) {
+			
+			System.out.println(mem.toString());
+			HttpSession session = request.getSession();
+			
+			mem.setNidx((int)session.getAttribute("MemberIdx"));
+			Member memberInfo = userInfoService.getInfo(mem);
+			model.addAttribute("MemberInfo", memberInfo);
+			
+			return new ModelAndView("main2");
+			
+	}
+	
+	
+	// 프로필관리
+		@RequestMapping(value ="/Modi", method= RequestMethod.GET)
+		public ModelAndView getModify(Member mem, HttpServletRequest request, Model model) {
+				
+				System.out.println(mem.toString());
+				HttpSession session = request.getSession();
+				
+				mem.setNidx((int)session.getAttribute("MemberIdx"));
+				Member memberInfo = userInfoService.getInfo(mem);
+				model.addAttribute("MemberInfo", memberInfo);
+				
+				return new ModelAndView("member/Modify");
+				
+	}
+	
+	
+	
 	// 로그인
 	@CrossOrigin
 	@PostMapping(value = "/login")
@@ -159,6 +235,45 @@ public class MemberController {
 		return new ResponseEntity<String>(LoginResult, HttpStatus.OK);
 
 	}
+	
+	// 비밀번호 찾기
+	@CrossOrigin
+	@PostMapping(value = "/")
+	public ResponseEntity<String> FindPw(@RequestBody RequestMemberLogin member, HttpServletRequest request) {
+
+			String LoginResult = "";
+			String nemail = member.getNemail();
+			String npw = member.getNpw();
+
+			int loginChk = userLoginService.memberInfo(nemail, npw, request);
+
+			switch (loginChk) {
+
+			// 0 - 오류
+			// 1 - 미인증회원
+			// 2 - 인증완료 !!
+			case 0:
+				LoginResult = "fail";
+				break;
+			case 1:
+				LoginResult = "yet";
+				break;
+			case 2:
+
+				int nidx = userEditService.getUser(nemail).getNidx();
+
+				LoginResult = String.valueOf(nidx);
+
+				System.out.println("LoginResult : " + loginChk);
+
+				break;
+
+			}
+			HttpSession session = request.getSession();
+			return new ResponseEntity<String>(LoginResult, HttpStatus.OK);
+
+		}
+	
 
 	// 로그아웃
 	@CrossOrigin
@@ -185,6 +300,42 @@ public class MemberController {
 
 		return userJoinService.nicCheck(nnic);
 	}
+	
+	// 비밀번호 찾기 이메일 발송
+		@RequestMapping("/sendTempPw")
+		@ResponseBody
+		public String sendEmailPw(HttpServletRequest request, Model model, HttpSession session) throws Exception {
+
+			
+			Email email = new Email();
+		
+		 String id = (String)request.getParameter("nemail"); String pw =
+		 (String)request.getParameter("npw");
+		 
+			
+		System.out.println(id);
+			
+			int result = 0;
+
+			String msg = "고객님의 임시비밀번호는 뉴밋입니다";
+					
+			if(pw != null) {
+				email.setContent(msg);
+				email.setReciver(id);
+				email.setSubject(id + " 님의 비밀번호 찾기 인증 메일입니다.");
+				mailSenderService.send(email);
+				result = 1;
+				model.addAttribute("result", result);
+
+				return "member/sendChk";
+			} else {
+				result = 0;
+				model.addAttribute("result", result);
+				return "member/sendChk";
+			}
+		}
+	
+	
 
 	// 회원탈퇴
 	@CrossOrigin

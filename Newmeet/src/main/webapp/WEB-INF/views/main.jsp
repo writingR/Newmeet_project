@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <%@include file="/WEB-INF/views/frame/link.jsp"%>
 </head>
@@ -40,7 +40,7 @@ function main_popup(){
 	</div>
 	<div>
 	<img src="static/img/main1.png">
-	<span style="color:black;">인기모임 보러가기</span>
+	<span style="color:black;">모임보러가기</span>
 	<span style="font-size:55px;font-weight:bold;color:black;font-family: 'Anton', sans-serif;"><a href="#" style="color:black;">  go!</a></span>
 	</div>
 	<div class="site-section site-section-sm site-blocks-1">

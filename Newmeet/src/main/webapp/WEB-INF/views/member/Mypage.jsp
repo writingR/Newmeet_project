@@ -36,10 +36,14 @@
 <%@include file="/WEB-INF/views/frame/link.jsp"%>
 </head>
 <body>
+<%@include file="/WEB-INF/views/frame/header2.jsp"%>
 <%-- ${sessionScope.loginKey}<h1>로그인키</h1>
  --%>
-<%@include file="/WEB-INF/views/frame/header2.jsp"%>
-<img alt="" src="static/img/banner2.png">
+<%-- <%@include file="/WEB-INF/views/frame/header2.jsp"%> --%>
+
+
+
+<img alt="" src="${pageContext.request.contextPath}/static/img/banner2.png">
 
 <br><br><br>
 
@@ -66,7 +70,7 @@
 	function button_1() {
 		var nidx = sessionStorage.getItem("loginKey");
 		$.ajax({
-				url : '/nm/mem/user/' + nidx,
+				url : '/nm/user/' + nidx,
 				type : 'GET',
 				success : function(data) {
 						var html = '';
@@ -84,7 +88,7 @@
 	function button_2() {
 		var nidx = sessionStorage.getItem("loginKey");
 		$.ajax({
-				url : '/nm/mem/user/' + nidx,
+				url : '/nm/user/' + nidx,
 				type : 'GET',
 				success : function(data) {
 						var html = '';

@@ -7,10 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
-<div >
-<img alt="" src="static/img/detail.png"><br>
-<a onclick="window.close()" style="margin-left:270px;margin-top:300px;font-size: 12px; color: black;cursor:pointer;" >창 닫을게요!</a>
-</div>
+	<h1>안녕하세요!</h1>
 </body>
 </html>

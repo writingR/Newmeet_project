@@ -32,9 +32,7 @@
 		
 	
 	<select id="selectById" resultMap="Member" >
-
 		select * from newMeet_RDS.Member where nemail = #{nemail}
-
 	</select>
 
 
@@ -47,8 +45,12 @@
 		select * from newMeet_RDS.Member where nidx = #{nidx}
 		<!-- select * from bitcamp.mem where id like concat(#{id}, '%') -->
 	</select>
-
-
+	
+	<select id="viewInfo" resultMap="Member" >
+		select nphoto,nemail,nnic,npw,nidx from newMeet_RDS.Member where nidx = #{nidx}
+		<!-- select * from bitcamp.mem where id like concat(#{id}, '%') -->
+	</select>
+	
 	<insert id="insertUser" parameterType="com.xy.nm.member.domain.Member">
 		insert into newMeet_RDS.Member (nphoto,nemail, npw,nnic,code) values (#{nphoto},#{nemail},#{npw},#{nnic},#{code})
 	</insert>
@@ -73,7 +75,6 @@
 			parameterType="com.xy.nm.member.domain.Member">
 		update newMeet_RDS.Member set nnic=#{nnic},npw=#{npw} where nidx=#{nidx}
 	</update>
-	
 	
 	
 </mapper>	

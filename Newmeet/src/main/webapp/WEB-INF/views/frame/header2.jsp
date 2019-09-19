@@ -10,7 +10,7 @@
 			
 			<div class="col-12 mb-3 mb-md-0 col-md-4 order-1 order-md-2 text-center">
                 <!-- <a href="index.html" class="js-logo-clone">Shoppers</a> -->
-                <a href="<c:url value="/loginOk" />"><img alt="" src="static/img/logo.png" style="width:140px;height:140px;margin-left:510px;"></a>
+                <a href="<c:url value="/loginOk" />"><img alt="" src="${pageContext.request.contextPath}/static/img/logo.png" style="width:140px;height:140px;margin-left:510px;"></a>
             </div>
 			<%-- <div class="col-12 mb-3 mb-md-0 col-md-4 order-1 order-md-2 text-center">
                 <!-- <a href="index.html" class="js-logo-clone">Shoppers</a> -->
@@ -26,10 +26,10 @@
 
 
             <div class="col-6 col-md-4 order-3 order-md-3 text-right">
-              <div class="site-top-icons" style="width:450px;margin:0 700px;">
+              <div class="site-top-icons" style="width:350px;margin:0 700px;">
                 <ul>
-                  <img style="width: 30px;height:30px;border-radius: 50px;" id="profile" src="/nm/uploadfile/${MemberImg}">
-                  ${MemberNic} <span style="color:black;font-size:16px; font-weight:450"> 님 :></span> 
+                  <img style="width: 30px;height:30px;border-radius: 50px;" id="profile" src="/nm/uploadfile/${MemberInfo.nphoto}">
+                  ${MemberInfo.nnic} <span style="color:black;font-size:16px; font-weight:450"> 님 :></span> 
                   <li>
                   <a href="<c:url value="/main" />" style="font-family: 'Nanum Gothic Coding', monospace;color:black;margin-left: 20px;font-weight:bold;" onclick="logout()">로그아웃</a></li>
                   <li> 
@@ -57,7 +57,7 @@
 		function logout() {
 			$.ajax({
 				
-				url : '/nm/mem/logout',
+				url : '/nm/logout',
 				type : 'GET',
 				success : function(data) {
 					alert(data);

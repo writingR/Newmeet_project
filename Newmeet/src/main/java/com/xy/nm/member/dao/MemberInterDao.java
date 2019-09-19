@@ -3,7 +3,8 @@ package com.xy.nm.member.dao;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import com.xy.nm.member.domain.Member;
 
@@ -17,6 +18,7 @@ public interface MemberInterDao {
 	public Member selectById(String nemail);
 	public Member selectByIdx(int nidx);
 	
+	public Member viewInfo(Member mem);
 	
 	public List<HashMap<String, Object>> selectList();
 	//내정보
@@ -24,11 +26,15 @@ public interface MemberInterDao {
 	
 	public int insertUser(Member mem) ;
 	public List<Member> selectAllList();
+	
 	//회원 수정
 	public int memUpdate(Member mem);
 	//회원 탈퇴
 	public int newMeetDelete(int nidx);
 	// 회원 이메일 인증 처리
 	public int verify(String nemail,String code);
+	
+	// 비밀번호 찾기 - 비밀번호 얻기
+	public Member getPw(String npw);
 	
 }

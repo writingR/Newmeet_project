@@ -1,7 +1,6 @@
 package com.xy.nm;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 
@@ -23,6 +22,12 @@ public class MainController {
 		@RequestMapping("/popup")
 		public String popUp() {
 			return "popup";
+
+		}
+		
+		@RequestMapping("/FindPw")
+		public String FindPw() {
+			return "FindPw";
 
 		}
 		
