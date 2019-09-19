@@ -114,8 +114,8 @@ $(document).ready(function(){
 			var html = '';
 			if(data == 2){
 				//alert('넌 모임장이지');
-				html += '<input type="button" value="수정">';
-				html += '<input type="button" value="삭제">';
+				html += '<a href="<c:url value="/moimedit"/>?m_idx=${m_idx}">수정</a>';
+				html += '<input type="button" onclick="moimdelete()" value="삭제">';
 				
 				$('#button').html(html);
 			}else if(data == 1){
@@ -140,6 +140,29 @@ $(document).ready(function(){
 	});
 	
 	});
+	
+	function moimdelete(){
+		var m_idx = ${m_idx};
+		
+		$.ajax({
+			url : 'http://localhost:8080/nm/meeting/'+ m_idx,
+			type : 'DELETE',
+			success : function(data) {
+				
+				if(data == 1){
+					alert('삭제완료 ~')
+					location.href="/nm/moimList";
+				}else{
+					alert('삭제안댐')
+				}
+				
+			}
+		
+	});
+		
+	}
+		
+	
 	function star(star){
 		var star = star;
 		var html = '';

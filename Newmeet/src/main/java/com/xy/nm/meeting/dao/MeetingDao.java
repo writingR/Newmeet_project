@@ -1,10 +1,12 @@
 package com.xy.nm.meeting.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.xy.nm.meeting.domain.MeetingInfo;
 import com.xy.nm.meeting.domain.MeetingLcategory;
 import com.xy.nm.meeting.domain.MeetingScategory;
+import com.xy.nm.meeting.domain.RequestMeetingEdit;
 
 
 
@@ -15,10 +17,14 @@ public interface MeetingDao {
 	public List<MeetingScategory> sCategoryList(int big_idx);
 	// 모임 생성
 	public int MeetingWrite(MeetingInfo meetingInfo);
+	// 모임 삭제
+	public int MoimDelete(int m_idx);
 	// 모임 생성후 m_idx 뽑아오기
 	public int SelectMidx(String m_name);
 	// 모임 리스트
 	public List<MeetingInfo> MeetingList();
+	// 모임 수정
+	public int MoimEdit(Map<String, Object> params);
 	// 모임 상세 정보 로그인
 	public MeetingInfo MeetingInfo(int m_idx,int nidx);
 	// 모임 상세 정보 비로그인

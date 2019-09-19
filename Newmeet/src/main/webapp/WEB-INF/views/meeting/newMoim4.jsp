@@ -17,7 +17,7 @@
 			<table>
 			<thead>
 			<tr>
-				<td><input type="file" id="m_img" name="m_img"></td>
+				<td><input type="file" id="m_img" name="m_img" value="null"></td>
 			</tr>
 				
 			</thead>
@@ -42,7 +42,7 @@
 		html += '<td><input type="hidden" id="m_name" name="m_name" value="' + sessionStorage.getItem("m_name") + '"></td>';
 		html += '</tr>';
 		html += '<tr>';
-		html += '<td><input type="hidden" id="m_cont" name="m_cont" value="' + sessionStorage.getItem("m_cont") + '"></td>';
+		html += '<td><input type="text" id="m_cont" name="m_cont" value="' + sessionStorage.getItem("m_cont").replace(/\"/g,'&quot;') + '"></td>';
 		html += '</tr>';
 		html += '<tr>';
 		html += '<td><input type="submit" value="모임 생성"></td>';
@@ -62,7 +62,9 @@
         formData.append("m_name",$('#m_name').val());
 		formData.append("m_cont",$('#m_cont').val());
 		formData.append("m_img",$('#m_img')[0].files[0]);
-		
+		if($('#m_img')[0].files[0] == null){
+			alert('사진을 선택해주세요');
+		}
 		
 		$.ajax({
 			url : 'http://localhost:8080/nm/meeting',
@@ -74,7 +76,7 @@
 				sessionStorage.setItem("m_idx",data);
 				
 				alert(data+':정확하게 추출');
-				location.href="/nm/newMoim5";
+				location.href="/nm/moimList";
 				
 			}
 			

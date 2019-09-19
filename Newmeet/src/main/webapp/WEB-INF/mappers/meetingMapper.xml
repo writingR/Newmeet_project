@@ -69,6 +69,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from newMeet_RDS.sCategory where big_idx=#{big_idx}
 	
 	</select>
+	<!-- 모임 수정 -->
+	<update id="MoimEdit" 
+			parameterType="com.xy.nm.meeting.domain.MeetingInfo">
+		update newMeet_RDS.Meeting set m_name=#{m_name},m_cont=#{m_cont},small_idx=#{small_idx} where m_idx = #{m_idx}
+	</update>
 <!-- 모임 생성 -->
 	<insert id="MeetingWrite"
 			parameterType="com.xy.nm.meeting.domain.MeetingInfo">
@@ -77,6 +82,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			values (#{small_idx},#{m_name},#{m_img},#{m_cont})
 	
 	</insert>
+	
 	<!-- 모임생성후 midx 추출 -->
 	<select id="SelectMidx"
 			resultType="int">
@@ -113,6 +119,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			resultType="int">
 	select mm_level from newMeet_RDS.mMember where m_idx=#{param1} and nidx=#{param2}
 	</select>
+	
+	<!-- 모임 삭제 -->
+	<delete id="MoimDelete">
+		delete from newMeet_RDS.Meeting where m_idx = #{param1}
+	</delete>
 	
 	
 	<!-- 총 좋아요 데이터 조건 -->

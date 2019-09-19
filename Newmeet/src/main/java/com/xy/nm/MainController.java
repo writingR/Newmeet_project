@@ -48,7 +48,30 @@ public class MainController {
 		return "meeting/moimList";
 	}
 	
-	
+	@RequestMapping("/moimedit")
+	public String moimedit(@RequestParam(value = "m_idx") int m_idx,
+			HttpServletRequest request, Model model) {
+		if(request.getSession().getAttribute("MemberIdx")!=null) {
+			int nidx = (Integer)request.getSession().getAttribute("MemberIdx");
+			MeetingInfo meetingInfo = moimInfoService.getMoimInfo(m_idx,nidx);
+			if(meetingInfo!=null) {
+				
+				model.addAttribute("m_name", meetingInfo.getM_name());
+				model.addAttribute("m_img", meetingInfo.getM_img());
+				model.addAttribute("m_cont", meetingInfo.getM_cont());
+				model.addAttribute("m_star", meetingInfo.getM_star());
+				model.addAttribute("m_like", meetingInfo.getM_like());
+				model.addAttribute("small_idx", meetingInfo.getSmall_idx());
+				model.addAttribute("m_stotal", meetingInfo.getM_stotal());
+				model.addAttribute("m_idx", meetingInfo.getM_idx());
+				model.addAttribute("nidx", meetingInfo.getNidx());
+				model.addAttribute("l_like", meetingInfo.getL_like());
+				
+				return "meeting/moimedit";
+		}
+	}
+		return "로그인 안댐";
+	}
 	
 	
 	@RequestMapping("/moimInfo")

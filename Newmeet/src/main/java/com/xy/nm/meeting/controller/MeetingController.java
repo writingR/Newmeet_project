@@ -1,6 +1,8 @@
 package com.xy.nm.meeting.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -10,18 +12,27 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.xy.nm.meeting.domain.MeetingInfo;
 import com.xy.nm.meeting.domain.MeetingLcategory;
 import com.xy.nm.meeting.domain.MeetingScategory;
+import com.xy.nm.meeting.domain.RequestMeetingEdit;
 import com.xy.nm.meeting.domain.RequestMeetingWrite;
 import com.xy.nm.meeting.service.CategoryListService;
+import com.xy.nm.meeting.service.ImageService;
 import com.xy.nm.meeting.service.MeetingWriteService;
+import com.xy.nm.meeting.service.MoimDeleteService;
+import com.xy.nm.meeting.service.MoimEditService;
 import com.xy.nm.meeting.service.MoimInfoService;
 import com.xy.nm.meeting.service.MoimListService;
 import com.xy.nm.meeting.service.MoimMemberService;
@@ -41,6 +52,12 @@ public class MeetingController {
 	private MoimInfoService moimInfoService;
 	@Autowired
 	private MoimMemberService moimMemberService;
+	@Autowired
+	private ImageService imageService;
+	@Autowired
+	private MoimDeleteService moimDeleteService;
+	@Autowired
+	private MoimEditService moimEditService;
 	
 	
 	// 대분류 리스트
@@ -72,7 +89,32 @@ public class MeetingController {
 							HttpStatus.OK);
 			return entity;
 		}
+	// 모임 수정
+		@CrossOrigin
+		@PutMapping
+		public ResponseEntity<Integer> edit(
+				RequestMeetingEdit regRequest
+				) {
+			System.out.println("수정중 1");
+			System.out.println(regRequest.getM_name());
+			MeetingInfo meetingInfo = regRequest.toMeetingInfo();
+			System.out.println(meetingInfo);
+			Map<String, Object> params = new HashMap<String, Object>();
+			
+			params.put("m_idx", meetingInfo.getM_idx());
+			params.put("m_name", meetingInfo.getM_name());
+			params.put("small_idx", meetingInfo.getSmall_idx());
+			params.put("m_cont", meetingInfo.getM_cont());
 	
+			
+			//request.getFile("m_img").getSize()
+			int resultCnt = moimEditService.edit(params);
+			
+			return new ResponseEntity<Integer>(
+					resultCnt >0? 1 : 0,
+					HttpStatus.OK
+					);
+		}
 	// 모임 생성
 		@CrossOrigin
 		@PostMapping
@@ -80,8 +122,10 @@ public class MeetingController {
 				RequestMeetingWrite regRequest,
 				MultipartHttpServletRequest request
 				) {
+			System.out.println(regRequest.getM_name());
+			System.out.println("2123  "+ request.getFile("m_img").getOriginalFilename());
 			
-			System.out.println("2  "+ request.getFile("m_img").getOriginalFilename());
+			
 			int m_idx = meetingWriteService.write(request, regRequest);
 			
 			
@@ -91,7 +135,30 @@ public class MeetingController {
 					);
 			
 		}
-	
+	// 서머노트 사진
+		@CrossOrigin
+		@RequestMapping(value = "/photo", method = RequestMethod.POST,produces =  "application/text; charset=utf8")
+		public ResponseEntity<String> summernote(
+				HttpServletRequest request,
+				@RequestParam("file") MultipartFile file
+				) {
+			
+			HttpSession session =	request.getSession(false);
+			int nidx = 0;
+			
+			if(session != null && session.getAttribute("MemberIdx") != null) {
+				nidx = (int)session.getAttribute("MemberIdx");
+			}
+			
+			String url = imageService.summernote(nidx, request, file);
+			
+			
+			return new ResponseEntity<String>(
+					"/nm/uploadfile/"+url,
+					HttpStatus.OK
+					);
+		
+		}
 		// 모임 리스트
 		@GetMapping("/list")
 		@CrossOrigin
@@ -155,5 +222,17 @@ public class MeetingController {
 		return result;
 	 }
 		
-		
+	// 모임 삭제	
+	 @CrossOrigin
+	 @DeleteMapping("/{m_idx}")
+	 public ResponseEntity<Integer> moimDelete(
+			 @PathVariable("m_idx") int m_idx){
+		 
+		 return new ResponseEntity<Integer>(
+					moimDeleteService.delete(m_idx)>0?1:0,
+					HttpStatus.OK
+					);
+		 
+	 }
+	 
 }

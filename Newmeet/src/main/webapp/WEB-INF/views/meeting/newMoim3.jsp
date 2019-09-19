@@ -1,33 +1,93 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="EUC-KR"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<%@ include file="../frame/sc.jsp" %>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.js"></script>
+    
 </head>
 <body>
-<h1>¸ğÀÓÀ» »ı¼ºÇÏÀÚ</h1>
+<h1>ëª¨ì„ì„ ìƒì„±í•˜ì</h1>
 	
-	<h2>¸ğÀÓ ¼Ò°³±Û ÀÛ¼º</h2>
+	<h2>ëª¨ì„ ì†Œê°œê¸€ ì‘ì„±</h2>
 		<br><br>
-		<textarea id="m_cont" name="m_cont" style="width: 500px; height: 300px;"></textarea>
-		
+		<form>
+		<textarea id="summernote" name="m_cont" required></textarea>
+		<input type="hidden" name="img" id="images">
                 	
-					<input type="button" onclick="m_cont()" value="Next">
+					
+					
+					</form>
+					<input type="button" onclick="sum()" value="Next">
 </body>
 <script>
+	
+	 $(document).ready(function() {
+		 
+		 
+		 
+		 
+	    	$('#summernote').summernote({
+	    		  height: 300,
+	    		  width: 600,           // set editor height
+	    		  minHeight: null,             // set minimum height of editor
+	    		  maxHeight: 500,             // set maximum height of editor
+	    		  focus: true,                  // set focus to editable area after initializing summernote
+	    		  callbacks: {
+	    	          onImageUpload: function(files, editor, welEditable) {
+	    	            for (var i = files.length - 1; i >= 0; i--) {
+	    	              sendFile(files[i], this);
+	    	            }
+	    	            
+	    	          }
+	    	        }
+	        	});
+	    	function sendFile(file, el) {
+	    	      var form_data = new FormData();
+	    	      form_data.append('file', file);
+	    	      $.ajax({
+	    	        data: form_data,
+	    	        type: "POST",
+	    	        url: 'http://localhost:8080/nm/meeting/photo',
+	    	        cache: false,
+	    	        contentType: false,
+	    	        enctype: 'multipart/form-data',
+	    	        processData: false,
+	    	        success: function(url) {
+	    	          $(el).summernote('editor.insertImage', url);
+	    	          img =url;
+	    	          $('#images').val(img);
+	    	          
+	    	        }
+	    	      });
+	    	    }
+	    	
+	    	
+	    	
+	    });
+	
+	
+	
+	 function sum(){
+ 		
+ 		var m_cont = $('#summernote').val();
+ 		
+ 		sessionStorage.setItem("m_cont",m_cont);
+ 		alert(m_cont);
+ 		location.href="/nm/newMoim4";
+ 		
+ 	}
 
 
-function m_cont(){
-	var m_cont = $('#m_cont').val();
-	
-	sessionStorage.setItem("m_cont",m_cont);
-	location.href="/nm/newMoim4";
-	
-}
+
+
+
 		
 
 	
