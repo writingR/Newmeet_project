@@ -22,30 +22,26 @@
     <input type="email" class="form-control" id="Nemail" placeholder="뉴밋 ID" name="nemail">
   </div>
   <!-- <button type="submit" class="btn btn-primary mb-2">입력완료</button> -->
-  <button type="button" class="btn btn-secondary" style="margin-top: -10px; margin-left:3px;" onclick="findPw()">입력완료</button>
+  <button type="button" id="find" class="btn btn-secondary" style="margin-top: -10px; margin-left:3px;">입력완료</button>
 </form>
 <a onclick="window.close()" style="margin-left:360px;margin-top:300px;font-size: 12px; color: black;cursor:pointer;" >창 닫을게요!</a>
 
 
 <script>
-		function findPw() {    
-			if (confirm('전송 받으실 아이디/이메일이 맞나요?')) {
-				$.ajax({  
-							url : '/nm/sendTempPw',
-							type : 'get',
-							data : ,
-							success : function(data) {
-								alert(data);
-								alert('전송되었습니다.');
-								/* location.reload(); */
-								location.reload();
-							}
-						});
-			} else {
-				return false;
-
-			}
-		}
+$(function(){
+	$("#find").click(function(){
+		$.ajax({
+			url : "/nm/FindPwOK",
+			type : "POST",
+			data : {
+				nemail : $("#Nemail").val()
+			},
+			success : function(result) {
+				alert(result);
+			},
+		})
+	});
+})
 </script>
 
 </body>

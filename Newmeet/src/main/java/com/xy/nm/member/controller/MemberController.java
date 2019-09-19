@@ -3,6 +3,7 @@ package com.xy.nm.member.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -13,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,7 +27,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.xy.nm.member.dao.MemberInterDao;
-import com.xy.nm.member.domain.Email;
 import com.xy.nm.member.domain.Member;
 import com.xy.nm.member.domain.RequestMemberEdit;
 import com.xy.nm.member.domain.RequestMemberLogin;
@@ -33,6 +34,7 @@ import com.xy.nm.member.domain.RequestMemberRegist;
 import com.xy.nm.member.service.MailSenderService;
 import com.xy.nm.member.service.UserDeleteService;
 import com.xy.nm.member.service.UserEditService;
+import com.xy.nm.member.service.UserFindPwService;
 import com.xy.nm.member.service.UserInfoService;
 import com.xy.nm.member.service.UserJoinService;
 import com.xy.nm.member.service.UserListService;
@@ -59,6 +61,9 @@ public class MemberController {
 	private UserDeleteService userDeleteService;
 	@Autowired
 	private UserInfoService userInfoService;
+	@Autowired
+	private UserFindPwService userfindPwService;
+	
 	
 	private MemberInterDao dao;
 	@Autowired
@@ -236,44 +241,6 @@ public class MemberController {
 
 	}
 	
-	// 비밀번호 찾기
-	@CrossOrigin
-	@PostMapping(value = "/")
-	public ResponseEntity<String> FindPw(@RequestBody RequestMemberLogin member, HttpServletRequest request) {
-
-			String LoginResult = "";
-			String nemail = member.getNemail();
-			String npw = member.getNpw();
-
-			int loginChk = userLoginService.memberInfo(nemail, npw, request);
-
-			switch (loginChk) {
-
-			// 0 - 오류
-			// 1 - 미인증회원
-			// 2 - 인증완료 !!
-			case 0:
-				LoginResult = "fail";
-				break;
-			case 1:
-				LoginResult = "yet";
-				break;
-			case 2:
-
-				int nidx = userEditService.getUser(nemail).getNidx();
-
-				LoginResult = String.valueOf(nidx);
-
-				System.out.println("LoginResult : " + loginChk);
-
-				break;
-
-			}
-			HttpSession session = request.getSession();
-			return new ResponseEntity<String>(LoginResult, HttpStatus.OK);
-
-		}
-	
 
 	// 로그아웃
 	@CrossOrigin
@@ -301,40 +268,20 @@ public class MemberController {
 		return userJoinService.nicCheck(nnic);
 	}
 	
-	// 비밀번호 찾기 이메일 발송
-		@RequestMapping("/sendTempPw")
-		@ResponseBody
-		public String sendEmailPw(HttpServletRequest request, Model model, HttpSession session) throws Exception {
-
-			
-			Email email = new Email();
-		
-		 String id = (String)request.getParameter("nemail"); String pw =
-		 (String)request.getParameter("npw");
-		 
-			
-		System.out.println(id);
-			
-			int result = 0;
-
-			String msg = "고객님의 임시비밀번호는 뉴밋입니다";
-					
-			if(pw != null) {
-				email.setContent(msg);
-				email.setReciver(id);
-				email.setSubject(id + " 님의 비밀번호 찾기 인증 메일입니다.");
-				mailSenderService.send(email);
-				result = 1;
-				model.addAttribute("result", result);
-
-				return "member/sendChk";
-			} else {
-				result = 0;
-				model.addAttribute("result", result);
-				return "member/sendChk";
-			}
-		}
+	// 비밀번호 찾기 폼
+	@RequestMapping(value = "/FindPw")
+	public ModelAndView find_pw_form() throws Exception{
+		return new ModelAndView("FindPw");
+	}
 	
+	
+	@RequestMapping(value = "/FindPwOK")
+	public void findPwOK(@ModelAttribute Member mem,
+			@RequestParam(value = "nemail",required=false) String nemail,
+			@RequestParam(value = "npw",required=false) String npw,
+			HttpServletResponse response) throws Exception{
+		userfindPwService.find_pw(response, nemail, npw);
+	}
 	
 
 	// 회원탈퇴

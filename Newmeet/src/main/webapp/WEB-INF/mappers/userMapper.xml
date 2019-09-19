@@ -65,6 +65,14 @@
 		order by nidx desc
 	</select>
 	
+	
+	<!-- 비밀번호 변경 -->
+	<update id="findPw" parameterType="com.xy.nm.member.domain.Member">
+		update newMeet_RDS.Member 
+		set npw = #{npw} where nemail = #{nemail}
+	</update>
+	
+	
 	<!-- 탈퇴 -->
 	<delete id="newMeetDelete">
 		delete from newMeet_RDS.Member where nidx=#{nidx}

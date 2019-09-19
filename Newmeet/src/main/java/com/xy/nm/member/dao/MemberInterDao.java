@@ -35,6 +35,6 @@ public interface MemberInterDao {
 	public int verify(String nemail,String code);
 	
 	// 비밀번호 찾기 - 비밀번호 얻기
-	public Member getPw(String npw);
+	public int findPw(Member mem);
 	
 }

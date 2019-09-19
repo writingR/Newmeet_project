@@ -25,11 +25,6 @@ public class MainController {
 
 		}
 		
-		@RequestMapping("/FindPw")
-		public String FindPw() {
-			return "FindPw";
-
-		}
 		
 		@RequestMapping("/Welcome")
 		public String getJoinSelect() {
