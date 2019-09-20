@@ -129,6 +129,7 @@ input::placeholder {
 #calLists {
 	width: 430px;
 	margin: 0 auto;
+	margin-top: 10px;
 	height: 700px;
 	overflow: scroll;
 	
@@ -689,6 +690,7 @@ input::placeholder {
 		
 	}
 	
+	/* 일정에 참한 참여자 리스트 불러오기 */
 	function calJoinList(c_idx) {
 		
 		$('#calJoinList').modal('show');
@@ -704,15 +706,37 @@ input::placeholder {
 				
 				content += '<h5> 총 참여자 수: '+ data.length + '<h5><br>';
 				
+				
 				for(var i=0; i<data.length; i++) {
 					content += '<h5>' + data[i].nemail +'\t'+ data[i].nnic + '</h5>\n';
-						
+					content += "<button type='button' class='btn btn-primary' onclick='(calBanMember("+data[i].cm_idx+','+ c_idx+"))'>추방</button>";
 				}
 
 				$('#joinlistModal').html(content);
 			}
 			
 			
+		});
+	}
+	
+	/* 일정에 참가한 참여자를 추방 또는 참가취소 시 일정멤버 삭제 처리 */
+	function calBanMember(cm_idx, c_idx) {
+		
+		$.ajax({
+			
+			url: 'http://localhost:8080/nm/calMember/'+cm_idx,
+			type: 'delete',
+			/* dataType: 'json', */
+			success: function(data) {
+				
+				if(data=='success') {
+					alert('참가 취소되었습니다.');
+					calJoinList(c_idx);
+				}
+				
+				
+				
+			}
 		});
 	}
 	
@@ -884,7 +908,7 @@ input::placeholder {
 					
 					} else {
 						
-						alert('이미 참여한 일정입니다.');
+						alert('이미 참여중인 일정입니다.');
 					}
 				
 				}

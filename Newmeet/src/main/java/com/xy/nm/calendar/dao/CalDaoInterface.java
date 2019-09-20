@@ -26,4 +26,6 @@ public interface CalDaoInterface {
 	
 	public int selectCalMember(int c_idx, int nidx);
 	
+	public int deleteCalMember(int cm_idx);
+	
 }

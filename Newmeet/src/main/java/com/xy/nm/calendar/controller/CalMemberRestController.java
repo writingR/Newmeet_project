@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.xy.nm.calendar.domain.CalJoinMember;
 import com.xy.nm.calendar.domain.CalendarInfo;
+import com.xy.nm.calendar.service.CalBanMemberService;
 import com.xy.nm.calendar.service.CalCreateMemberService;
 import com.xy.nm.calendar.service.CalJoinMemberService;
 
@@ -28,6 +30,8 @@ public class CalMemberRestController {
 	@Autowired
 	private CalJoinMemberService listMService;
 	
+	@Autowired
+	private CalBanMemberService banService;
 	
 	@CrossOrigin
 	@PostMapping
@@ -51,5 +55,14 @@ public class CalMemberRestController {
 		return entity;
 	}
 	
+	@CrossOrigin
+	@DeleteMapping("/{cm_idx}")
+	public ResponseEntity<String> deleteCal(@PathVariable("cm_idx") int cm_idx) {
+		System.out.println(cm_idx);
+		
+		int rCnt = banService.calMemDelete(cm_idx);
+		
+		return new ResponseEntity<String>(rCnt>0 ? "success":"fail", HttpStatus.OK);
+	}
 	
 }

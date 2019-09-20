@@ -61,4 +61,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select count(*) from cMember where c_idx=#{param1} and nidx=#{param2}
 	</select>
 	
+	<delete id="deleteCalMember">
+		delete from cMember where cm_idx=#{cm_idx}
+	</delete>
+	
 </mapper>
