@@ -22,7 +22,7 @@
 	<select id="category" name="category" onclick="category1()">
                 		
                 	</select>
-	<select id="scategory" name="scategory"><option selected>소분류 선택</option></select>
+	<select id="small_idx" name="small_idx"><option selected>소분류 선택</option></select>
 	<table>
 	<thead id="table">
 		
@@ -124,11 +124,7 @@
 					for (var i = 0; i < data.length ; i++) {
 				
 						html += '<option value="'+ data[i].small_idx +'">'+ data[i].small_ca +'</option>';
-						table += '<tr>';
-						table += '<td><input type="hidden" id="small_idx" name="small_idx" value="'+ data[i].small_idx +'"></td>';
-						table += '</tr>';
-						$('#scategory').html(html);
-						$('#table').html(table);
+						$('#small_idx').html(html);
 					}
 				
 				}
@@ -137,16 +133,20 @@
 		}
 		
 		$('#form').submit(function(){
+			var m_idx = ${m_idx};
 			 var formData = new FormData();
 				 formData.append("m_idx",$('#m_idx').val());
 		        formData.append("small_idx",$('#small_idx').val());
 		        formData.append("m_name",$('#m_name').val());
 				formData.append("m_cont",$('#m_cont').val());
+				alert($('#m_idx').val());
+				alert($('#small_idx').val());
 				alert($('#m_name').val());
+				alert($('#m_cont').val());
 				
 			$.ajax({
-				url : 'http://localhost:8080/nm/meeting',
-				type : 'PUT',
+				url : 'http://localhost:8080/nm/meeting/'+ m_idx,
+				type : 'POST',
 				data : formData,
 				processData: false,
 		        contentType: false,

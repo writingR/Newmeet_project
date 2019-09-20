@@ -91,10 +91,12 @@ public class MeetingController {
 		}
 	// 모임 수정
 		@CrossOrigin
-		@PutMapping
+		@PostMapping("/{m_idx}")
 		public ResponseEntity<Integer> edit(
-				RequestMeetingEdit regRequest
+				RequestMeetingEdit regRequest,
+				@PathVariable("m_idx")int m_idx
 				) {
+			
 			System.out.println("수정중 1");
 			System.out.println(regRequest.getM_name());
 			MeetingInfo meetingInfo = regRequest.toMeetingInfo();
