@@ -69,6 +69,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from newMeet_RDS.sCategory where big_idx=#{big_idx}
 	
 	</select>
+	<!-- 대표 이미지 수정 -->
+	<update id="ImageEdit"
+					parameterType="com.xy.nm.meeting.domain.MeetingInfo">
+		update newMeet_RDS.Meeting set m_img=#{param2} where m_idx=#{param1}
+	</update>
 	<!-- 모임 수정 -->
 	<update id="MoimEdit" 
 			parameterType="com.xy.nm.meeting.domain.MeetingInfo">

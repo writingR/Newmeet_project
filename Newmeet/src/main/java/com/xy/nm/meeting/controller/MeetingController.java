@@ -137,6 +137,27 @@ public class MeetingController {
 					);
 			
 		}
+		
+		// 대표 이미지 수정
+		@CrossOrigin
+		@RequestMapping(value = "/image", method = RequestMethod.POST,produces = "application/json")
+		public ResponseEntity<Integer> image(@RequestParam("m_idx")int m_idx,
+				HttpServletRequest request,
+				@RequestParam("m_img")MultipartFile m_img){
+			
+			int cnt = 0;
+			System.out.println(m_idx);
+			System.out.println(m_img);
+			cnt = imageService.image(m_idx, request, m_img);
+			System.out.println("변경완료 캬캬캬"+cnt);
+			return new ResponseEntity<Integer>(
+					cnt>0?1:0,
+					HttpStatus.OK
+					);
+			
+			
+		}
+		
 	// 서머노트 사진
 		@CrossOrigin
 		@RequestMapping(value = "/photo", method = RequestMethod.POST,produces =  "application/text; charset=utf8")

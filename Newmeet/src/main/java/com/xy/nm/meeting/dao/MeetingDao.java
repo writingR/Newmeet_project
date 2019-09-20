@@ -3,6 +3,8 @@ package com.xy.nm.meeting.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.xy.nm.meeting.domain.MeetingInfo;
 import com.xy.nm.meeting.domain.MeetingLcategory;
 import com.xy.nm.meeting.domain.MeetingScategory;
@@ -25,6 +27,8 @@ public interface MeetingDao {
 	public List<MeetingInfo> MeetingList();
 	// 모임 수정
 	public int MoimEdit(Map<String, Object> params);
+	// 대표 이미지 수정
+	public int ImageEdit(int m_idx,String m_img);
 	// 모임 상세 정보 로그인
 	public MeetingInfo MeetingInfo(int m_idx,int nidx);
 	// 모임 상세 정보 비로그인
