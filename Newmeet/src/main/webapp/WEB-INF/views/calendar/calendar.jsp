@@ -573,14 +573,14 @@ input::placeholder {
 						html += '<div class="calList" id="calList" onclick="calDetail('+ data[i].c_idx + ')" style="background-color:#F8EFBA;">\n';
 						html += '<h4>마감 | ' + data[i].c_title +'</h4>\n';
 						html += '<h5>' + '일정\t' + dateArray[0]+'년'+dateArray[1]+'월'+dateArray[2]+'일'+dateArray[3]+'</h5>\n';
-						html += '<h6>' + '참가 인원 : ' + data[i].c_count + '\t|\t신청마감일 : ' + edate + '</h6>\n';
+						html += '<h6>' + '참가 인원 : ' + calJoinCount(data[i].c_idx) + '/' + data[i].c_count + '\t|\t신청마감일 : ' + edate + '</h6>\n';
 						html += '</div><br>\n'; 
 							
 					} else {
 						html += '<div class="calList" style="cursor:pointer" id="calList" onclick="calDetail('+ data[i].c_idx + ')">\n';
 						html += '<h4>' + data[i].c_title +'</h4>\n';
 						html += '<h5>' + '일정\t' + dateArray[0]+'년'+dateArray[1]+'월'+dateArray[2]+'일'+dateArray[3]+'</h5>\n';
-						html += '<h6>' + '참가 인원 : ' + data[i].c_count + '\t|\t신청마감일 : ' + edate + '</h6>\n';
+						html += '<h6>' + '참가 인원 : ' + calJoinCount(data[i].c_idx) + '/' + data[i].c_count + '\t|\t신청마감일 : ' + edate + '</h6>\n';
 						html += '</div><br>\n'; 
 					}
 					
@@ -590,6 +590,8 @@ input::placeholder {
 				btn += '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#calRegist01" style="width:300px; margin-left: 60px; margin-top: 10px;" >일정 등록</button>';
 				btn += '<button type="button" class="btn btn-primary" data-toggle="modal" style="width:300px; margin-left: 60px; margin-top: 10px;" onclick="(calJoin())">참여 하기</button>';
 				
+				
+				
 				$('#calLists').html(html);
 				$('#calListFooter').html(btn);
 			}
@@ -598,6 +600,34 @@ input::placeholder {
 		
 	}
 	
+	 
+	/* 리스트에 현재 참가중인 인원 수를 구해오는 기능
+	return 으로 count를 전달받기때문에 동기 방식으로 구현 */
+	function calJoinCount(c_idx) {
+		
+		var count = '';
+
+		$.ajax({
+			
+			url: 'http://localhost:8080/nm/calMember/count/'+c_idx,
+			type: 'get',
+			dataType: 'json',
+			async: false,
+			success: function(data) {
+				
+				count = data;
+			}
+			
+		});
+
+		return count;
+		
+	}
+		
+		
+		
+	
+	 
 	// 일정 클릭 시 해당 일정에 대한 상세 페이지 모달 보기
 	function calDetail(c_idx) {
 		

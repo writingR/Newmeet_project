@@ -17,6 +17,7 @@ import com.xy.nm.calendar.domain.CalJoinMember;
 import com.xy.nm.calendar.domain.CalendarInfo;
 import com.xy.nm.calendar.service.CalBanMemberService;
 import com.xy.nm.calendar.service.CalCreateMemberService;
+import com.xy.nm.calendar.service.CalJoinMemCountService;
 import com.xy.nm.calendar.service.CalJoinMemberService;
 
 @RestController
@@ -32,6 +33,10 @@ public class CalMemberRestController {
 	
 	@Autowired
 	private CalBanMemberService banService;
+	
+	@Autowired
+	private CalJoinMemCountService joinMemCountService;
+	
 	
 	@CrossOrigin
 	@PostMapping
@@ -51,6 +56,21 @@ public class CalMemberRestController {
 		
 		
 		ResponseEntity<List<CalJoinMember>> entity = new ResponseEntity<List<CalJoinMember>>(list, HttpStatus.OK);
+		
+		return entity;
+	}
+	
+	@CrossOrigin
+	@GetMapping("/count/{c_idx}")
+	public ResponseEntity<Integer> joinCountCal(@PathVariable("c_idx") int c_idx) {
+		
+		System.out.println(c_idx);
+		
+		int rCnt = joinMemCountService.count(c_idx);
+		
+		System.out.println(rCnt);
+		
+		ResponseEntity<Integer> entity = new ResponseEntity<Integer>(rCnt, HttpStatus.OK);
 		
 		return entity;
 	}

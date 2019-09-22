@@ -50,7 +50,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<select id="countCalMember" resultType="int">
-		select * from cMember where c_idx=#{c_idx}
+		select count(*) from cMember where c_idx=#{c_idx}
 	</select>
 	
 	<select id="joinCalMember" resultType="com.xy.nm.calendar.domain.CalJoinMember">
