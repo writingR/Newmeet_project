@@ -44,8 +44,4 @@ public class MeetMemberListData {
 		this.pageTotalCount = pageTotalCount;
 	}
 	
-	
-	
-	
-	
 }

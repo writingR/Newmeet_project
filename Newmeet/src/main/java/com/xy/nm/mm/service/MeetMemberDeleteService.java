@@ -1,5 +1,8 @@
 package com.xy.nm.mm.service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,13 +17,17 @@ public class MeetMemberDeleteService implements MeetMemberManagerService {
 	
 	private MeetMemberSessionDao dao;
 	
-	public int mmDelete(int mm_idx) {
+	public int mmDelete(int m_idx, int mm_idx) {
 		
 		dao = template.getMapper(MeetMemberSessionDao.class);
 		
 		int rCnt = 0;
 		
-		rCnt = dao.mmDelete(mm_idx);
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("m_idx", m_idx);
+		params.put("mm_idx", mm_idx);
+		
+		rCnt = dao.mmDelete(params);
 		
 		return rCnt;
 	}

@@ -1,5 +1,7 @@
 package com.xy.nm.mm.domain;
 
+import java.util.Date;
+
 public class MeetMemberInfo {
 	
 	private int mm_idx;
@@ -13,11 +15,130 @@ public class MeetMemberInfo {
 	private String ntype;
 	private String verify;
 	private String code;
+	private String m_name;
+	private String m_img;
+	private String m_cont;
+	private double m_stotal;
+	private int m_star;
+	private int small_idx;
+	private int m_like;
+	private int rd_idx;
+	private String rd_content;
+	private Date rd_date;
+	private int r_idx;
+	private String r_title;
+	private String r_content;
+	private double r_star;
+	private Date r_date;
+	private int r_like;
+	private String r_img;
 	
 	public MeetMemberInfo() {
 	
 	}
 	
+	public String getM_name() {
+		return m_name;
+	}
+	public void setM_name(String m_name) {
+		this.m_name = m_name;
+	}
+	public String getM_img() {
+		return m_img;
+	}
+	public void setM_img(String m_img) {
+		this.m_img = m_img;
+	}
+	public String getM_cont() {
+		return m_cont;
+	}
+	public void setM_cont(String m_cont) {
+		this.m_cont = m_cont;
+	}
+	public double getM_stotal() {
+		return m_stotal;
+	}
+	public void setM_stotal(double m_stotal) {
+		this.m_stotal = m_stotal;
+	}
+	public int getM_star() {
+		return m_star;
+	}
+	public void setM_star(int m_star) {
+		this.m_star = m_star;
+	}
+	public int getSmall_idx() {
+		return small_idx;
+	}
+	public void setSmall_idx(int small_idx) {
+		this.small_idx = small_idx;
+	}
+	public int getM_like() {
+		return m_like;
+	}
+	public void setM_like(int m_like) {
+		this.m_like = m_like;
+	}
+	public int getRd_idx() {
+		return rd_idx;
+	}
+	public void setRd_idx(int rd_idx) {
+		this.rd_idx = rd_idx;
+	}
+	public String getRd_content() {
+		return rd_content;
+	}
+	public void setRd_content(String rd_content) {
+		this.rd_content = rd_content;
+	}
+	public Date getRd_date() {
+		return rd_date;
+	}
+	public void setRd_date(Date rd_date) {
+		this.rd_date = rd_date;
+	}
+	public int getR_idx() {
+		return r_idx;
+	}
+	public void setR_idx(int r_idx) {
+		this.r_idx = r_idx;
+	}
+	public String getR_title() {
+		return r_title;
+	}
+	public void setR_title(String r_title) {
+		this.r_title = r_title;
+	}
+	public String getR_content() {
+		return r_content;
+	}
+	public void setR_content(String r_content) {
+		this.r_content = r_content;
+	}
+	public double getR_star() {
+		return r_star;
+	}
+	public void setR_star(double r_star) {
+		this.r_star = r_star;
+	}
+	public Date getR_date() {
+		return r_date;
+	}
+	public void setR_date(Date r_date) {
+		this.r_date = r_date;
+	}
+	public int getR_like() {
+		return r_like;
+	}
+	public void setR_like(int r_like) {
+		this.r_like = r_like;
+	}
+	public String getR_img() {
+		return r_img;
+	}
+	public void setR_img(String r_img) {
+		this.r_img = r_img;
+	}
 	public int getMm_idx() {
 		return mm_idx;
 	}
@@ -84,14 +205,16 @@ public class MeetMemberInfo {
 	public void setCode(String code) {
 		this.code = code;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "MeetMemberInfo [mm_idx=" + mm_idx + ", m_idx=" + m_idx + ", mm_level=" + mm_level + ", nidx=" + nidx
 				+ ", nemail=" + nemail + ", npw=" + npw + ", nphoto=" + nphoto + ", nnic=" + nnic + ", ntype=" + ntype
-				+ ", verify=" + verify + ", code=" + code + "]";
+				+ ", verify=" + verify + ", code=" + code + ", m_name=" + m_name + ", m_img=" + m_img + ", m_cont="
+				+ m_cont + ", m_stotal=" + m_stotal + ", m_star=" + m_star + ", small_idx=" + small_idx + ", m_like="
+				+ m_like + ", rd_idx=" + rd_idx + ", rd_content=" + rd_content + ", rd_date=" + rd_date + ", r_idx="
+				+ r_idx + ", r_title=" + r_title + ", r_content=" + r_content + ", r_star=" + r_star + ", r_date="
+				+ r_date + ", r_like=" + r_like + ", r_img=" + r_img + "]";
 	}
 	
-	
-
 }

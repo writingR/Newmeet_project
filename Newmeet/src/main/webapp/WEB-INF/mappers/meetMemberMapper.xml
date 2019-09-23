@@ -20,6 +20,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="nnic" column="nnic" />
 		<result property="verify" column="verify" />
 		<result property="code" column="code" />
+		<result property="m_name" column="m_name" />
+		<result property="m_img" column="m_img" />
+		<result property="m_cont" column="m_cont" />
+		<result property="m_stotal" column="m_stotal" />
+		<result property="m_star" column="m_star" />
+		<result property="m_like" column="m_like" />
+		<result property="rd_idx" column="rd_idx" />
+		<result property="rd_content" column="rd_content" />
+		<result property="rd_date" column="rd_date" />
+		<result property="r_idx" column="r_idx" />
+		<result property="r_title" column="r_title" />
+		<result property="r_content" column="r_content" />
+		<result property="r_star" column="r_star" />
+		<result property="r_date" column="r_date" />
+		<result property="r_like" column="r_like" />
+		<result property="r_img" column="r_img" />
 	</resultMap>
 
 	<!-- 모임멤버로 가입 -->
@@ -30,12 +46,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 전체 리스트 확인 -->
 	<select id="selectAllList" resultMap="resultMeetMemberInfo">
-		SELECT m_idx, nemail, nphoto, nnic, mm_level FROM newMeet_RDS.Member s LEFT OUTER JOIN newMeet_RDS.mMember l on s.nidx = l.nidx GROUP BY l.mm_idx ORDER BY mm_level DESC
+		SELECT * FROM newMeet_RDS.Member s LEFT OUTER JOIN newMeet_RDS.mMember l on s.nidx = l.nidx GROUP BY l.mm_idx ORDER BY mm_level DESC
 	</select>
 	
 	<!-- 특정 회원 정보를  확인 -->
 	<select id="selectByidx" resultMap="resultMeetMemberInfo">
-		SELECT nemail, nphoto, nnic, mm_idx, m_idx, mm_level FROM newMeet_RDS.Member s LEFT OUTER JOIN newMeet_RDS.mMember l ON s.nidx = l.nidx WHERE l.m_idx = #{m_idx} AND l.mm_idx = #{mm_idx}
+		SELECT * FROM newMeet_RDS.Member s LEFT OUTER JOIN newMeet_RDS.mMember l ON s.nidx = l.nidx WHERE l.m_idx = #{m_idx} AND s.nidx = #{nidx}
 	</select>
 	
 	<!-- 특정 회원 정보를 삭제 -->
@@ -48,30 +64,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		UPDATE newMeet_RDS.mMember SET mm_level = '1' where mm_idx = #{mm_idx}
 	</update>
 	
-	<!-- 검색으로 모임 멤버 리스트 구하기 -->
-	<!-- <select id="selectList" parameterType="map" resultMap="resultMeetMemberInfo">
-		SELECT * FROM newMeet_RDS.Member s 
-		LEFT OUTER JOIN newMeet_RDS.mMember l ON s.nidx = l.nidx
-		<where>
-			l.m_idx = #{m_idx}
-			<if test="stype != null">
-					<if test="stype == 'both'">
-						 AND (
-						 <include refid="whereId"/>
-						<include refid="whereNic"/>
-						)
-					</if>
-				<if test="search.stype == 'id'">
-						 AND <include refid="whereId"/>
-					</if>
-					<if test="search.stype == 'nic'">
-						 AND <include refid="whereNic"/>
-					</if>
-				</if>
-			</where>
-			LIMIT #{index}, #{count}
-	</select> --> 
-	
 	<!-- 특정 모임의 모임멤버 리스트 구하기 -->
 	<select id="selectList" parameterType="map" resultMap="resultMeetMemberInfo">
 		SELECT * FROM newMeet_RDS.Member s 
@@ -81,40 +73,64 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		LIMIT #{index}, #{count}
 	</select>
 	
-	
-	<!-- 모임 멤버 리스트의 개수 -->
-	<!-- <select id="selectTotalCount" parameterType="com.xy.nm.mm.domain.SearchParam" resultType="int">
-		SELECT COUNT(*) FROM newMeet_RDS.Member s
-		LEFT OUTER JOIN newMeet_RDS.mMember l ON s.nidx = l.nidx WHERE l.m_idx = #{m_idx}
-		
-			<if test="stype != null">
-				<if test="stype == 'both'">
-					AND ( s.nemail LIKE CONCAT('%', #{keyword}, '%') OR s.nnic LIKE CONCAT('%', #{keyword}, '%') )
-				</if>
-				<if test="stype =='id'">
-					AND s.nemail LIKE CONCAT('%', #{keyword}, '%')
-				</if>
-				<if test="stype =='nnic'">
-					AND s.nnic LIKE CONCAT('%', #{keyword}, '%')
-				</if>
-			</if>
-	</select> -->
-	
 	<!-- 모임 멤버 리스트의 개수 -->
 	<select id="selectTotalCount" resultType="int">
 		SELECT COUNT(*) FROM newMeet_RDS.mMember WHERE m_idx = #{m_idx}
 	</select>
-		
 	
-	<sql id="whereId">
-		OR s.nemail LIKE CONCAT('%', #{search.keyword}, '%')
-	</sql>
+	<!-- 특정 모임의 특정 유저가 작성한 리뷰 리스트 -->
+	<select id="selectReviewList" parameterType="map" resultMap="resultMeetMemberInfo">
+		SELECT * FROM newMeet_RDS.mMember s 
+		LEFT OUTER JOIN newMeet_RDS.Review l
+		ON s.nidx = l.nidx 
+		WHERE s.m_idx = #{m_idx} AND l.nidx = #{nidx}
+		ORDER BY r_date DESC
+		LIMIT #{index}, #{count}
+	</select>
 	
-	<sql id="whereNic">
-		OR s.nnic LIKE CONCAT('%', #{search.keyword}, '%')
-	</sql>
+	<!-- 특정 모임의 특정 유저가 작성한 리뷰 리스트의 개수 -->
+	<select id="selectReviewListCount" resultType="int">
+		SELECT COUNT(*) FROM newMeet_RDS.mMember s
+		LEFT OUTER JOIN newMeet_RDS.Review l
+		ON s.nidx = l.nidx
+		WHERE s.m_idx = #{m_idx} AND l.nidx = #{nidx}
+	</select>
+	
+	<!-- 특정 모임의 특정 유저가 작성한 리뷰 댓글 리스트 -->
+	<select id="selectRcommentList" parameterType="map" resultMap="resultMeetMemberInfo">
+		SELECT * FROM newMeet_RDS.mMember s 
+		LEFT OUTER JOIN newMeet_RDS.rComment l 
+		ON s.nidx = l.nidx
+		WHERE s.m_idx = #{m_idx} AND l.nidx = #{nidx} 
+		ORDER BY rd_date DESC
+		LIMIT #{index}, #{count}
+	</select>
+	
+	<!-- 특정 모임의 특정 유저가 작성한 리뷰 댓글 리스트의 개수 -->
+	<select id="selectRcommentListCount" resultType="int">
+		SELECT COUNT(*) FROM newMeet_RDS.mMember s
+		LEFT OUTER JOIN newMeet_RDS.rComment l
+		ON s.nidx = l.nidx
+		WHERE s.m_idx = #{m_idx} AND l.nidx = #{nidx}
+	</select>
 	
 	
+	<!-- 특정 모임의 특정 유저가 가입한 모든 모임의 목록 -->
+	<select id="selectMeetingList" parameterType="map" resultMap="resultMeetMemberInfo">
+		SELECT * FROM newMeet_RDS.mMember s
+		LEFT OUTER JOIN newMeet_RDS.Meeting l
+		ON s.m_idx = l.m_idx
+		WHERE s.nidx = #{nidx} 
+		ORDER BY l.m_idx DESC
+		LIMIT #{index}, #{count}
+	</select>
 	
+	<!-- 특정 모임의 특정 유저가 가입한 모든 모임 리스트의 개수 -->
+	<select id="selectMeetingListCount" resultType="int">
+		SELECT COUNT(*) FROM newMeet_RDS.mMember s
+		LEFT OUTER JOIN newMeet_RDS.Meeting l
+		ON s.m_idx = l.m_idx
+		WHERE s.nidx = #{nidx}
+	</select>
 </mapper>
 
