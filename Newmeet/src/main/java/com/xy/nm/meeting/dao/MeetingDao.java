@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.xy.nm.meeting.domain.CategoryList;
 import com.xy.nm.meeting.domain.MeetingInfo;
 import com.xy.nm.meeting.domain.MeetingLcategory;
 import com.xy.nm.meeting.domain.MeetingScategory;
@@ -17,6 +18,12 @@ public interface MeetingDao {
 	public List<MeetingLcategory> lCategoryList();
 	// 소분류 카테고리 리스트
 	public List<MeetingScategory> sCategoryList(int big_idx);
+	// 전체 리스트 중 좋아요 순
+	public List<MeetingInfo> LikeList();
+	// 전체 리스트 중 별점 순
+	public List<MeetingInfo> StarList();
+	// 대분류 별 리스트 순
+	public List<CategoryList> LList(String category);
 	// 모임 생성
 	public int MeetingWrite(MeetingInfo meetingInfo);
 	// 모임 삭제
@@ -37,6 +44,8 @@ public interface MeetingDao {
 	public int MoimMember(int m_idx,int nidx);
 	// 모임장인지 그냥 회원인지 확인
 	public int MoimJang(int m_idx,int nidx);
+	// 검색 기능
+	public List<MeetingInfo> MoimSearch(String Keyword);
 	// 좋아요 조건
 	public MeetingInfo MeetingInfo3(int m_idx);
 	// 좋아요 상태 확인 ( 잇는지 없는지 )

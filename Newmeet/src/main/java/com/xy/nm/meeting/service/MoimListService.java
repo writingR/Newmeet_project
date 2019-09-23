@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.xy.nm.meeting.dao.MeetingDao;
+import com.xy.nm.meeting.domain.CategoryList;
 import com.xy.nm.meeting.domain.MeetingInfo;
 
 @Service("moimListService")
@@ -25,6 +26,30 @@ public class MoimListService {
 		return meetingList;
 		
 	}
+		// 좋아요순
+	public List<MeetingInfo> getLike(){
+		dao = template.getMapper(MeetingDao.class);
+		List<MeetingInfo> likeList = dao.LikeList();
 		
+		return likeList;
 		
+	}
+		// 별점 순
+	public List<MeetingInfo> getStar(){
+		dao = template.getMapper(MeetingDao.class);
+		List<MeetingInfo> starList = dao.StarList();
+		
+		return starList;
+		
+	}
+	
+	public List<CategoryList> getCategory(String category){
+		
+		dao = template.getMapper(MeetingDao.class);
+		List<CategoryList> categorylist = dao.LList(category);
+		
+		return categorylist;
+		
+	}
+	
 }

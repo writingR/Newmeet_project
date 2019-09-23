@@ -1,5 +1,7 @@
 package com.xy.nm;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,19 +10,33 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.xy.nm.meeting.domain.CategoryList;
 import com.xy.nm.meeting.domain.MeetingInfo;
 import com.xy.nm.meeting.service.MoimInfoService;
+import com.xy.nm.meeting.service.MoimListService;
+import com.xy.nm.meeting.service.MoimSearchService;
 
 @Controller
 public class MainController {
 	@Autowired
 	private MoimInfoService moimInfoService;
-	
+	@Autowired
+	private MoimSearchService moimSearchService;
+	@Autowired
+	private MoimListService moimListService;
 	
 	@RequestMapping("/main")
 	public String getMain() {
 		
 		return "main";
+	}
+	@RequestMapping("/like")
+	public String getlike() {
+		return "meeting/likeList";
+	}
+	@RequestMapping("/star")
+	public String getstar() {
+		return "meeting/starList";
 	}
 	
 	@RequestMapping("/newMoim")
@@ -128,11 +144,49 @@ public class MainController {
 			
 			return "meeting/moimInfoNot";
 		}
-		
-		
-		
-		
-		
 	}
+	
+	@RequestMapping("/moimSearch")
+	public String moim(@RequestParam(value = "Keyword") String Keyword,Model model) {
+		
+		List<MeetingInfo> info = moimSearchService.search(Keyword);
+		
+		model.addAttribute("AllList", info);
+		
+		/*
+		 * for(int i = 0; i<info.size(); i++) { MeetingInfo meet = new MeetingInfo();
+		 * 
+		 * meet.setM_name(info.get(i).getM_name());
+		 * meet.setM_img(info.get(i).getM_img());
+		 * meet.setM_cont(info.get(i).getM_cont());
+		 * meet.setM_like(info.get(i).getM_like());
+		 * meet.setM_star(info.get(i).getM_star());
+		 * meet.setM_stotal(info.get(i).getM_stotal());
+		 * meet.setSmall_idx(info.get(i).getSmall_idx());
+		 * 
+		 * model.addAttribute("list["+i+"]", meet);
+		 * 
+		 * }
+		 */
+		
+		System.out.println(info);
+		
+		return "meeting/moimSearch";
+	}
+	
+	
+	@RequestMapping("/category")
+	public String category(@RequestParam(value = "category") String category,Model model) {
+		
+		List<CategoryList> info = moimListService.getCategory(category);
+		
+		model.addAttribute("AllList", info);
+		
+		
+		System.out.println(info);
+		
+		return "meeting/moimSearch";
+	}
+	
 	
 }

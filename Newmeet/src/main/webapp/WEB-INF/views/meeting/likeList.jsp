@@ -28,14 +28,9 @@
 	<input type="submit" value="검색">
 </form>
 
-<h1>모임 리스트</h1>
+<h1>좋아요순  리스트</h1>
 	
-	<a href="<c:url value="/like" />">좋아요순</a> <a href="<c:url value="/star" />">별점 순</a>
-		<br><br>
-		<h4><a href="<c:url value="/category?category=문화" />">문화</a></h4>
-		<h4><a href="<c:url value="/category?category=게임" />">게임</a></h4>
-		<h4><a href="<c:url value="/category?category=여행" />">여행</a></h4>
-		<h4><a href="<c:url value="/category?category=스포츠" />">스포츠</a></h4>
+	<a href="<c:url value="/like" />">좋아요순</a> <a href="<c:url value="/star" />">별점 순</a><a href="<c:url value="/moimList" />">전체 리스트</a>
 		<br><br>
 		<div id="list">
 		</div>
@@ -45,7 +40,7 @@
 	$(document).ready(function(){
 	
 		$.ajax({
-			url : 'http://localhost:8080/nm/meeting/list',
+			url : 'http://localhost:8080/nm/meeting/like',
 			type : 'GET',
 			success : function(data) {
 				var html = '';
