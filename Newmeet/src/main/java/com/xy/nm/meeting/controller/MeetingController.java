@@ -90,36 +90,8 @@ public class MeetingController {
 			return entity;
 		}
 		
-		// 전체 리스트 중 좋아요 순 
-		@CrossOrigin
-		@GetMapping("/like")
-		public ResponseEntity<List<MeetingInfo>> getLike(){
-			
-			List<MeetingInfo> likeInfo = moimListService.getLike();
-			
-			ResponseEntity<List<MeetingInfo>> entity =
-					new ResponseEntity<List<MeetingInfo>>(
-							likeInfo,
-							HttpStatus.OK);
-			
-			return entity;
-			
-		}
-		// 전체 리스트 중 별점 순
-		@CrossOrigin
-		@GetMapping("/star")
-		public ResponseEntity<List<MeetingInfo>> getStar(){
-			
-			List<MeetingInfo> starInfo = moimListService.getStar();
-			
-			ResponseEntity<List<MeetingInfo>> entity =
-					new ResponseEntity<List<MeetingInfo>>(
-							starInfo,
-							HttpStatus.OK);
-			
-			return entity;
-			
-		}
+	
+		
 	// 모임 수정
 		@CrossOrigin
 		@PostMapping("/{m_idx}")

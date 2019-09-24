@@ -26,22 +26,14 @@ public class MoimListService {
 		return meetingList;
 		
 	}
-		// 좋아요순
-	public List<MeetingInfo> getLike(){
+	public List<MeetingInfo> getLikeStar(String likestar){
 		dao = template.getMapper(MeetingDao.class);
-		List<MeetingInfo> likeList = dao.LikeList();
+		List<MeetingInfo> likestarlist = dao.LikeStarList(likestar);
 		
-		return likeList;
-		
+		return likestarlist;
 	}
-		// 별점 순
-	public List<MeetingInfo> getStar(){
-		dao = template.getMapper(MeetingDao.class);
-		List<MeetingInfo> starList = dao.StarList();
-		
-		return starList;
-		
-	}
+	
+	
 	
 	public List<CategoryList> getCategory(String category){
 		

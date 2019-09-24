@@ -30,7 +30,7 @@
 
 <h1>별점순 리스트</h1>
 	
-	<a href="<c:url value="/like" />">좋아요순</a> <a href="<c:url value="/star" />">별점 순</a><a href="<c:url value="/moimList" />">전체 리스트</a>
+	<a href="<c:url value="/like" />">좋아요순</a> <a href="<c:url value="/likestar" />">별점 순</a><a href="<c:url value="/moimList" />">전체 리스트</a>
 		<br><br>
 		<div id="list">
 		</div>

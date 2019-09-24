@@ -18,10 +18,8 @@ public interface MeetingDao {
 	public List<MeetingLcategory> lCategoryList();
 	// 소분류 카테고리 리스트
 	public List<MeetingScategory> sCategoryList(int big_idx);
-	// 전체 리스트 중 좋아요 순
-	public List<MeetingInfo> LikeList();
-	// 전체 리스트 중 별점 순
-	public List<MeetingInfo> StarList();
+	// 전체 리스트 중 좋아요 별점 순
+	public List<MeetingInfo> LikeStarList(String likestar);
 	// 대분류 별 리스트 순
 	public List<CategoryList> LList(String category);
 	// 모임 생성

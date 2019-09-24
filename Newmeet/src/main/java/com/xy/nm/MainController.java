@@ -30,14 +30,7 @@ public class MainController {
 		
 		return "main";
 	}
-	@RequestMapping("/like")
-	public String getlike() {
-		return "meeting/likeList";
-	}
-	@RequestMapping("/star")
-	public String getstar() {
-		return "meeting/starList";
-	}
+	
 	
 	@RequestMapping("/newMoim")
 	public String getMoim() {
@@ -186,6 +179,28 @@ public class MainController {
 		System.out.println(info);
 		
 		return "meeting/moimSearch";
+	}
+	
+	@RequestMapping("/likestar")
+	public String likestar(@RequestParam(value = "likestar") int likestar,Model model) {
+		String likestarlist = "";
+		System.out.println(likestar);
+		if(likestar == 1) {
+			likestarlist = "m_like";
+		}
+		if(likestar == 2) {
+			likestarlist = "m_stotal/m_star";
+		}
+		System.out.println(likestarlist);
+		
+		List<MeetingInfo> info = moimListService.getLikeStar(likestarlist);
+		
+		model.addAttribute("AllList", info);
+		
+		
+		System.out.println(info);
+		
+		return "meeting/LikeStarList";
 	}
 	
 	

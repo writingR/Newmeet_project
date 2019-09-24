@@ -30,7 +30,7 @@
 
 <h1>모임 리스트</h1>
 	
-	<a href="<c:url value="/like" />">좋아요순</a> <a href="<c:url value="/star" />">별점 순</a>
+	<a href="<c:url value="/likestar?likestar=1" />">좋아요순</a> <a href="<c:url value="/likestar?likestar=2" />">별점 순</a>
 		<br><br>
 		<h4><a href="<c:url value="/category?category=문화" />">문화</a></h4>
 		<h4><a href="<c:url value="/category?category=게임" />">게임</a></h4>
