@@ -152,6 +152,8 @@ input::placeholder {
 }
 
 #detailDiv {
+	width: 600px;
+	height: 700px;
 }
 
 #detailInfo tr>td {
@@ -245,7 +247,7 @@ input::placeholder {
 				</div>
 				<div class="modal-body">
 					<!-- 모달 내용 -->
-					<h5 style="text-align: center;" class="inputMsg">기본정보 입력</h5>
+					<h5 style="text-align: center; margin-top: 30px;" class="inputMsg">기본정보 입력</h5>
 					<div class="progress">
 						<div class="progress-bar progress-bar-striped progress-bar-animated" style="width:30%">
 						</div>
@@ -253,7 +255,7 @@ input::placeholder {
 					</div>
 					
 					<label for="c_title">정모 이름</label>
-					<input class="basic" id="c_title" type="text" placeholder="20자를 초과할 수 없습니다.">
+					<input style="margin-top:50px;" class="basic" id="c_title" type="text" placeholder="20자를 초과할 수 없습니다.">
 					<br>
 					<label for="c_pay">참가 금액</label>
 					<input class="basic" id="c_pay" type="text" placeholder="10만원 이상 초과할 수 없습니다.">
@@ -357,12 +359,12 @@ input::placeholder {
 				</div>
 				<div class="modal-body">
 					<!-- 모달 내용 -->
-					<h5 style="text-align: center;" class="inputMsg"> 날짜를 선택해 주세요.</h5>
+					<h5 style="text-align: center; margin-top:30px;" class="inputMsg"> 날짜를 선택해 주세요.</h5>
 					<div class="progress">
 						<div class="progress-bar progress-bar-striped progress-bar-animated" style="width:90%">
 						</div>
 					</div>
-					    <label for="c_date">모임 날짜</label> 
+					    <label style="margin-top:50px;" for="c_date">모임 날짜</label> 
 					    <input type="text" id="c_date" class="basic">
 					    
 						<br>
@@ -398,15 +400,31 @@ input::placeholder {
 					<!-- 모달 내용 -->
 					<h5 style="text-align: center;" class="">상세 정보</h5>
 
- 					<input id="c_Eidx"><br>
-					<input id="m_Eidx"><br>
-					<input id="c_Etitle"><br>
-					<input id="c_Epay"><br>
-					<input id="c_Ecount"><br>
-					<input id="c_Eplace"><br>
-					<input id="c_Eaddress"><br>
-					<input id="c_Edate"><br>
-					<input id="c_Eedate"><br>
+
+					<label style="margin-top:50px;" for="m_Eidx">모임 No.</label><input id="m_Eidx" class="basic" readonly><br>
+ 					<label for="c_Eidx">일정 No. </label><input id="c_Eidx" class="basic" readonly><br>
+					<label for="c_Etitle">정모 이름</label><input id="c_Etitle" class="basic"><br>
+					<label for="c_Epay">참가 금액</label><input id="c_Epay" class="basic"><br>
+					<label for="c_Ecount">참가 인원</label>
+					<select class="basic" id="c_Ecount">
+						<option>1</option>
+						<option>2</option>
+						<option>3</option>
+						<option>4</option>
+						<option>5</option>
+						<option>6</option>
+						<option>7</option>
+						<option>8</option>
+						<option>9</option>
+						<option>10</option>
+					</select><br>
+					<label for="c_Eplace">모임 장소</label><input id="c_Eplace" class="basic"><br>
+					<label for="c_Eaddress">모임 주소</label><input id="c_Eaddress" class="basic"><br>
+					<label for="c_Edate">모임 날짜</label> 
+					<input type="text" id="c_Edate" class="basic">    
+					<br>
+    				<label for="c_Eedate">신청 마감</label>
+    				<input type="text" id="c_Eedate" class="basic">
  					
 				</div>
 				
@@ -510,6 +528,22 @@ input::placeholder {
 		  /* inline:true */
 	});
 	
+	/* 모임 일정 날짜 수정 */
+	jQuery('#c_Edate').datetimepicker({
+		  format:'Y.m.d H:i',
+		  /* theme:'dark', */
+		  
+		  /* inline:true */
+	});
+	
+	/* 신청 마감일 날짜 수정 */
+	jQuery('#c_Eedate').datetimepicker({
+		  format:'Y.m.d H:i',
+		  /* theme:'dark', */
+		  
+		  /* inline:true */
+	});
+	
 
 	 
 	 // 일정등록 마지막 단계 finish 누르면 입력한 폼데이터로 ajax 처리
@@ -537,7 +571,7 @@ input::placeholder {
 					$('#calRegist03').modal('hide');
 
 					/* resetReg(); */
-					calList($('#m_Didx').text());
+					calList(100);
 					
 				}
 			}
@@ -569,7 +603,7 @@ input::placeholder {
 					var edate = (enddate.toLocaleString().slice(0,-3));
 					
 					/* document.write(sysdate.toISOString()); */
-					if(today>data[i].c_date || today>data[i].c_edate) {
+					if(today>data[i].c_date || today>data[i].c_edate || data[i].c_count/calJoinCount(data[i].c_idx)==1) {
 						html += '<div class="calList" id="calList" onclick="calDetail('+ data[i].c_idx + ')" style="background-color:#F8EFBA;">\n';
 						html += '<h4>마감 | ' + data[i].c_title +'</h4>\n';
 						html += '<h5>' + '일정\t' + dateArray[0]+'년'+dateArray[1]+'월'+dateArray[2]+'일'+dateArray[3]+'</h5>\n';
@@ -635,6 +669,7 @@ input::placeholder {
 		
 		var btn = '';
 		var content = '';
+		var today = new Date();
 		
 		$.ajax({
 			
@@ -653,7 +688,7 @@ input::placeholder {
 				
 				content += '<table id="detailInfo">';
 				content += '<tr>'
-				content += '<td colspan="2"><h3>모임 정보</h3></td>\n<br>';
+				content += '<td colspan="2"><h3 style="color:#10ac84; border-bottom:1px solid #ddd;">모임 정보</h3></td>\n<br>';
 				content += '</tr>'
 				content += '<tr>';
 				content += '<td><h5>모임이름</h5></td>';
@@ -676,10 +711,10 @@ input::placeholder {
 				content += '<td><h5 id="c_Dedate">'+edate+'</h5></td>';
 				content += '</tr>';
 				content += '<tr>'
-				content += '<td colspan="2" id="joinInfoMsg"><h3>참가 정보</h3></td>\n<br>';
+				content += '<td colspan="2" id="joinInfoMsg"><h3 style="color:#10ac84; border-bottom:1px solid #ddd;">참가 정보</h3></td>\n<br>';
 				content += '</tr>'
 				content += '<tr>';
-				content += '<td><h5>참가비용</h5></td>';
+				content += '<td><h5 >참가비용</h5></td>';
 				content += '<td><h5>'+data.c_pay+' 원</h5></td>';
 				content += '</tr>';
 				content += '<tr>';
@@ -707,11 +742,15 @@ input::placeholder {
 				*/
 				
 				
-				btn += "<button type='button' class='btn btn-secondary' onclick="+"(calEditForm("+c_idx+"))"+">수정</button>"
-				btn += "<button type='button' class='btn btn-primary' onclick="+"(calDelete("+c_idx+"))"+">삭제</button>"
+				if(today>data.c_date || today>data.c_edate || data.c_count/calJoinCount(data.c_idx)==1) {
+					btn += "<button type='button' class='btn btn-secondary' onclick="+"(calEditForm("+c_idx+"))"+">수정</button>"
+					btn += "<button type='button' class='btn btn-primary' onclick="+"(calDelete("+c_idx+"))"+">삭제</button>"
+				} else {
+					btn += "<button type='button' class='btn btn-secondary' onclick="+"(calEditForm("+c_idx+"))"+">수정</button>"
+					btn += "<button type='button' class='btn btn-primary' onclick="+"(calDelete("+c_idx+"))"+">삭제</button>"
+					btn += "<button type='button' class='btn btn-primary' onclick="+"(calChoice())"+">선택</button>"
+				}
 				
-				btn += "<button type='button' class='btn btn-primary' onclick="+"(calChoice())"+">선택</button>"
-	
 				$('#detailModal').html(content);
 				$('#detail-footer').html(btn);
 			}
@@ -762,6 +801,7 @@ input::placeholder {
 				if(data=='success') {
 					alert('참가 취소되었습니다.');
 					calJoinList(c_idx);
+					calList($('#m_Didx').text());
 				}
 				
 				
@@ -786,7 +826,7 @@ input::placeholder {
 					if(data=='success') {
 						alert('삭제되었습니다.');
 						$('#calDetail').modal('hide');
-						calList();
+						calList(100);
 						
 					}
 				}
@@ -806,27 +846,26 @@ input::placeholder {
 		var btn = '';
 		var editData = '';
 		
-		
 		$.ajax({
 			
 			url: 'http://localhost:8080/nm/cal/ByIdx/'+c_idx,
 			type: 'get',
 			dataType: 'json',
 			success: function(data) {
-/* 				
-				editData += '<div id="editData>"\n';
-				editData += '<form id="editForm>"\n';
-				editData += '<h5>'+c_idx+'</h5>\n';
-				editData += '<h5>'+data.m_idx+'</h5>\n';
-				editData += '<h5>'+data.c_title+'</h5>\n';
-				editData += '<h5>'+data.c_pay+'</h5>\n';
-				editData += '<h5>'+data.c_count+'</h5>\n';
-				editData += '<h5>'+data.c_place+'</h5>\n';
-				editData += '<h5>'+data.c_address+'</h5>\n';
-				editData += '<h5>'+data.c_date+'</h5>\n';
-				editData += '<h5>'+data.c_edate+'</h5>\n';
-				editData += '</form>\n';
-				editData += '</div>\n'; */
+
+				var sysdate = new Date(data.c_date);
+				var enddate = new Date(data.c_edate);
+				
+				var mdate = (sysdate.toLocaleString().slice(0,-3));
+				var edate = (enddate.toLocaleString().slice(0,-3));
+			
+				var dateArray = (sysdate.toLocaleString().slice(0,-3)).split('.');
+				var edateArray = (enddate.toLocaleString().slice(0,-3)).split('.');
+				/* var edate = (enddate.toLocaleString().slice(0,-3)); */
+				
+				/* alert(dateArray[3].replace(dateArray[3].slice(0, 3), '')); */
+				
+					/* html += '<h5>' + '일정\t' + dateArray[0]+'년'+dateArray[1]+'월'+dateArray[2]+'일'+dateArray[3]+'</h5>\n'; */
 				
  				$('#c_Eidx').val(c_idx);
 				$('#m_Eidx').val(data.m_idx);
@@ -835,13 +874,14 @@ input::placeholder {
 				$('#c_Ecount').val(data.c_count);
 				$('#c_Eplace').val(data.c_place);
 				$('#c_Eaddress').val(data.c_address);
-				$('#c_Edate').val(data.c_date);
-				$('#c_Eedate').val(data.c_edate); 
+				$('#c_Edate').val(dateArray[0].replace(' ', '')+'.'+dateArray[1].replace(' ', '')+'.'+dateArray[2].replace(' ', '') + dateArray[3].replace(dateArray[3].slice(0, 3), ''));
+				$('#c_Eedate').val(edateArray[0].replace(' ', '')+'.'+edateArray[1].replace(' ', '')+'.'+edateArray[2].replace(' ', '') + edateArray[3].replace(edateArray[3].slice(0, 3), '')); 
 				btn += "<button type='button' class='btn btn-primary' onclick="+"(calEdit("+c_idx+"))"+">수정</button>"
 				btn += "<button type='button' class='btn btn-secondary'>이전</button>"
 	
 				$('#edit-footer').html(btn);
 				/* $('#edit-body').html(editData); */
+			
 			}
 			
 		});
@@ -849,14 +889,15 @@ input::placeholder {
 	
 
 	// 일정 수정폼에서 수정 버튼 클릭시 ajax 수정처리
-	function calEdit(c_idx) {
+	function calEdit() {
 		
 		
 		$.ajax({
 			
-			url: 'http://localhost:8080/nm/cal/'+c_idx,
+			url: 'http://localhost:8080/nm/cal',
 			type: 'put',
 			data: JSON.stringify({
+				c_idx : $('#c_Eidx').val(),
 				m_idx : $('#m_Eidx').val(),
 				c_title : $('#c_Etitle').val(),
 				c_pay : $('#c_Epay').val(),
@@ -870,9 +911,11 @@ input::placeholder {
 			success: function(data) {
 				if(data=='success') {
 					alert('수정되었습니다.');
-					calList();
 					$('#calEditForm').modal('hide');
-					
+					$('#calDetail').modal('hide');
+					calDetail($('#c_Didx').text());
+					calList(100);
+						
 				}
 				
 			}

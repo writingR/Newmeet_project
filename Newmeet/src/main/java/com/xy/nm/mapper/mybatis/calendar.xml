@@ -39,7 +39,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		delete from Calendar where c_idx=#{c_idx}
 	</delete>
 	
-	<update id="updateCalendar" parameterType="com.xy.nm.calendar.domain.CalendarInfo">
+	<update id="updateCalendar" parameterType="com.xy.nm.calendar.domain.CalendarEdit">
 		update Calendar set c_title=#{c_title}, c_pay=#{c_pay}, c_count=#{c_count}, c_place=#{c_place}, c_address=#{c_address}, c_date=#{c_date}, c_edate=#{c_edate}
 		where c_idx=#{c_idx}
 	</update>

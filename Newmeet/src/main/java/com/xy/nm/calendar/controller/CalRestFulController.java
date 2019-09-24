@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.xy.nm.calendar.domain.CalendarEdit;
 import com.xy.nm.calendar.domain.CalendarInfo;
 import com.xy.nm.calendar.domain.RequestCalendar;
 import com.xy.nm.calendar.service.CalCreateService;
@@ -92,16 +93,28 @@ public class CalRestFulController {
 		
 		return new ResponseEntity<String>(rCnt>0 ? "success":"fail", HttpStatus.OK);
 	}
+//	
+//	@CrossOrigin
+//	@PutMapping("/{c_idx}")
+//	public ResponseEntity<String> editCal(@PathVariable("c_idx") int c_idx, @RequestBody RequestCalendar reqCal) {
+//		
+//		System.out.println(reqCal);
+//		
+//		int rCnt = editService.calEdit(c_idx, reqCal);
+//		
+//		return new ResponseEntity<String>(rCnt>0 ? "success":"fail", HttpStatus.OK);
+//	}
 	
 	@CrossOrigin
-	@PutMapping("/{c_idx}")
-	public ResponseEntity<String> editCal(@PathVariable("c_idx") int c_idx, @RequestBody RequestCalendar reqCal) {
+	@PutMapping
+	public ResponseEntity<String> editCal(@RequestBody CalendarEdit editCal) {
 		
-		System.out.println(reqCal);
+		System.out.println(editCal);
 		
-		int rCnt = editService.calEdit(c_idx, reqCal);
+		int rCnt = editService.calEdit(editCal);
 		
 		return new ResponseEntity<String>(rCnt>0 ? "success":"fail", HttpStatus.OK);
 	}
+	
 	
 }

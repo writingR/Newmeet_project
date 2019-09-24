@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.xy.nm.calendar.dao.CalDaoInterface;
+import com.xy.nm.calendar.domain.CalendarEdit;
 import com.xy.nm.calendar.domain.CalendarInfo;
 import com.xy.nm.calendar.domain.RequestCalendar;
 
@@ -27,15 +28,15 @@ public class CalEditService {
 //		return calInfo;
 //	}
 	
-	public int calEdit(int c_idx, RequestCalendar reqCal) {
+	public int calEdit(CalendarEdit editCal) {
 		
 		dao = template.getMapper(CalDaoInterface.class);
 		
-		CalendarInfo calInfo = reqCal.toCalendarInfo();
+//		CalendarInfo calInfo = editCal.toCalendarInfo();
 		
-		calInfo.setC_idx(c_idx);
+//		calInfo.setC_idx(c_idx);
 		
-		int rCnt = dao.updateCalendar(calInfo);
+		int rCnt = dao.updateCalendar(editCal);
 		
 		return rCnt;
 	}
