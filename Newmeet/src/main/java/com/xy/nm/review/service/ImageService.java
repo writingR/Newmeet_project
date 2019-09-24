@@ -25,9 +25,7 @@ public class ImageService {
 		String path = "/uploadfile/review"; // 리소스 매핑 필요
 		// 절대 경로 
 		String dir = request.getSession().getServletContext().getRealPath(path);
-		
-		int resultCnt = 0;
-	
+			
 		String newFileName = "";
 		
 		try {
@@ -42,7 +40,7 @@ public class ImageService {
 					sb.append((char)(r.nextInt(26)+97));
 				}
 			}
-			
+
 			newFileName = sb.toString()+"_"+nidx+"_"+file.getOriginalFilename();
 			// 파일을 서버의 지정 경로에 저장
 			file.transferTo(new File(dir, newFileName));
@@ -54,7 +52,6 @@ public class ImageService {
 			System.out.println("오류");
 			new File(dir,newFileName).delete();
 		}
-		
 		
 		return newFileName;
 	}

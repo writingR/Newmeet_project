@@ -3,6 +3,7 @@ package com.xy.nm.review.dao;
 import java.util.List;
 import java.util.Map;
 
+import com.xy.nm.review.domain.Comment;
 import com.xy.nm.review.domain.Review;
 
 
@@ -15,7 +16,7 @@ public interface ReviewDaoInterface {
 		public int getReviewCount(int m_idx);
 		
 		//모임의 멤버인지 체크
-		public int checkmmId(int nidx);
+		public int checkmmId(Map<String, Object> param);
 		
 		//좋아요 상태 세기
 		public int selectCountLikeState(Map<String, Object> param);
@@ -37,4 +38,34 @@ public interface ReviewDaoInterface {
 		
 		//최근 리스트 검색
 		public List<Review> getRecentReviewList(Map<String, Object> param);
+
+		//상세 리스트 검색
+		public Review getReviewDetail(Map<String, Object> param);
+		
+		//댓글 개수 검색
+		public int getCommentCount(int r_idx);
+		
+		//댓글 리스트 검색
+		public List<Comment> getCommentList(Map<String, Object> param);
+		
+		//댓글 작성
+		public int insertComment(Map<String, Object> param);
+		
+		//리뷰 편집 정보
+		public Review getReviewEditInfo(int rNum);
+		
+		//리뷰 편집
+		public int updateReview(Map<String, Object> param);
+		
+		//리뷰 삭제
+		public int deleteReview(int rNum);
+		
+		//댓글 편집
+		public int updateReviewComment(Map<String, Object> param);
+		
+		//댓글 작성자 확인
+		public int checkComment(Map<String, Object> param);
+		
+		//댓글 삭제
+		public int deleteReviewComment(int rd_idx);
 }

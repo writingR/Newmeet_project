@@ -11,31 +11,25 @@ import org.springframework.stereotype.Service;
 import com.xy.nm.review.dao.ReviewDaoInterface;
 
 @Service
-public class MeetingMemberCheckService {
-	
-	private ReviewDaoInterface dao;
+public class ReviewCommentMemberCheckService {
+
+private ReviewDaoInterface dao;
 	
 	@Inject
 	private SqlSessionTemplate template;
 	
-	public boolean check(int nidx, int mNum) {
-		
-		boolean result = false;
-		
+	public int checkWriter(int nidx, int rdNum) {
+				
 		dao = template.getMapper(ReviewDaoInterface.class);
 		
 		Map<String, Object> params = new HashMap<String, Object>();
 		
 		params.put("nidx", nidx);
-		params.put("m_idx", mNum);
+		params.put("rd_idx", rdNum);
 		
-		int chk = dao.checkmmId(params);
+		int chk = dao.checkComment(params);
 		
-		if(chk>0) {
-			result = true;
-		}
-		
-		return result;
+		return chk;
 	}
 	
 	

@@ -46,10 +46,17 @@
 <%@include file="/WEB-INF/views/frame/link.jsp"%>
 </head>
 <body>
+
+	<div class="alert alert-danger alert-dismissible fade show"  style="display: none;" id="alertBar">
+    	<button type="button" class="close" data-dismiss="alert">&times;</button>
+    	<strong><b id="alertText"></b></strong>
+	</div>
+
 	<%@include file="/WEB-INF/views/frame/header.jsp"%>
 	<%@include file="/WEB-INF/views/frame/nav.jsp"%>
 	
- 
+     
+	
 	<div class="site-wrap">
 
 		<div class="py-5 bg-light">
@@ -106,16 +113,16 @@
 					<c:forEach items="${reviewList}" var="review" varStatus="stat">
 					<div class="col-lg-4 mb-4">
 						<div class="entry2">
-							<a href="single.html"><img src="${review.r_img}" alt="Image" class="img-fluid rounded" style="width: 332px; height: 228px;"/></a>
+							<a href="${pageContext.request.contextPath}/review/${review.r_idx}?mNum=${moimNum}"><img src="${review.r_img}" alt="Image" class="img-fluid rounded" style="width: 332px; height: 228px;"/></a>
 							<div class="excerpt">
 								<span class="post-category text-white bg-secondary mb-3">Review</span>
 
 								<h2>
-									<a href="single.html">${review.r_title}</a>
+									<a href="${pageContext.request.contextPath}/review/${review.r_idx}?mNum=${moimNum}">${review.r_title}</a>
 								</h2>
 								<div class="post-meta align-items-center text-left clearfix">
 									<figure class="author-figure mb-0 mr-3 float-left">
-										<img src="${pageContext.request.contextPath}/static/img/${review.nphoto}" alt="Image" class="img-fluid">
+										<img src="${pageContext.request.contextPath}/uploadfile/${review.nphoto}" alt="Image" class="img-fluid">
 									</figure>
 									<span class="d-inline-block mt-1">By <a href="" style="pointer-events: none;">
 											${review.nnic}</a></span> <span>&nbsp;-&nbsp; ${review.r_date}</span>
@@ -189,8 +196,22 @@
 	        });
         }
     }
-
+   
 	$(document).ready(function(){
+
+		 var err = ${errCode};
+		
+		<!-- 권한 alert start -->
+		if(err!=0){
+			$('#alertBar').css('display','block');
+			if(err==1){
+				$('#alertText').text('권한이 없습니다.');
+			}
+			if(err==2){
+				$('#alertText').text('멤머 회원이 아닙니다.');
+			}
+		}
+		<!-- 권한 alert end -->
 
 		var span;
 		$('#likeButton img').click(function(){

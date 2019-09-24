@@ -20,10 +20,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="nidx" column="nidx" />
 		<result property="nphoto" column="nphoto" />
 		<result property="r_img" column="r_img" />
+		<result property="rlike_state" column="rlike_state" />
+		<result property="nnic" column="nnic" />
+	</resultMap>
+
+	<!-- select 결과 메핑을 위한 resultMap 설정 -->
+	<resultMap id="resultCommentInfo"
+		type="com.xy.nm.review.domain.Comment">
+		<id property="rd_idx" column="rd_idx" />
+		<result property="rd_content" column="rd_content" />
+		<result property="rd_date" column="rd_date" />
+		<result property="r_idx" column="r_idx"/> 
+		<result property="nidx" column="nidx" />
 		<result property="nnic" column="nnic" />
 	</resultMap>
 	
-	<!-- 모임 게시판 : 댓글 리스트의 개수  -->
+	
+	
+	<!-- 모임 게시판 : 후기 리스트의 개수  -->
 	<select id="getReviewCount"
 		resultType="int">
 		select count(*) from Review where m_idx=#{m_idx}
@@ -48,9 +62,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 모임 멤머 체크 -->
-	<select id="checkmmId" 
+	<select id="checkmmId" parameterType="map"
 		resultType="int">
-		select count(*) from mMember where nidx=#{nidx};
+		select count(*) from mMember where nidx=#{nidx}  and m_idx=#{m_idx}
 	</select>
 
 
@@ -101,6 +115,64 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		limit #{startIndex}, #{LIST_PER_PAGE}
 	</select>
 
-
-
+	<!-- 상세 정보 -->
+	<select id="getReviewDetail" parameterType="map"
+		resultMap="resultReviewInfo">
+		select r.r_idx, r_title,r_img, r_content, r_star, r_date, r_like, m_idx, r.nidx ,nphoto, rlike_state, nnic 
+		from newMeet_RDS.Review as r Left join newMeet_RDS.Member as m on r.nidx = m.nidx 
+		Left join (select * from newMeet_RDS.rLike where nidx=#{nidx}) as rl on r.r_idx = rl.r_idx 
+		where m_idx = #{m_idx} and r.r_idx = #{r_idx}
+	</select>
+	
+	<!-- 후기 : 댓글 리스트의 개수  -->
+	<select id="getCommentCount"
+		resultType="int">
+		select count(*) from newMeet_RDS.rComment where r_idx=#{r_idx}
+	</select>
+	
+	
+	<!-- 후기 리스트 -->
+	<select id="getCommentList" parameterType="map"
+		resultMap="resultCommentInfo">
+		select rd_idx, rd_content, rd_date, r_idx, rc.nidx, nphoto, nnic from rComment as rc join Member as m on rc.nidx = m.nidx where r_idx= #{r_idx} limit #{startIndex}, #{LIST_PER_PAGE}
+	</select>
+	
+	
+	<!-- 댓글 삽입 -->
+	<insert id="insertComment" parameterType="map">
+		insert into rComment(rd_content, r_idx, nidx) values(#{content},#{r_idx}, #{nidx} )
+	</insert>
+	
+	<!-- 리뷰 편집 정보 -->
+	<select id="getReviewEditInfo" resultMap="resultReviewInfo">
+		select * from Review where r_idx = #{rNum}
+	</select>
+	
+	<!-- 리뷰 편집 -->
+	<update id="updateReview">
+		update Review set r_title = #{title}, r_img =#{img}, r_content = #{content}, r_star = #{star} where r_idx = #{rNum}
+	</update>
+	
+	<!-- 리뷰 삭제 -->
+	<delete id="deleteReview">
+		delete from Review where r_idx=#{rNum}
+	</delete>
+	
+	<!-- 댓글 편집 -->
+	<update id="updateReviewComment" parameterType="map">
+		update rComment set rd_content = #{content} where rd_idx = #{rdNum}
+	</update>
+	
+	<!-- 댓글 작성자 확인 -->
+	<select id="checkComment" parameterType="map"
+		resultType="int">
+		select count(*) from newMeet_RDS.rComment where rd_idx=#{rd_idx} and nidx=#{nidx}
+	</select>
+	
+	<!-- 댓글 삭제 -->
+	<delete id="deleteReviewComment">
+		delete from rComment where rd_idx=#{rd_idx}
+	</delete>
+	
+	
 </mapper>

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,6 +33,7 @@ public class ReviewController {
 			@RequestParam(value = "sort", defaultValue = "1") int sort,
 			@RequestParam(value = "mNum") int mNum,
 			@RequestParam(value = "page", defaultValue = "1") int page,
+			@RequestParam(value = "errCode", defaultValue = "0") int errCode,
 			Model model
 			) {
 		
@@ -54,13 +56,10 @@ public class ReviewController {
 			startPage = (page/5*5-1);
 		}
 		
-		//1-5 start 1
-		//5-9 start 4
-		//10-14 start 9
-		
 		model.addAttribute("totalCount", totalCount);
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("endPage", endPage);
+		model.addAttribute("errCode", errCode);
 		
 		model.addAttribute("sort", sort);
 		model.addAttribute("reviewList", reviewList);
@@ -84,10 +83,10 @@ public class ReviewController {
 		boolean check = false;
 		
 		if(session != null && session.getAttribute("MemberIdx") != null) {
-			check = mmCheckService.check((int)session.getAttribute("MemberIdx"));
+			check = mmCheckService.check((int)session.getAttribute("MemberIdx"),mNum);
 		}
 		
-		String result = "review/invalidMember";
+		String result =  "redirect:/review?mNum="+mNum+"&errCode=2";
 		
 		if(check) {
 			result = "review/reviewWrite2";
@@ -97,6 +96,41 @@ public class ReviewController {
 		
 		return result;
 	}
+	
+	@RequestMapping(value =  "/review/edit/{rNum}", method = RequestMethod.GET)
+	public String reviewEdit(
+			HttpServletRequest request,
+			@PathVariable("rNum") int rNum,
+			@RequestParam(value = "mNum") int mNum,
+			Model model
+			) {
+		
+		HttpSession session =	request.getSession(false);
+		int nidx = -1;
+		if(session != null && session.getAttribute("MemberIdx") != null) {
+			nidx = (int)session.getAttribute("MemberIdx");
+			if(!mmCheckService.check(nidx,mNum)) {
+				return  "redirect:/review/"+rNum+"?mNum="+mNum+"&errCode=2";
+			}
+		}
+		
+		Review reviewDetail = reviewService.getReviewEditInfo(rNum);
+		
+		//권한 확인
+		//세션 아이디==rNum의 작성자
+		if(nidx == reviewDetail.getNidx()) {
+			model.addAttribute("reviewDetail",reviewDetail);
+			model.addAttribute("mNum",mNum);
+			model.addAttribute("rNum",rNum);
+			return "review/reviewEdit";
+		}else {
+			return  "redirect:/review/"+rNum+"?mNum="+mNum+"&errCode=1";
+		}
+		
+		
+	}
+	
+	
 	
 	
 }

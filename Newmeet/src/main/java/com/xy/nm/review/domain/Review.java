@@ -89,6 +89,13 @@ public class Review {
 		this.nphoto = nphoto;
 	}
 	
+	@Override
+	public String toString() {
+		return "Review [r_idx=" + r_idx + ", r_title=" + r_title + ", r_content=" + r_content + ", r_star=" + r_star
+				+ ", r_date=" + r_date + ", r_like=" + r_like + ", m_idx=" + m_idx + ", nidx=" + nidx + ", nphoto="
+				+ nphoto + ", r_img=" + r_img + ", rlike_state=" + rlike_state + ", nnic=" + nnic + "]";
+	}
+	
 	
 	
 	

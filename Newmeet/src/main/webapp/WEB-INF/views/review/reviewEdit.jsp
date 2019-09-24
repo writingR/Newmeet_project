@@ -24,30 +24,31 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12">
-						<h2 class="h3 mb-3 text-black">후기 작성</h2>
+						<h2 class="h3 mb-3 text-black">후기 수정</h2>
 					</div>
 					<div class="col-md-7">
 
-						<form action="${pageContext.request.contextPath}/review/writeProcess" method="post">
+						<form action="${pageContext.request.contextPath}/review/editProcess" method="post">
 							<input type="hidden" value="${mNum}" name="mNum" required>
+							<input type="hidden" value="${rNum}" name="rNum" required>
 							<input type="hidden" name="img" id="images">
-							<input type="hidden" name="star"  step="0.1" value="0" id="starScore">
+							<input type="hidden" name="star"  step="0.1" value="${reviewDetail.r_star}" id="starScore">
 							
 							<div class="p-3 p-lg-5 border">
 
 								<div class="form-group row">
 									<div class="col-md-12">
 										<label for="c_subject" class="text-black">제목 </label> <input
-											type="text" class="form-control" id="c_subject" name="title"
+											type="text" class="form-control" id="c_subject" name="title" value="${reviewDetail.r_title}"
 											required>
 									</div>
 								</div>
-
+								
 								<div class="form-group row">
 									<div class="col-md-12">
 										<label for="c_message" class="text-black">내용 </label>
 										<textarea name="content" id="summernote" cols="30"
-											rows="7" class="form-control" required></textarea>
+											rows="7" class="form-control" required>${reviewDetail.r_content}</textarea>
 									</div>
 								</div>
 
@@ -56,7 +57,7 @@
 								<div class="form-group row">
 									<div class="col-lg-12">
 										<input type="submit" class="btn btn-info btn-lg btn-block"
-											value="작성하기">
+											value="수정하기">
 									</div>
 								</div>
 							</div>
@@ -65,7 +66,7 @@
 					
 					<div class="col-md-5 ml-auto">
 						<div class="p-4 border mb-3">
-							<span class="h6 text-uppercase">평가</span><span id="score" class="h6 text-uppercase" style="margin-left: 10px">0</span><p></p>
+							<span class="h6 text-uppercase">평가</span><span id="score" class="h6 text-uppercase" style="margin-left: 10px">${reviewDetail.r_star}</span><p></p>
 							<div id="rate"></div>
 						</div>
 					</div>
@@ -84,13 +85,13 @@
 <script src="http://www.shieldui.com/shared/components/latest/js/shieldui-all.min.js"></script>
 
 	<script>
-		var img = '${pageContext.request.contextPath}/static/img/noimg.jpg';
+		var img = '${reviewDetail.r_img}';
 		$('#images').val(img);
 		$(document).ready(function() {
 			$('#summernote').summernote({
 				height : 500,
 				minHeight : null, // set minimum height of editor
-				maxHeight : 1000, // set maximum height of editor
+				maxHeight : 400, // set maximum height of editor
 				focus : true, // set focus to editable area after initializing summernote
 				callbacks : {
 					onImageUpload : function(files, editor, welEditable) {
@@ -141,7 +142,7 @@
 		    $('#rate').shieldRating({
 		    	max: 5,
 	            step: 0.1,
-	            value: 0,
+	            value: ${reviewDetail.r_star},
 	            markPreset: false
 		    });
 	        
