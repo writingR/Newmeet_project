@@ -10,7 +10,6 @@
 	session.setAttribute("MemberIdx", 17);
 %>
 
-
 <head>
 <title>뉴밋</title>
 <meta charset="utf-8">
@@ -63,11 +62,9 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-6">
-						<span>Category</span>
-						<h3>Sports</h3>
-						<p>Category description here.. Lorem ipsum dolor sit amet,
-							consectetur adipisicing elit. Aliquam error eius quo, officiis
-							non maxime quos reiciendis perferendis doloremque maiores!</p>
+						<span></span>
+						<h3>Review</h3>
+						<p></p>
 					</div>
 				</div>
 			</div>

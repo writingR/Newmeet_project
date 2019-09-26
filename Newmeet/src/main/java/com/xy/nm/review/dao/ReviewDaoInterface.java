@@ -68,4 +68,7 @@ public interface ReviewDaoInterface {
 		
 		//댓글 삭제
 		public int deleteReviewComment(int rd_idx);
+		
+		//멤버 닉네임 추출
+		public String selectMember(int nidx);
 }

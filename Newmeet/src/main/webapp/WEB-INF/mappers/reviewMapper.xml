@@ -174,5 +174,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		delete from rComment where rd_idx=#{rd_idx}
 	</delete>
 	
+	<select id="selectMember" resultType="String">
+		select nnic from Member where nidx=#{nidx}
+	</select>
+	
 	
 </mapper>

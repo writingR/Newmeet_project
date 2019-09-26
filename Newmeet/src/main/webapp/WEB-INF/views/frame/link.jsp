@@ -19,4 +19,3 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/bootstrap/css/aos.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/bootstrap/css/style.css">
     
-    
