@@ -28,7 +28,7 @@ public class MainController {
 	@RequestMapping("/main")
 	public String getMain() {
 		
-		return "main";
+		return "main3";
 	}
 	
 	
@@ -62,7 +62,10 @@ public class MainController {
 			HttpServletRequest request, Model model) {
 		if(request.getSession().getAttribute("MemberIdx")!=null) {
 			int nidx = (Integer)request.getSession().getAttribute("MemberIdx");
-			MeetingInfo meetingInfo = moimInfoService.getMoimInfo(m_idx,nidx);
+			System.out.println(nidx);
+			System.out.println(m_idx);
+			MeetingInfo meetingInfo = moimInfoService.getMoimInfo4(m_idx);
+			System.out.println(meetingInfo);
 			if(meetingInfo!=null) {
 				
 				model.addAttribute("m_name", meetingInfo.getM_name());
@@ -73,8 +76,6 @@ public class MainController {
 				model.addAttribute("small_idx", meetingInfo.getSmall_idx());
 				model.addAttribute("m_stotal", meetingInfo.getM_stotal());
 				model.addAttribute("m_idx", meetingInfo.getM_idx());
-				model.addAttribute("nidx", meetingInfo.getNidx());
-				model.addAttribute("l_like", meetingInfo.getL_like());
 				
 				return "meeting/moimedit";
 		}

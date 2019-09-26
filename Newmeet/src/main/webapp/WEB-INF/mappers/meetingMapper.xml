@@ -102,6 +102,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			parameterType="com.xy.nm.meeting.domain.MeetingInfo">
 		update newMeet_RDS.Meeting set m_name=#{m_name},m_cont=#{m_cont},small_idx=#{small_idx} where m_idx = #{m_idx}
 	</update>
+	<!-- 모임 수정할때 상세정보 가져오기 -->
+	<select id="MoimEditInfo"
+			resultMap="resultMeetingInfo">
+	 select * from newMeet_RDS.Meeting where m_idx=#{param1}
+	 </select>
 <!-- 모임 생성 -->
 	<insert id="MeetingWrite"
 			parameterType="com.xy.nm.meeting.domain.MeetingInfo">
@@ -114,7 +119,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 모임생성후 midx 추출 -->
 	<select id="SelectMidx"
 			resultType="int">
-		select m_idx from newMeet_RDS.Meeting where m_name = #{m_name}
+		SELECT LAST_INSERT_ID()
+		<!-- select m_idx from newMeet_RDS.Meeting where m_name = #{m_name} -->
 	
 	</select>
 	<!-- 모임 리스트 -->

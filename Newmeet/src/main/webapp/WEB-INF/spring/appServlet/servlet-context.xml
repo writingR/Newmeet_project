@@ -20,6 +20,8 @@
 	<resources mapping="/static/**" location="/static/" />
 	<resources mapping="/uploadfile/**" location="/uploadfile/" />
 	<resources mapping="/bootstrap/**" location="/bootstrap/" />
+	<resources mapping="/bootstrap1/**" location="/bootstrap1/" />
+	
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">

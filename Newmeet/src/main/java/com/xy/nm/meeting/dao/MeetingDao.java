@@ -27,11 +27,13 @@ public interface MeetingDao {
 	// 모임 삭제
 	public int MoimDelete(int m_idx);
 	// 모임 생성후 m_idx 뽑아오기
-	public int SelectMidx(String m_name);
+	public int SelectMidx();
 	// 모임 리스트
 	public List<MeetingInfo> MeetingList();
 	// 모임 수정
 	public int MoimEdit(Map<String, Object> params);
+	// 모임 수정 정보
+	public MeetingInfo MoimEditInfo(int m_idx);
 	// 대표 이미지 수정
 	public int ImageEdit(int m_idx,String m_img);
 	// 모임 상세 정보 로그인

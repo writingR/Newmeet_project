@@ -1,80 +1,213 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="EUC-KR"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    pageEncoding="UTF-8"%>
+<%@ page trimDirectiveWhitespaces="true" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <!DOCTYPE html>
 <%
 	session.setAttribute("MemberIdx",107);
-%>   
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<style>
-	.list{
-		float: left;
-	}
-	
-	span{
-		
-		margin-left: 15px;
-	}
-</style>
-</head>
-<body>
-<h1> ∞Àªˆ </h1>
-<form action="moimSearch" method="get">
-	<input type="text" id="Keyword" name="Keyword">
-	<input type="submit" value="∞Àªˆ">
-</form>
+%>  
+<html lang="en">
+  <head>
+  <%@include file="/WEB-INF/views/frame/link.jsp"%>
+    <title>New Meet</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
 
-<h1>∏¿” ∏ÆΩ∫∆Æ</h1>
-	
-	<a href="<c:url value="/likestar?likestar=1" />">¡¡æ∆ø‰º¯</a> <a href="<c:url value="/likestar?likestar=2" />">∫∞¡° º¯</a>
-		<br><br>
-		<h4><a href="<c:url value="/category?category=πÆ»≠" />">πÆ»≠</a></h4>
-		<h4><a href="<c:url value="/category?category=∞‘¿”" />">∞‘¿”</a></h4>
-		<h4><a href="<c:url value="/category?category=ø©«‡" />">ø©«‡</a></h4>
-		<h4><a href="<c:url value="/category?category=Ω∫∆˜√˜" />">Ω∫∆˜√˜</a></h4>
-		<br><br>
-		<div id="list">
-		</div>
-                	
-</body>
-<script>
-	$(document).ready(function(){
-	
+    <link rel="stylesheet" href="bootstrap1/css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="bootstrap1/css/animate.css">
+    
+    <link rel="stylesheet" href="bootstrap1/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="bootstrap1/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="bootstrap1/css/magnific-popup.css">
+
+    <link rel="stylesheet" href="bootstrap1/css/aos.css">
+
+    <link rel="stylesheet" href="bootstrap1/css/ionicons.min.css">
+    
+    <link rel="stylesheet" href="bootstrap1/css/flaticon.css">
+    <link rel="stylesheet" href="bootstrap1/css/icomoon.css">
+    <link rel="stylesheet" href="bootstrap1/css/style.css">
+  </head>
+  
+  <body>
+  <%@include file="/WEB-INF/views/frame/header.jsp"%>
+   <%@include file="/WEB-INF/views/frame/nav.jsp"%>
+    <!-- END nav -->
+    
+   
+    <section class="hero-wrap hero-wrap-2" style="background-image: url('bootstrap1/images/bg_1.jpg');">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+          <div class="col-md-9 ftco-animate text-center">
+            <h1 class="mb-2 bread">New Meet</h1>
+            <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home <i class="ion-ios-arrow-forward"></i></a></span> </p>
+          </div>
+        </div>
+      </div>
+    </section>
+<div style="text-align: right;">
+<br>
+
+<a class="btn btn-primary" href="<c:url value="/likestar?likestar=1"/>">Ï¢ãÏïÑÏöîÏàú</a>
+<a class="btn btn-primary" href="<c:url value="/likestar?likestar=2"/>">Î≥ÑÏ†ê Ïàú</a>
+<a class="btn btn-primary" href="<c:url value="/moimList" />">Ï†ÑÏ≤¥ Î¶¨Ïä§Ìä∏</a>
+</div>
+    <section class="ftco-section">
+			<div class="container-fluid px-4">
+				<div class="row" id="show">
+					
+					
+				</div>
+			</div>
+		</section>
+
+    <footer class="ftco-footer ftco-bg-dark ftco-section">
+      <div class="container">
+        <div class="row mb-5">
+          <div class="col-md-6 col-lg-3">
+            <div class="ftco-footer-widget mb-5">
+            	<h2 class="ftco-heading-2">Have a Questions?</h2>
+            	<div class="block-23 mb-3">
+	              <ul>
+	                <li><span class="icon icon-map-marker"></span><span class="text">203 Fake St. Mountain View, San Francisco, California, USA</span></li>
+	                <li><a href="#"><span class="icon icon-phone"></span><span class="text">+2 392 3929 210</span></a></li>
+	                <li><a href="#"><span class="icon icon-envelope"></span><span class="text">info@yourdomain.com</span></a></li>
+	              </ul>
+	            </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-3">
+            <div class="ftco-footer-widget mb-5">
+              <h2 class="ftco-heading-2">Recent Blog</h2>
+              <div class="block-21 mb-4 d-flex">
+                <a class="blog-img mr-4" style="background-image: url(images/image_1.jpg);"></a>
+                <div class="text">
+                  <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about</a></h3>
+                  <div class="meta">
+                    <div><a href="#"><span class="icon-calendar"></span> June 27, 2019</a></div>
+                    <div><a href="#"><span class="icon-person"></span> Admin</a></div>
+                    <div><a href="#"><span class="icon-chat"></span> 19</a></div>
+                  </div>
+                </div>
+              </div>
+              <div class="block-21 mb-5 d-flex">
+                <a class="blog-img mr-4" style="background-image: url(images/image_2.jpg);"></a>
+                <div class="text">
+                  <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about</a></h3>
+                  <div class="meta">
+                    <div><a href="#"><span class="icon-calendar"></span> June 27, 2019</a></div>
+                    <div><a href="#"><span class="icon-person"></span> Admin</a></div>
+                    <div><a href="#"><span class="icon-chat"></span> 19</a></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-3">
+            <div class="ftco-footer-widget mb-5 ml-md-4">
+              <h2 class="ftco-heading-2">Links</h2>
+              <ul class="list-unstyled">
+                <li><a href="#"><span class="ion-ios-arrow-round-forward mr-2"></span>Home</a></li>
+                <li><a href="#"><span class="ion-ios-arrow-round-forward mr-2"></span>About</a></li>
+                <li><a href="#"><span class="ion-ios-arrow-round-forward mr-2"></span>Services</a></li>
+                <li><a href="#"><span class="ion-ios-arrow-round-forward mr-2"></span>Deparments</a></li>
+                <li><a href="#"><span class="ion-ios-arrow-round-forward mr-2"></span>Contact</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-3">
+            <div class="ftco-footer-widget mb-5">
+            	<h2 class="ftco-heading-2">Subscribe Us!</h2>
+              <form action="#" class="subscribe-form">
+                <div class="form-group">
+                  <input type="text" class="form-control mb-2 text-center" placeholder="Enter email address">
+                  <input type="submit" value="Subscribe" class="form-control submit px-3">
+                </div>
+              </form>
+            </div>
+            <div class="ftco-footer-widget mb-5">
+            	<h2 class="ftco-heading-2 mb-0">Connect With Us</h2>
+            	<ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-3">
+                <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
+                <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
+                <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 text-center">
+
+            <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+          </div>
+        </div>
+      </div>
+    </footer>
+  
+
+  <!-- loader -->
+  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+
+
+  <script src="bootstrap1/js/jquery.min.js"></script>
+  <script src="bootstrap1/js/jquery-migrate-3.0.1.min.js"></script>
+  <script src="bootstrap1/js/popper.min.js"></script>
+  <script src="bootstrap1/js/bootstrap.min.js"></script>
+  <script src="bootstrap1/js/jquery.easing.1.3.js"></script>
+  <script src="bootstrap1/js/jquery.waypoints.min.js"></script>
+  <script src="bootstrap1/js/jquery.stellar.min.js"></script>
+  <script src="bootstrap1/js/owl.carousel.min.js"></script>
+  <script src="bootstrap1/js/jquery.magnific-popup.min.js"></script>
+  <script src="bootstrap1/js/aos.js"></script>
+  <script src="bootstrap1/js/jquery.animateNumber.min.js"></script>
+  <script src="bootstrap1/js/scrollax.min.js"></script>
+  <script src="bootstrap1/js/main.js"></script>
+     
+  </body>
+  
+  <script>
+    
+    $(document).ready(function(){
+
 		$.ajax({
 			url : 'http://localhost:8080/nm/meeting/list',
 			type : 'GET',
 			success : function(data) {
+				
 				var html = '';
+				
 				//console.log(data);
 				for (var i = 0; i < data.length ; i++) {
-					html += '<div class="list">';
-					html += '<img src="http://localhost:8080/nm/uploadfile/' + data[i].m_img+ '" style="width: 200px; height: 150px;"><br>';
-					html += '<a href="<c:url value="/moimInfo"/>?m_idx='+ data[i].m_idx +'">'+ data[i].m_name +'</a><br>';
-					html += '<span><img src="http://localhost:8080/nm/uploadfile/like0.png"> ' + data[i].m_like +'</span><span><img src="http://localhost:8080/nm/uploadfile/star0.png">'+ (data[i].m_stotal/data[i].m_star).toFixed(1) +'</span>';
+					
+					html += '<div class="col-md-3 course ftco-animate fadeInUp ftco-animated">';
+					html += '<div class="img" style="background-image: url(http://localhost:8080/nm/uploadfile/' + data[i].m_img+ ');width: 400px;height: 300px;"></div>';
+					html += '<div class="text pt-4">';
+					html += '<p class="meta d-flex">';
+					html += '<span><img src="http://localhost:8080/nm/uploadfile/like0.png" style="margin-right: 10px;"> ' + data[i].m_like +'</span>';
+					html += '<span><img src="http://localhost:8080/nm/uploadfile/star1.png" style="margin-right: 10px;"> '+ (data[i].m_stotal/data[i].m_star).toFixed(1) +'</span>';
+					html += '<span><i class="icon-calendar mr-2"></i>New meet</span>';
+					html += '</p>';
+					html += '<h3 style="text-align: center;"><a href="<c:url value="/moimInfo"/>?m_idx='+ data[i].m_idx +'">'+data[i].m_name+'</a></h3>';
+					html += '<p><a href="<c:url value="/moimInfo"/>?m_idx='+ data[i].m_idx +'" class="btn btn-primary">Î™®ÏûÑÎ≥¥Îü¨Í∞ÄÍ∏∞</a></p>';
 					html += '</div>';
-					
-					
-					$('#list').html(html);
-				}
+					html += '</div>';
+				
+		
+					$('#show').html(html);
+			
+				} 
 					
 			}
 		});
 		
-		});
-	
-	
-		
-		
-		
-		
-	
-		
-
-	
-
-</script>
+		}); 
+    
+    </script>
 </html>
+   

@@ -65,7 +65,7 @@ public class MeetingWriteService {
 				resultCnt = dao.MeetingWrite(meetingInfo);
 				if(resultCnt > 0) {
 					System.out.println("모임은생성됫고");
-					int select = dao.SelectMidx(regist.getM_name());
+					int select = dao.SelectMidx();
 					System.out.println(select);
 					return select;
 				}

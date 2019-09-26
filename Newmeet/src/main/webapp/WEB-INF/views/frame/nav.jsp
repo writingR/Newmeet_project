@@ -2,8 +2,8 @@
     pageEncoding="UTF-8"%>
       <nav class="site-navigation text-right text-md-center" role="navigation">
         <div class="container">
-          <ul class="site-menu js-clone-nav d-none d-md-block">
-            <li class="has-children active">
+          <ul class="site-menu js-clone-nav d-none d-md-block" style="padding:20px;">
+           <!--  <li class="has-children active">
               <a href="index.html">Home</a>
               <ul class="dropdown">
                 <li><a href="#">Menu One</a></li>
@@ -30,8 +30,13 @@
             <li><a href="shop.html">Shop</a></li>
             <li><a href="#">Catalogue</a></li>
             <li><a href="#">New Arrivals</a></li>
-            <li><a href="<c:url value="/newMoim" />">모임 생성</a></li>
-            <li><a href="<c:url value="/moimList" />">모임 리스트</a></li>
+            <li><a href="contact.html">Contact</a></li> -->
+            
+            <li style="font-weight:bold;"><a href="<c:url value="/category?category=여행" />" style="font-size:20px;">여행</a></li>
+            <li style="font-weight:bold;"><a href="<c:url value="/category?category=문화" />" style="font-size:20px;">문화</a></li>
+            <li style="font-weight:bold;"><a href="<c:url value="/category?category=게임" />" style="font-size:20px;">게임</a></li>
+            <li style="font-weight:bold;"><a href="<c:url value="/category?category=스포츠" />" style="font-size:20px;">운동</a></li>
+           <li style="font-weight:bold;"><a href="<c:url value="/newMoim" />" style="font-size:20px;">모임 생성</a></li>
             
           </ul>
         </div>

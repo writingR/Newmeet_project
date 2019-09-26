@@ -37,5 +37,13 @@ public class MoimInfoService {
 		
 		return moimInfo3;
 	}
+	public MeetingInfo getMoimInfo4(int m_idx) {
+		dao = template.getMapper(MeetingDao.class);
+		
+		MeetingInfo moimInfo4 = dao.MoimEditInfo(m_idx);
+		
+		return moimInfo4;
+		
+	}
 	
 }
