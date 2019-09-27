@@ -1,7 +1,5 @@
 package com.xy.nm;
 
-import java.text.DateFormat;
-import java.util.Date;
 import java.util.Locale;
 
 import org.springframework.stereotype.Controller;
@@ -17,6 +15,6 @@ public class TestController {
 	public String home(Locale locale, Model model) {
 		
 		
-		return "calendar/calendar";
+		return "calendar/detail";
 	}
 }

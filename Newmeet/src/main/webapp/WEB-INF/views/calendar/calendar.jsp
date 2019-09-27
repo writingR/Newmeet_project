@@ -185,8 +185,8 @@ input::placeholder {
 </style>
 </head>
 <body>
-	<%@include file="/WEB-INF/views/frame/header2.jsp"%>
-	<%@include file="/WEB-INF/views/frame/nav.jsp"%>
+	<%-- <%@include file="/WEB-INF/views/frame/header2.jsp"%>
+	<%@include file="/WEB-INF/views/frame/nav.jsp"%> --%>
 
 
 <!-- 	<form id="regform"> -->
@@ -603,13 +603,20 @@ input::placeholder {
 					var edate = (enddate.toLocaleString().slice(0,-3));
 					
 					/* document.write(sysdate.toISOString()); */
-					if(today>data[i].c_date || today>data[i].c_edate || data[i].c_count/calJoinCount(data[i].c_idx)==1) {
-						html += '<div class="calList" id="calList" onclick="calDetail('+ data[i].c_idx + ')" style="background-color:#F8EFBA;">\n';
-						html += '<h4>마감 | ' + data[i].c_title +'</h4>\n';
+					if(today>data[i].c_date || today>data[i].c_edate) {
+						html += '<div class="calList" id="calList" onclick="calDetail('+ data[i].c_idx + ')" style="background-color:#d1ccc0; cursor:pointer">\n';
+						html += '<h4>종료 | ' + data[i].c_title +'</h4>\n';
 						html += '<h5>' + '일정\t' + dateArray[0]+'년'+dateArray[1]+'월'+dateArray[2]+'일'+dateArray[3]+'</h5>\n';
 						html += '<h6>' + '참가 인원 : ' + calJoinCount(data[i].c_idx) + '/' + data[i].c_count + '\t|\t신청마감일 : ' + edate + '</h6>\n';
 						html += '</div><br>\n'; 
 							
+					} else if(data[i].c_count/calJoinCount(data[i].c_idx)==1) {
+						html += '<div class="calList" id="calList" onclick="calDetail('+ data[i].c_idx + ')" style="background-color:#f7f1e3; cursor:pointer">\n';
+						html += '<h4>마감 | ' + data[i].c_title +'</h4>\n';
+						html += '<h5>' + '일정\t' + dateArray[0]+'년'+dateArray[1]+'월'+dateArray[2]+'일'+dateArray[3]+'</h5>\n';
+						html += '<h6>' + '참가 인원 : ' + calJoinCount(data[i].c_idx) + '/' + data[i].c_count + '\t|\t신청마감일 : ' + edate + '</h6>\n';
+						html += '</div><br>\n'; 
+						
 					} else {
 						html += '<div class="calList" style="cursor:pointer" id="calList" onclick="calDetail('+ data[i].c_idx + ')">\n';
 						html += '<h4>' + data[i].c_title +'</h4>\n';
@@ -1303,7 +1310,7 @@ function calRegist02(title, address) {
 </script>
 
 <script src="<c:url value="/bootstrap/js/bootstrap.min.js" />"></script>
-	<%-- <%@include file="/WEB-INF/views/frame/sc.jsp"%> --%>
+<%-- <%@include file="/WEB-INF/views/frame/sc.jsp"%> --%>
 
 </body>
 </html>
