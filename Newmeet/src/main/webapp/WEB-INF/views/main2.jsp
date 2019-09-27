@@ -7,7 +7,7 @@
 <%@include file="/WEB-INF/views/frame/link.jsp"%>
 </head>
 <body>
-	<%@include file="/WEB-INF/views/frame/header2.jsp"%>
+	<%@include file="/WEB-INF/views/frame/header.jsp"%>
 	<%@include file="/WEB-INF/views/frame/nav.jsp"%>
 
 	

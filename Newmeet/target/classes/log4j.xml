@@ -12,7 +12,7 @@
 	
 	<!-- Application Loggers -->
 	<logger name="com.xy.nm">
-		<level value="info" />
+		<level value="all" />
 	</logger>
 	
 	<!-- 3rdparty Loggers -->
