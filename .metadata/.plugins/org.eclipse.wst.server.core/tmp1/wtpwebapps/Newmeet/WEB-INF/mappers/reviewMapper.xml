@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- interface의 full name을 namespace의 속성으로 사용 : 필수 -->
+<mapper namespace="com.xy.nm.review.dao.ReviewDaoInterface">
+
+	<!-- select 결과 메핑을 위한 resultMap 설정 -->
+	<resultMap id="resultReviewInfo"
+		type="com.xy.nm.review.domain.Review">
+		<id property="r_idx" column="r_idx" />
+		<result property="r_title" column="r_title" />
+		<result property="r_content" column="r_content" />
+		<result property="r_star" column="r_star"/> 
+		<result property="r_date" column="r_date" />
+		<result property="r_like" column="r_like" />
+		<result property="m_idx" column="m_idx" />
+		<result property="nidx" column="nidx" />
+		<result property="nphoto" column="nphoto" />
+		<result property="r_img" column="r_img" />
+		<result property="rlike_state" column="rlike_state" />
+		<result property="nnic" column="nnic" />
+	</resultMap>
+
+	<!-- select 결과 메핑을 위한 resultMap 설정 -->
+	<resultMap id="resultCommentInfo"
+		type="com.xy.nm.review.domain.Comment">
+		<id property="rd_idx" column="rd_idx" />
+		<result property="rd_content" column="rd_content" />
+		<result property="rd_date" column="rd_date" />
+		<result property="r_idx" column="r_idx"/> 
+		<result property="nidx" column="nidx" />
+		<result property="nnic" column="nnic" />
+	</resultMap>
+	
+	
+	
+	<!-- 모임 게시판 : 후기 리스트의 개수  -->
+	<select id="getReviewCount"
+		resultType="int">
+		select count(*) from Review where m_idx=#{m_idx}
+	</select>
+
+	<!-- 후기 리스트 -->
+	<select id="getReviewList" parameterType="map"
+		resultMap="resultReviewInfo">
+		
+		select r.r_idx, r_title, r_content, r_star, r_date, r_like, m_idx, r.nidx ,nphoto, r_img , rlike_state, nnic  
+		from Review as r 
+		Left join Member as m 
+		on r.nidx = m.nidx 
+		Left join (select * from newMeet_RDS.rLike 
+		where nidx=#{nidx}) 
+		as rl 
+		on r.r_idx = rl.r_idx 
+		where m_idx= #{m_idx} 
+		order by ${sort}  
+		desc 
+		limit #{startIndex}, #{LIST_PER_PAGE}
+	</select>
+	
+	<!-- 모임 멤머 체크 -->
+	<select id="checkmmId" parameterType="map"
+		resultType="int">
+		select count(*) from mMember where nidx=#{nidx}  and m_idx=#{m_idx}
+	</select>
+
+
+
+<!-- 좋아요 시작 -->
+	<!-- 좋아요 상태 세기 -->
+	<select id="selectCountLikeState" 
+		resultType="int">
+		select count(rlike_state) from newMeet_RDS.rLike where r_idx = #{r_idx} and nidx = #{nidx}
+	</select>
+	
+	<!-- 좋아요 상태 확인 -->
+	<select id="selectLikeState" 
+		resultType="int">
+		select rlike_state from newMeet_RDS.rLike where r_idx = #{r_idx} and nidx = #{nidx}
+	</select>
+	
+	<!-- 좋아요 업데이트 -->
+	<update id="updateLike">
+		update newMeet_RDS.rLike set rlike_state = #{plus_minus} where r_idx = #{r_idx} and nidx = #{nidx}
+	</update>
+	
+	<!-- 리뷰 좋아요 업데이트 -->
+	<update id="updateReviewLike">
+		update Review set r_like = r_like+${plus_minus} where r_idx = #{r_idx}
+	</update>
+	
+	<!-- 좋아요 삽입 -->
+	<insert id="insertLike">
+		insert into newMeet_RDS.rLike(rlike_state, r_idx, nidx) values(1, #{r_idx}, #{nidx})
+	</insert>
+<!-- 좋아요 끝 -->
+
+	<!-- 리뷰 삽입 -->
+	<insert id="insertReview" parameterType="map">
+		insert into Review(r_title, r_img, r_content, r_star, m_idx, nidx) values(#{title}, #{img}, #{content},#{star},#{mNum}, #{nidx} );
+	</insert>
+
+
+	<!-- 최근 리스트 -->
+	<select id="getRecentReviewList" parameterType="map"
+		resultMap="resultReviewInfo">
+		select r_idx, r_title, r_content, r_star, r_date, r_like, m_idx, nidx , r_img 
+		from Review 
+		where m_idx= #{m_idx} 
+		order by r_idx 
+		desc 
+		limit #{startIndex}, #{LIST_PER_PAGE}
+	</select>
+
+	<!-- 상세 정보 -->
+	<select id="getReviewDetail" parameterType="map"
+		resultMap="resultReviewInfo">
+		select r.r_idx, r_title,r_img, r_content, r_star, r_date, r_like, m_idx, r.nidx ,nphoto, rlike_state, nnic 
+		from newMeet_RDS.Review as r Left join newMeet_RDS.Member as m on r.nidx = m.nidx 
+		Left join (select * from newMeet_RDS.rLike where nidx=#{nidx}) as rl on r.r_idx = rl.r_idx 
+		where m_idx = #{m_idx} and r.r_idx = #{r_idx}
+	</select>
+	
+	<!-- 후기 : 댓글 리스트의 개수  -->
+	<select id="getCommentCount"
+		resultType="int">
+		select count(*) from newMeet_RDS.rComment where r_idx=#{r_idx}
+	</select>
+	
+	
+	<!-- 후기 리스트 -->
+	<select id="getCommentList" parameterType="map"
+		resultMap="resultCommentInfo">
+		select rd_idx, rd_content, rd_date, r_idx, rc.nidx, nphoto, nnic from rComment as rc join Member as m on rc.nidx = m.nidx where r_idx= #{r_idx} limit #{startIndex}, #{LIST_PER_PAGE}
+	</select>
+	
+	
+	<!-- 댓글 삽입 -->
+	<insert id="insertComment" parameterType="map">
+		insert into rComment(rd_content, r_idx, nidx) values(#{content},#{r_idx}, #{nidx} )
+	</insert>
+	
+	<!-- 리뷰 편집 정보 -->
+	<select id="getReviewEditInfo" resultMap="resultReviewInfo">
+		select * from Review where r_idx = #{rNum}
+	</select>
+	
+	<!-- 리뷰 편집 -->
+	<update id="updateReview">
+		update Review set r_title = #{title}, r_img =#{img}, r_content = #{content}, r_star = #{star} where r_idx = #{rNum}
+	</update>
+	
+	<!-- 리뷰 삭제 -->
+	<delete id="deleteReview">
+		delete from Review where r_idx=#{rNum}
+	</delete>
+	
+	<!-- 댓글 편집 -->
+	<update id="updateReviewComment" parameterType="map">
+		update rComment set rd_content = #{content} where rd_idx = #{rdNum}
+	</update>
+	
+	<!-- 댓글 작성자 확인 -->
+	<select id="checkComment" parameterType="map"
+		resultType="int">
+		select count(*) from newMeet_RDS.rComment where rd_idx=#{rd_idx} and nidx=#{nidx}
+	</select>
+	
+	<!-- 댓글 삭제 -->
+	<delete id="deleteReviewComment">
+		delete from rComment where rd_idx=#{rd_idx}
+	</delete>
+	
+	<select id="selectMember" resultType="String">
+		select nnic from Member where nidx=#{nidx}
+	</select>
+	
+	
+</mapper>
