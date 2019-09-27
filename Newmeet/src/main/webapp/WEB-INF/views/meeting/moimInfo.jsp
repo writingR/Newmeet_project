@@ -2,10 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>	
-<%
-	session.setAttribute("MemberIdx", 107);
-	
-%>
 <!DOCTYPE html>
 <html lang="en">
   <head>

@@ -35,9 +35,7 @@ public class MeetMemberController {
 
 		HttpSession session = request.getSession(false);
 
-		if(session != null) {
-			session.setAttribute("MemberIdx", 107);
-		} 
+		
 		if(session != null && session.getAttribute("MemberIdx") != null) {
 			nidx = (int)session.getAttribute("MemberIdx");
 		}
