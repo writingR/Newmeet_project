@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- interface의 full name을 namespace의 속성으로 사용 : 필수 -->
+<mapper namespace="com.xy.nm.meeting.dao.MeetingDao">
+
+	<!-- select 결과 메핑을 위한 resultMap 설정 -->
+	<!-- 대분류 카테고리 -->
+	<resultMap id="lCategoryList"
+		type="com.xy.nm.meeting.domain.MeetingLcategory">
+		<result property="big_idx" column="big_idx" />
+		<result property="big_ca" column="big_ca" />
+	</resultMap>
+	<!-- 소분류 카테고리 -->
+	<resultMap id="sCategoryList"
+		type="com.xy.nm.meeting.domain.MeetingScategory">
+		<result property="small_idx" column="small_idx" />
+		<result property="big_idx" column="big_idx" />
+		<result property="small_ca" column="small_ca" />
+	</resultMap>
+	<!-- 모임 -->
+	<resultMap id="resultMeetingInfo"
+		type="com.xy.nm.meeting.domain.MeetingInfo">
+		<result property="m_idx" column="m.m_idx" />
+		<result property="m_name" column="m_name" />
+		<result property="m_img" column="m_img" />
+		<result property="m_cont" column="m_cont" />
+		<result property="m_stotal" column="m_stotal" />
+		<result property="m_star" column="m_star" />
+		<result property="m_like" column="m_like" />
+		<result property="small_idx" column="small_idx" />
+		<result property="l_like" column="l_like" />
+		<result property="nidx" column="nidx" />
+	</resultMap>
+	<resultMap id="resultMeetingInfo2"
+		type="com.xy.nm.meeting.domain.MeetingInfo">
+		<result property="m_idx" column="m.m_idx" />
+		<result property="m_name" column="m_name" />
+		<result property="m_img" column="m_img" />
+		<result property="m_cont" column="m_cont" />
+		<result property="m_stotal" column="m_stotal" />
+		<result property="m_star" column="m_star" />
+		<result property="m_like" column="m_like" />
+		<result property="small_idx" column="small_idx" />
+	</resultMap>
+	<!-- 좋아요 -->
+	<resultMap id="resultMeetingLike"
+		type="com.xy.nm.meeting.domain.MeetingLike">
+		<result property="l_idx" column="l_idx" />
+		<result property="m_idx" column="m_idx" />
+		<result property="nidx" column="nidx" />
+		<result property="l_like" column="l_like" />
+	</resultMap>
+	<!-- 대분류별 리스트 -->
+	<resultMap id="categoryList" type="com.xy.nm.meeting.domain.CategoryList">
+		<result property="m_idx" column="m.m_idx" />
+		<result property="m_name" column="m_name" />
+		<result property="m_img" column="m_img" />
+		<result property="m_cont" column="m_cont" />
+		<result property="m_stotal" column="m_stotal" />
+		<result property="m_star" column="m_star" />
+		<result property="m_like" column="m_like" />
+		<result property="small_ca" column="small_ca" />
+		<result property="big_ca" column="big_ca" />
+	</resultMap>
+	
+	
+	
+	<!-- 대분류 리스트 -->
+	<select id="lCategoryList"
+			resultMap="lCategoryList">
+		select * from newMeet_RDS.lCategory
+	
+	</select>
+	<!-- 소분류 리스트 -->
+	<select id="sCategoryList"
+			resultMap="sCategoryList">
+		select * from newMeet_RDS.sCategory where big_idx=#{big_idx}
+	
+	</select>
+	<!-- 전체리스트중 좋아요 벌점 순 -->
+	<select id="LikeStarList" 
+				resultMap="resultMeetingInfo2">
+	select * from newMeet_RDS.Meeting order by ${value} desc
+	</select>
+	
+	<!-- 대분류 별 모임 리스트 -->
+	<select id="LList" 
+				resultMap="categoryList">
+	select m_idx,m_name,m_img,m_cont,m_stotal,m_star,small_ca,m_like,big_ca from newMeet_RDS.lCategory as l left join newMeet_RDS.sCategory as s on l.big_idx=s.big_idx left join newMeet_RDS.Meeting as m on s.small_idx=m.small_idx where m.m_idx > 0 and l.big_ca = #{param1}
+	</select>
+	
+	<!-- 대표 이미지 수정 -->
+	<update id="ImageEdit"
+					parameterType="com.xy.nm.meeting.domain.MeetingInfo">
+		update newMeet_RDS.Meeting set m_img=#{param2} where m_idx=#{param1}
+	</update>
+	<!-- 모임 수정 -->
+	<update id="MoimEdit" 
+			parameterType="com.xy.nm.meeting.domain.MeetingInfo">
+		update newMeet_RDS.Meeting set m_name=#{m_name},m_cont=#{m_cont},small_idx=#{small_idx} where m_idx = #{m_idx}
+	</update>
+	<!-- 모임 수정할때 상세정보 가져오기 -->
+	<select id="MoimEditInfo"
+			resultMap="resultMeetingInfo">
+	 select * from newMeet_RDS.Meeting where m_idx=#{param1}
+	 </select>
+<!-- 모임 생성 -->
+	<insert id="MeetingWrite"
+			parameterType="com.xy.nm.meeting.domain.MeetingInfo">
+			
+			insert into newMeet_RDS.Meeting (small_idx,m_name,m_img,m_cont) 
+			values (#{small_idx},#{m_name},#{m_img},#{m_cont})
+	
+	</insert>
+	
+	<!-- 모임생성후 midx 추출 -->
+	<select id="SelectMidx"
+			resultType="int">
+		SELECT LAST_INSERT_ID()
+		<!-- select m_idx from newMeet_RDS.Meeting where m_name = #{m_name} -->
+	
+	</select>
+	<!-- 모임 리스트 -->
+	<select id="MeetingList"
+			resultMap="resultMeetingInfo">
+		select * from newMeet_RDS.Meeting
+	
+	</select>
+	<!-- 모임 상세 정보 -->
+	<select id="MeetingInfo"
+			resultMap="resultMeetingInfo">
+		select m.m_idx,m_name,m_img,m_cont,m_stotal,m_star,m_like,small_idx,l_like,nidx from newMeet_RDS.Meeting as m left join newMeet_RDS.mLike as l on m.m_idx = l.m_idx where nidx=#{param2} and m.m_idx=#{param1}
+		
+	</select>
+	<!-- 모임 상세 정보 비로그인 -->
+	<select id="MeetingInfo2"
+			resultMap="resultMeetingInfo2">
+		select m.m_idx,m_name,m_img,m_cont,m_stotal,m_star,m_like,small_idx,nidx from newMeet_RDS.Meeting as m left join newMeet_RDS.mLike as l on m.m_idx = l.m_idx where m.m_idx=#{m_idx} limit 0, 1
+		
+	</select>
+	
+	<!-- 모임의 회원인지 아닌지확인 -->
+	<select id="MoimMember"
+			resultType="int">
+	select count(mm_level) from newMeet_RDS.mMember where m_idx=#{param1} and nidx=#{param2}
+	</select>
+	 <!-- 모임원인지 모임장인지 확인 -->
+	 
+	<select id="MoimJang"
+			resultType="int">
+	select mm_level from newMeet_RDS.mMember where m_idx=#{param1} and nidx=#{param2}
+	</select>
+	
+	<!-- 모임 삭제 -->
+	<delete id="MoimDelete">
+		delete from newMeet_RDS.Meeting where m_idx = #{param1}
+	</delete>
+	
+	
+	<!-- 총 좋아요 데이터 조건 -->
+	<select id="MeetingInfo3"
+			resultMap="resultMeetingInfo2">
+		select * from newMeet_RDS.Meeting where m_idx=#{m_idx}
+		
+	</select>
+	
+	<!-- 검색 기능 -->
+	<select id="MoimSearch"
+			resultMap="resultMeetingInfo2">
+	select * from newMeet_RDS.Meeting where m_name like CONCAT('%',#{Keyword},'%')
+	</select>
+	
+
+	<!-- 좋아요 기능 -->
+	<!-- 좋아요 상태 확인 있는지 없는지 -->
+	<select id="LikeCheck"
+			resultType="int">
+		select count(l_like) from newMeet_RDS.mLike where m_idx=#{param1} and nidx=#{param2}
+	</select>
+	<!-- 좋아요 상태 넣기 -->
+	<insert id="LikePush" parameterType="com.xy.nm.meeting.domain.MeetingLike">
+		insert into newMeet_RDS.mLike (m_idx,l_like,nidx) values (#{param1},1,#{param2})
+	</insert>
+	<!-- 좋아요 상태 확인 ( 있을때 눌럿는지 안눌럿는지) -->
+	<select id="LikeCheckPush"
+			resultType="int">
+		select l_like from newMeet_RDS.mLike where m_idx=#{param1} and nidx=#{param2}
+	</select>
+	<!-- 좋아요 누르기 -->
+	<update id="Like"
+			parameterType="com.xy.nm.meeting.domain.MeetingLike">
+	update newMeet_RDS.mLike set l_like=1 where m_idx=#{param1} and nidx=#{param2}
+	</update>
+	<!-- 좋아요 내리기 -->
+	<update id="Likedown"
+			parameterType="com.xy.nm.meeting.domain.MeetingLike">
+	update newMeet_RDS.mLike set l_like=0 where m_idx=#{param1} and nidx=#{param2}
+	</update>
+	<!-- 총 좋아요 최신화 -->
+	<update id="LikeUpdate"
+			parameterType="com.xy.nm.meeting.domain.MeetingLike">
+	update newMeet_RDS.Meeting set m_like=(select count(l_like) from newMeet_RDS.mLike where m_idx=#{param1} and l_like=1) where m_idx=#{param1}
+	</update>
+	
+	
+	<!-- 별점 기능 -->
+	<!-- 별점 주기 -->
+	<insert id="StarPush" parameterType="com.xy.nm.meeting.domain.MeetingStar">
+		insert into newMeet_RDS.mStar (m_idx,nidx,ms_star,ms_spoint) values (#{param1},#{param2},1,#{param3});
+	</insert>
+	<!-- 별점 상태 확인  -->
+	<select id="StarCheckPush"
+			resultType="int">
+		select count(ms_star) from newMeet_RDS.mStar where m_idx=#{param1} and nidx=#{param2}
+	</select>
+	<!-- 별점 최신화 -->
+	<update id="StarUpdate"
+			parameterType="com.xy.nm.meeting.domain.MeetingStar">
+	update newMeet_RDS.Meeting set m_stotal = m_stotal+#{param2} , m_star = m_star+1 where m_idx=#{param1};
+	</update>
+	
+	
+	
+	
+</mapper>
