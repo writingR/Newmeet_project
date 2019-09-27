@@ -13,8 +13,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.xy.nm.meeting.dao.MeetingDao;
 
-@Service("imageService")
-public class ImageService {
+@Service("image_Service")
+public class Image_Service {
 	// 자동 메퍼를 이용해서 생성할 dao 
 				private MeetingDao dao;
 				// 자동 메퍼를 위한 sqlSessionTemplate 객체 주입

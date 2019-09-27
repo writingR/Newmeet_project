@@ -29,7 +29,7 @@ import com.xy.nm.meeting.domain.MeetingScategory;
 import com.xy.nm.meeting.domain.RequestMeetingEdit;
 import com.xy.nm.meeting.domain.RequestMeetingWrite;
 import com.xy.nm.meeting.service.CategoryListService;
-import com.xy.nm.meeting.service.ImageService;
+import com.xy.nm.meeting.service.Image_Service;
 import com.xy.nm.meeting.service.MeetingWriteService;
 import com.xy.nm.meeting.service.MoimDeleteService;
 import com.xy.nm.meeting.service.MoimEditService;
@@ -53,7 +53,7 @@ public class MeetingController {
 	@Autowired
 	private MoimMemberService moimMemberService;
 	@Autowired
-	private ImageService imageService;
+	private Image_Service image_Service;
 	@Autowired
 	private MoimDeleteService moimDeleteService;
 	@Autowired
@@ -151,7 +151,7 @@ public class MeetingController {
 			int cnt = 0;
 			System.out.println(m_idx);
 			System.out.println(m_img);
-			cnt = imageService.image(m_idx, request, m_img);
+			cnt = image_Service.image(m_idx, request, m_img);
 			System.out.println("변경완료 캬캬캬"+cnt);
 			return new ResponseEntity<Integer>(
 					cnt>0?1:0,
@@ -176,7 +176,7 @@ public class MeetingController {
 				nidx = (int)session.getAttribute("MemberIdx");
 			}
 			
-			String url = imageService.summernote(nidx, request, file);
+			String url = image_Service.summernote(nidx, request, file);
 			
 			
 			return new ResponseEntity<String>(
