@@ -46,4 +46,14 @@ public interface MeetMemberSessionDao {
 	
 	//특정 모임의 특정 유저가 가입한 모든 모임 리스트의 개수
 	public int selectMeetingListCount(Map<String, Object> params);
+	
+	//특정 모임에 들어온 유저가 모임멤버에 들어와있는 멤버인지 체크 
+	public int checkMember(Map<String, Object> params);
+
+	//특정 모임의 특정 유저가 모임장인지 아닌지 체크
+	public int checkLeader(Map<String, Object> params);
+	
+	//위의 dao를 보조하는 sql
+	public MeetMemberInfo checkLeaderside(int m_idx);
+	
 }

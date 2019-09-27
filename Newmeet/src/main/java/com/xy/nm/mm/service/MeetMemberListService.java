@@ -50,6 +50,7 @@ public class MeetMemberListService implements MeetMemberManagerService {
 		return list;
 
 	}
+	
 
 	// 특정 모임의 모임 멤버 리스트 출력과 페이징 처리를 함께 하기 위한 코드
 	public MeetMemberListData getListData(int m_idx, int currentPageNumber) {

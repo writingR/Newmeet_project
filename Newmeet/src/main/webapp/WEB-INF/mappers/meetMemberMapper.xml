@@ -51,7 +51,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 특정 회원 정보를  확인 -->
 	<select id="selectByidx" resultMap="resultMeetMemberInfo">
-		SELECT * FROM newMeet_RDS.Member s LEFT OUTER JOIN newMeet_RDS.mMember l ON s.nidx = l.nidx WHERE l.m_idx = #{m_idx} AND s.nidx = #{nidx}
+		SELECT * FROM newMeet_RDS.Member s LEFT OUTER JOIN newMeet_RDS.mMember l ON s.nidx = l.nidx WHERE l.m_idx = #{m_idx} AND l.nidx = #{nidx}
 	</select>
 	
 	<!-- 특정 회원 정보를 삭제 -->
@@ -69,7 +69,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT * FROM newMeet_RDS.Member s 
 		LEFT OUTER JOIN newMeet_RDS.mMember l 
 		ON s.nidx = l.nidx
-		WHERE l.m_idx = #{m_idx} 
+		WHERE l.m_idx = #{m_idx}
+		GROUP BY l.mm_idx
+		ORDER BY mm_level DESC
 		LIMIT #{index}, #{count}
 	</select>
 	
@@ -80,38 +82,41 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 특정 모임의 특정 유저가 작성한 리뷰 리스트 -->
 	<select id="selectReviewList" parameterType="map" resultMap="resultMeetMemberInfo">
-		SELECT * FROM newMeet_RDS.mMember s 
-		LEFT OUTER JOIN newMeet_RDS.Review l
-		ON s.nidx = l.nidx 
-		WHERE s.m_idx = #{m_idx} AND l.nidx = #{nidx}
+		SELECT * FROM newMeet_RDS.Review s
+		WHERE s.nidx IN(SELECT l.nidx FROM newMeet_RDS.mMember l) 
+		AND s.m_idx = #{m_idx} 
+		AND s.nidx = #{nidx}
 		ORDER BY r_date DESC
 		LIMIT #{index}, #{count}
 	</select>
 	
 	<!-- 특정 모임의 특정 유저가 작성한 리뷰 리스트의 개수 -->
 	<select id="selectReviewListCount" resultType="int">
-		SELECT COUNT(*) FROM newMeet_RDS.mMember s
-		LEFT OUTER JOIN newMeet_RDS.Review l
-		ON s.nidx = l.nidx
-		WHERE s.m_idx = #{m_idx} AND l.nidx = #{nidx}
+		SELECT COUNT(*) FROM newMeet_RDS.Review s
+		WHERE s.nidx IN(SELECT l.nidx FROM newMeet_RDS.mMember l) 
+		AND s.m_idx = #{m_idx} 
+		AND s.nidx = #{nidx}
 	</select>
 	
 	<!-- 특정 모임의 특정 유저가 작성한 리뷰 댓글 리스트 -->
 	<select id="selectRcommentList" parameterType="map" resultMap="resultMeetMemberInfo">
-		SELECT * FROM newMeet_RDS.mMember s 
-		LEFT OUTER JOIN newMeet_RDS.rComment l 
-		ON s.nidx = l.nidx
-		WHERE s.m_idx = #{m_idx} AND l.nidx = #{nidx} 
-		ORDER BY rd_date DESC
+		SELECT * FROM newMeet_RDS.rComment c
+		LEFT JOIN newMeet_RDS.Review r
+		ON c.r_idx = r.r_idx
+		WHERE c.nidx = #{nidx}
+		AND r.m_idx = #{m_idx}
+		ORDER BY c.rd_date DESC
 		LIMIT #{index}, #{count}
 	</select>
+
 	
 	<!-- 특정 모임의 특정 유저가 작성한 리뷰 댓글 리스트의 개수 -->
 	<select id="selectRcommentListCount" resultType="int">
-		SELECT COUNT(*) FROM newMeet_RDS.mMember s
-		LEFT OUTER JOIN newMeet_RDS.rComment l
-		ON s.nidx = l.nidx
-		WHERE s.m_idx = #{m_idx} AND l.nidx = #{nidx}
+		SELECT * FROM newMeet_RDS.rComment c
+		LEFT JOIN newMeet_RDS.Review r
+		ON c.r_idx = r.r_idx
+		WHERE c.nidx = #{nidx}
+		AND r.m_idx = #{m_idx}
 	</select>
 	
 	
@@ -131,6 +136,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		LEFT OUTER JOIN newMeet_RDS.Meeting l
 		ON s.m_idx = l.m_idx
 		WHERE s.nidx = #{nidx}
+	</select>
+	
+	<!-- 특정 모임에 들어온 유저가 모임멤버에 들어와있는 멤버인지 체크 -->
+	<select id="checkMember" resultType="int">
+		SELECT COUNT(*) FROM newMeet_RDS.Member s
+		LEFT OUTER JOIN newMeet_RDS.mMember l
+		ON s.nidx = l.nidx
+		WHERE l.m_idx = #{m_idx}
+		AND l.nidx = #{nidx}
+	</select>
+	
+	<!-- 특정 회원이 특정 모임의 모임장인지 아닌지 판단하는 SQL -->
+	<select id="checkLeader" resultType="int">
+		SELECT COUNT(*) FROM newMeet_RDS.Member s
+		LEFT OUTER JOIN newMeet_RDS.mMember l
+		ON s.nidx = l.nidx
+		WHERE l.m_idx = #{m_idx}
+		AND l.nidx = #{nidx}
+		AND l.mm_level = #{mm_level}
+		GROUP BY l.mm_idx
+	</select>
+	
+	<!-- 위의 sql문을 보조하는 sql문 mm_level을 뽑아내기 위한 sql -->
+	<select id="checkLeaderside" resultMap="resultMeetMemberInfo">
+		SELECT * FROM newMeet_RDS.mMember s
+		WHERE m_idx = #{m_idx}
 	</select>
 </mapper>
 

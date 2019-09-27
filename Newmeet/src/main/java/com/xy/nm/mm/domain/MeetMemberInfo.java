@@ -24,12 +24,12 @@ public class MeetMemberInfo {
 	private int m_like;
 	private int rd_idx;
 	private String rd_content;
-	private Date rd_date;
+	private String rd_date;
 	private int r_idx;
 	private String r_title;
 	private String r_content;
 	private double r_star;
-	private Date r_date;
+	private String r_date;
 	private int r_like;
 	private String r_img;
 	
@@ -91,12 +91,7 @@ public class MeetMemberInfo {
 	public void setRd_content(String rd_content) {
 		this.rd_content = rd_content;
 	}
-	public Date getRd_date() {
-		return rd_date;
-	}
-	public void setRd_date(Date rd_date) {
-		this.rd_date = rd_date;
-	}
+
 	public int getR_idx() {
 		return r_idx;
 	}
@@ -121,12 +116,7 @@ public class MeetMemberInfo {
 	public void setR_star(double r_star) {
 		this.r_star = r_star;
 	}
-	public Date getR_date() {
-		return r_date;
-	}
-	public void setR_date(Date r_date) {
-		this.r_date = r_date;
-	}
+
 	public int getR_like() {
 		return r_like;
 	}
@@ -204,6 +194,22 @@ public class MeetMemberInfo {
 	}
 	public void setCode(String code) {
 		this.code = code;
+	}
+	
+	public String getRd_date() {
+		return rd_date;
+	}
+
+	public void setRd_date(String rd_date) {
+		this.rd_date = rd_date;
+	}
+
+	public String getR_date() {
+		return r_date;
+	}
+
+	public void setR_date(String r_date) {
+		this.r_date = r_date;
 	}
 
 	@Override

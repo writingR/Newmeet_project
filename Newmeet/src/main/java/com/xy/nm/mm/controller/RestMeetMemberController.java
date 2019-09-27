@@ -1,5 +1,7 @@
 package com.xy.nm.mm.controller;
 
+
+
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.xy.nm.mm.domain.MeetMemberInfo;
 import com.xy.nm.mm.domain.MeetMemberListData;
+import com.xy.nm.mm.service.MeetMemberCheckService;
 import com.xy.nm.mm.service.MeetMemberDeleteService;
 import com.xy.nm.mm.service.MeetMemberLevelService;
 import com.xy.nm.mm.service.MeetMemberListService;
@@ -35,22 +38,10 @@ public class RestMeetMemberController {
 
 	@Autowired
 	private MeetMemberLevelService levelService;
-
-	/*
-	 * // 모임멤버의 전체 리스트 출력
-	 * 
-	 * @CrossOrigin
-	 * 
-	 * @GetMapping public ResponseEntity<List<MeetMemberInfo>> getAllList() {
-	 * 
-	 * List<MeetMemberInfo> list = listService.getAllList();
-	 * 
-	 * ResponseEntity<List<MeetMemberInfo>> entity = new
-	 * ResponseEntity<List<MeetMemberInfo>>(list, HttpStatus.OK);
-	 * 
-	 * return entity; }
-	 */
-
+	
+	@Autowired
+	private MeetMemberCheckService checkService;
+	
 	// 특정 모임의 멤버 리스트 출력
 	@CrossOrigin
 	@GetMapping("/{m_idx}")
@@ -67,9 +58,15 @@ public class RestMeetMemberController {
 	@GetMapping("/review/{m_idx}/{nidx}")
 	public ResponseEntity<MeetMemberListData> MemberReviewList(@PathVariable("m_idx") int m_idx,
 			@PathVariable("nidx") int nidx, @RequestParam(value = "p", defaultValue = "1") int pageNumber) {
-
-		MeetMemberListData listData = listService.selectReviewList(m_idx, nidx, pageNumber);
-
+		
+		boolean check = checkService.MemberCheck(m_idx, nidx);
+		
+		MeetMemberListData listData = new MeetMemberListData();
+		
+		if(check) {
+			listData = listService.selectReviewList(m_idx, nidx, pageNumber);
+		}
+		
 		return new ResponseEntity<MeetMemberListData>(listData, HttpStatus.OK);
 
 	}
@@ -80,8 +77,14 @@ public class RestMeetMemberController {
 	public ResponseEntity<MeetMemberListData> MemberCommentList(@PathVariable("m_idx") int m_idx,
 			@PathVariable("nidx") int nidx, @RequestParam(value = "p", defaultValue = "1") int pageNumber) {
 
-		MeetMemberListData listData = listService.selectRcommentList(m_idx, nidx, pageNumber);
-
+		boolean check = checkService.MemberCheck(m_idx, nidx);
+		
+		MeetMemberListData listData = new MeetMemberListData();
+		
+		if(check) {
+			listData = listService.selectRcommentList(m_idx, nidx, pageNumber);
+		} 
+	
 		return new ResponseEntity<MeetMemberListData>(listData, HttpStatus.OK);
 
 	}
@@ -91,11 +94,16 @@ public class RestMeetMemberController {
 	@GetMapping("/meeting/{m_idx}/{nidx}")
 	public ResponseEntity<MeetMemberListData> MemberMeetingList(@PathVariable("m_idx") int m_idx,
 			@PathVariable("nidx") int nidx, @RequestParam(value = "p", defaultValue = "1") int pageNumber) {
-
-		MeetMemberListData listData = listService.selectMeetingList(m_idx, nidx, pageNumber);
-
+		
+		boolean check = checkService.MemberCheck(m_idx, nidx);
+		
+		MeetMemberListData listData = new MeetMemberListData();
+		
+		if(check) {
+			listData = listService.selectMeetingList(m_idx, nidx, pageNumber);
+		} 
+		
 		return new ResponseEntity<MeetMemberListData>(listData, HttpStatus.OK);
-
 	}
 
 	// 모임멤버 특정 회원의 상세 리스트 출력
