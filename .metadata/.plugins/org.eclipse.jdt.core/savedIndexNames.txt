@@ -52,7 +52,6 @@ INDEX VERSION 1.131+/Users/kwon-yongmin/newMeet_project_v01_20190927/Newmeet_pro
 2591922542.index
 276762565.index
 3104059621.index
-314730624.index
 2318995283.index
 3630514593.index
 4166710037.index
