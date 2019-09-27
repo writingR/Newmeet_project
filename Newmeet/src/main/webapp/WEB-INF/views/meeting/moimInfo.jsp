@@ -293,8 +293,6 @@
   		
   		var m_idx = ${m_idx};
   		
-  		$('#m_idx').val(${m_idx}); 		
-  		
   		list(m_idx);
   			var m_idx = ${m_idx};
   			$.ajax({

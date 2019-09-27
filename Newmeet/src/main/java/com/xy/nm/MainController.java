@@ -140,6 +140,8 @@ public class MainController {
 		}
 	}
 	
+	// 검색 기능
+	
 	@RequestMapping("/moimSearch")
 	public String moim(@RequestParam(value = "Keyword") String Keyword,Model model) {
 		
@@ -168,6 +170,7 @@ public class MainController {
 		return "meeting/moimSearch";
 	}
 	
+	// 카테고리별 검색
 	
 	@RequestMapping("/category")
 	public String category(@RequestParam(value = "category") String category,Model model) {
@@ -181,6 +184,9 @@ public class MainController {
 		
 		return "meeting/moimSearch";
 	}
+	
+	
+	// 좋아요 별점 순 검색
 	
 	@RequestMapping("/likestar")
 	public String likestar(@RequestParam(value = "likestar") int likestar,Model model) {

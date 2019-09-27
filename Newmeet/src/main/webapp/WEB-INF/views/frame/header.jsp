@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
  <div class="site-wrap">
     <header class="site-navbar" role="banner">
       <div class="site-navbar-top">
@@ -39,9 +40,18 @@
         <i class="material-icons" style="font-size:26px;display:inline-block;">search</i> -->
         <div class="col-6 col-md-4 order-2 order-md-1 site-search-icon text-left" style="width: 150px;margin:0 auto;">
               <form action="moimSearch" class="site-block-top-search" method="get">
-                <span class="icon icon-search2"></span>
+                <span class="icon icon-search2" onclick="keyword()" style="cursor: pointer;"></span>
                 <input type="text" id="Keyword" name="Keyword" class="form-control border-0" placeholder="Search">
               </form>
          </div>
         
       </div> 
+      
+      <script>
+      	function keyword(){
+      		var keyword = $('#Keyword').val();
+      		
+      		location.href="moimSearch?Keyword="+keyword;
+      		
+      	}
+      </script>
