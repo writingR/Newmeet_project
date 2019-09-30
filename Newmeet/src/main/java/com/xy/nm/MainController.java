@@ -287,7 +287,10 @@ public class MainController {
 		}
 		
 		
-		
+		@RequestMapping("/cal")
+		public String calendar() {
+			return "calendar/detail_kym";
+		}
 		
 		
 }
