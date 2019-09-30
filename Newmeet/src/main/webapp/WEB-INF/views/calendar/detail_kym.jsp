@@ -875,10 +875,11 @@ input::placeholder {
 					
 					
 				}
-				
-				btn += '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#calRegist01" style="width:300px; height: 40px; margin-left: 60px; margin-top: 10px;" >일정 등록</button>';
-				btn += '<button type="button" class="btn btn-primary" data-toggle="modal" style="width:300px; height: 40px; margin-left: 60px; margin-top: 10px;" onclick="(calJoin())">참여 하기</button>';
-				
+				if((CreateBtn(m_idx)) == 1) {
+					btn += '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#calRegist01" style="width:350px; height: 60px; margin-left: 25px; margin-top: 5px; font-size:24px;" >일정 등록</button>';
+				} else {
+					btn += '<button type="button" class="btn btn-primary" data-toggle="modal" style="width:350px; height: 60px; margin-left: 25px; margin-top: 5px; font-size:24px;" onclick="(calJoin())">참여 하기</button>';
+				}
 				
 				
 				$('#calLists').html(html);
@@ -889,6 +890,35 @@ input::placeholder {
 		
 	}
 	
+	// 모임멤버 레벨에 따라 일정 버튼을 생성하는 함수
+	// 일정 등록/참여, 일정 수정,삭제/선택 버튼 구별
+	function CreateBtn(m_idx) {
+		
+		sessionStorage.setItem("MemberIdx", "100");
+		var nidx = sessionStorage.getItem("MemberIdx");
+		
+		var CheckBtn = 0;
+		
+		$.ajax({
+			
+			url: 'http://localhost:8080/nm/cal/button/'+m_idx,
+			type: 'get',
+			data: {
+				nidx : nidx
+			},
+			dataType: 'json',
+			async: false,
+			success: function(data) {
+				
+				CheckBtn = data;
+			}
+			
+		});
+
+		return CheckBtn;
+		
+		
+	}
 	 
 	/* 리스트에 현재 참가중인 인원 수를 구해오는 기능
 	return 으로 count를 전달받기때문에 동기 방식으로 구현 */
@@ -903,7 +933,6 @@ input::placeholder {
 			dataType: 'json',
 			async: false,
 			success: function(data) {
-				
 				count = data;
 			}
 			
@@ -996,7 +1025,7 @@ input::placeholder {
 				$('#c_Dedate').val(data.c_edate); 
 				*/
 				
-				
+/* 				
 				if(today>data.c_date || today>data.c_edate || data.c_count/calJoinCount(data.c_idx)==1) {
 					btn += "<button type='button' class='btn btn-primary' onclick="+"(calEditForm("+c_idx+"))"+">수정</button>"
 					btn += "<button type='button' class='btn btn-secondary' onclick="+"(calDelete("+c_idx+"))"+">삭제</button>"
@@ -1004,6 +1033,24 @@ input::placeholder {
 					btn += "<button type='button' class='btn btn-primary' onclick="+"(calEditForm("+c_idx+"))"+">수정</button>"
 					btn += "<button type='button' class='btn btn-secondary' onclick="+"(calDelete("+c_idx+"))"+">삭제</button>"
 					btn += "<button type='button' class='btn btn-primary' onclick="+"(calChoice())"+">선택</button>"
+				}
+		 */
+		 
+			sessionStorage.setItem("MemberIdx", "100");
+			
+			var nidx = sessionStorage.getItem("MemberIdx");
+		 	
+				if(today>data.c_date || today>data.c_edate || data.c_count/calJoinCount(data.c_idx)==1) {
+					btn += '';
+				} else if((CreateBtn(100)) == 1){
+					btn += "<button type='button' class='btn btn-primary' onclick="+"(calEditForm("+c_idx+"))"+">수정</button>";
+					btn += "<button type='button' class='btn btn-secondary' onclick="+"(calDelete("+c_idx+"))"+">삭제</button>";
+				} else {
+					if((calJoinChk(data.c_idx,nidx)) == 'exist') {
+						btn += "<button type='button' class='btn btn-secondary' onclick="+"(calCancelMember("+c_idx+","+nidx+"))"+">참가취소</button>";
+					} else {
+						btn += "<button type='button' class='btn btn-primary' onclick="+"(calChoice())"+">선택</button>";
+					}
 				}
 				
 				$('#detailModal').html(content);
@@ -1014,7 +1061,7 @@ input::placeholder {
 		
 	}
 	
-	/* 일정에 참한 참여자 리스트 불러오기 */
+	/* 일정에 참가한 참여자 리스트 불러오기 */
 	function calJoinList(c_idx) {
 		
 		$('#calJoinList').modal('show');
@@ -1042,7 +1089,11 @@ input::placeholder {
 					content += '<tr>';
 					content += '<td><h5>' + data[i].nemail +'</h5></td>';
 					content += '<td><h5>' + data[i].nnic +'</h5></td>';
-					content += '<td><button type="button" class="btn btn-secondary" onclick="(calBanMember('+data[i].cm_idx+","+ c_idx+'))">추방</button></td>';
+					if((CreateBtn(100)) == 1) {
+						content += '<td><button type="button" class="btn btn-secondary" onclick="(calBanMember('+data[i].cm_idx+","+ c_idx+'))">추방</button></td>';
+					} else {
+						content += '<td></td>';
+					}
 					content += '</tr>';
 				
 				}
@@ -1054,7 +1105,7 @@ input::placeholder {
 		});
 	}
 	
-	/* 일정에 참가한 참여자를 추방 또는 참가취소 시 일정멤버 삭제 처리 */
+	/* 모임장이 일정에 참가한 참여자를 추방시 삭제 처리 */
 	function calBanMember(cm_idx, c_idx) {
 		
 		$.ajax({
@@ -1065,16 +1116,56 @@ input::placeholder {
 			success: function(data) {
 				
 				if(data=='success') {
-					alert('참가 취소되었습니다.');
+					alert('추방 처리 하였습니다.');
 					calJoinList(c_idx);
 					calList($('#m_Didx').text());
 				}
 				
+			}
+		});
+	}
+	
+	/* 일정상세보기 에서 일정참여/취소 버튼 구분 */
+	function calJoinChk(c_idx, nidx) {
+		
+		var chk = '';
+		
+		$.ajax({
+			
+			url: 'http://localhost:8080/nm/calMember/'+c_idx+'/'+nidx,
+			type: 'get',
+			/* dataType: 'json', */
+			async: false,
+			success: function(data) {
+				console.log(data);
+				chk = data;
 				
+			}
+		});
+		
+		return chk;
+	}
+	
+	/* 일정 참여자가 일정상세보기에서 참가취소시 삭제 처리 */
+	function calCancelMember(c_idx, nidx) {
+		
+		$.ajax({
+			
+			url: 'http://localhost:8080/nm/calMember/'+c_idx+'/'+nidx,
+			type: 'delete',
+			/* dataType: 'json', */
+			success: function(data) {
+				
+				if(data=='success') {
+					alert('참가 취소되었습니다.');
+					calDetail(c_idx);
+					calList($('#m_Didx').text());
+				}
 				
 			}
 		});
 	}
+	
 	
 	// 일정 상세 페이지에서 삭제 버튼 클릭시 ajax 처리
 	function calDelete(c_idx) {

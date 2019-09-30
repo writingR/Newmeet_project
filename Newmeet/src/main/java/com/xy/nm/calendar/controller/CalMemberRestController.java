@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.xy.nm.calendar.domain.CalJoinMember;
 import com.xy.nm.calendar.domain.CalendarInfo;
 import com.xy.nm.calendar.service.CalBanMemberService;
+import com.xy.nm.calendar.service.CalCancelMemService;
 import com.xy.nm.calendar.service.CalCreateMemberService;
+import com.xy.nm.calendar.service.CalJoinMemChkService;
 import com.xy.nm.calendar.service.CalJoinMemCountService;
 import com.xy.nm.calendar.service.CalJoinMemberService;
 
@@ -36,6 +38,12 @@ public class CalMemberRestController {
 	
 	@Autowired
 	private CalJoinMemCountService joinMemCountService;
+	
+	@Autowired
+	private CalCancelMemService cancelService;
+	
+	@Autowired
+	private CalJoinMemChkService joinChkService;
 	
 	
 	@CrossOrigin
@@ -60,6 +68,7 @@ public class CalMemberRestController {
 		return entity;
 	}
 	
+	
 	@CrossOrigin
 	@GetMapping("/count/{c_idx}")
 	public ResponseEntity<Integer> joinCountCal(@PathVariable("c_idx") int c_idx) {
@@ -81,6 +90,25 @@ public class CalMemberRestController {
 		System.out.println(cm_idx);
 		
 		int rCnt = banService.calMemDelete(cm_idx);
+		
+		return new ResponseEntity<String>(rCnt>0 ? "success":"fail", HttpStatus.OK);
+	}
+	
+	@CrossOrigin
+	@GetMapping("/{c_idx}/{nidx}")
+	public ResponseEntity<String> joinChkCal(@PathVariable("c_idx") int c_idx,@PathVariable("nidx") int nidx) {
+		
+		int rCnt = joinChkService.calJoinChk(c_idx, nidx);
+		System.out.println("참여중인 인원 : " + rCnt);
+		
+		return new ResponseEntity<String>(rCnt>0 ? "exist":"nexist", HttpStatus.OK);
+	}
+	
+	@CrossOrigin
+	@DeleteMapping("/{c_idx}/{nidx}")
+	public ResponseEntity<String> CancelCal(@PathVariable("c_idx") int c_idx, @PathVariable("nidx") int nidx) {
+		
+		int rCnt = cancelService.calMemCancel(c_idx,nidx);
 		
 		return new ResponseEntity<String>(rCnt>0 ? "success":"fail", HttpStatus.OK);
 	}
