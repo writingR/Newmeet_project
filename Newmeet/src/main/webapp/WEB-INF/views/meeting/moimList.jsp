@@ -3,9 +3,6 @@
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <!DOCTYPE html>
-<%
-	session.setAttribute("MemberIdx",107);
-%>  
 <html lang="en">
   <head>
   <%@include file="/WEB-INF/views/frame/link.jsp"%>
@@ -44,7 +41,7 @@
         <div class="row no-gutters slider-text align-items-center justify-content-center">
           <div class="col-md-9 ftco-animate text-center">
             <h1 class="mb-2 bread">New Meet</h1>
-            <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home <i class="ion-ios-arrow-forward"></i></a></span> </p>
+            <p class="breadcrumbs"><span class="mr-2"><a href="<c:url value="/main"/>">Home <i class="ion-ios-arrow-forward"></i></a></span> </p>
           </div>
         </div>
       </div>

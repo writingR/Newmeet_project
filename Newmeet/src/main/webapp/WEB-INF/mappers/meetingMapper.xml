@@ -85,6 +85,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				resultMap="resultMeetingInfo2">
 	select * from newMeet_RDS.Meeting order by ${value} desc
 	</select>
+	<!-- 메인페이지 좋아요 리스트 -->
+	<select id="MainPage"
+					resultMap="resultMeetingInfo2">
+	select * from newMeet_RDS.Meeting order by  m_like desc limit 0,3
+	</select>
 	
 	<!-- 대분류 별 모임 리스트 -->
 	<select id="LList" 
@@ -159,6 +164,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		delete from newMeet_RDS.Meeting where m_idx = #{param1}
 	</delete>
 	
+	<!-- 마이페이지에서 자신이 만든 모임 리스트 -->
+	<select id="MyMoim"
+				resultMap="resultMeetingInfo2">
+	select m.m_idx,m_name,m_img,m_cont,m_stotal,m_star,small_idx,m_like from newMeet_RDS.Meeting as m left join newMeet_RDS.mMember b on m.m_idx=b.m_idx where nidx=#{nidx} and mm_level=1
+	</select>
+	
 	
 	<!-- 총 좋아요 데이터 조건 -->
 	<select id="MeetingInfo3"
@@ -193,6 +204,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="Like"
 			parameterType="com.xy.nm.meeting.domain.MeetingLike">
 	update newMeet_RDS.mLike set l_like=1 where m_idx=#{param1} and nidx=#{param2}
+
 	</update>
 	<!-- 좋아요 내리기 -->
 	<update id="Likedown"

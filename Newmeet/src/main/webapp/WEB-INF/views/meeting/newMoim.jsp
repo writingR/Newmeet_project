@@ -56,6 +56,9 @@
 		position: absolute;
 		left: 1400px;
 	}
+	.site-navbar .site-navbar-top {
+    display: none;
+}
 </style>
 </head>
 <body>
@@ -99,7 +102,7 @@
  </header>
  </div>
  <div id="cont">
-<div id="select">
+<div id="select" style="height: 530px;">
 <h2><span style="background-color: #2d3436; opacity: 0.7;"> CATEGORY </span></h2>
 <div id="option">
 <select id="category" name="category" onclick="category()" class="category">	</select>
@@ -178,7 +181,7 @@
 		
 		function pre(){
 			
-			location.href="/nm/main";
+			location.href="/nm/Mypage";
 		}
 
 	

@@ -15,6 +15,7 @@ import com.xy.nm.meeting.domain.MeetingInfo;
 import com.xy.nm.meeting.service.MoimInfoService;
 import com.xy.nm.meeting.service.MoimListService;
 import com.xy.nm.meeting.service.MoimSearchService;
+import com.xy.nm.meeting.service.MyMoimService;
 
 
 	
@@ -26,6 +27,8 @@ public class MainController {
 		private MoimSearchService moimSearchService;
 		@Autowired
 		private MoimListService moimListService;
+		@Autowired
+		private MyMoimService myMoimService;
 	
 
 		@RequestMapping("/main")
@@ -284,6 +287,31 @@ public class MainController {
 			System.out.println(info);
 			
 			return "meeting/LikeStarList";
+		}
+		
+		// 자신이 만든 모임 보기
+		@RequestMapping("/Meet")
+		public String Meet(HttpServletRequest request, Model model) {
+			
+			if(request.getSession().getAttribute("MemberIdx")!=null) {
+				int nidx = (Integer)request.getSession().getAttribute("MemberIdx");
+				List<MeetingInfo> mymoim = myMoimService.meet(nidx);
+				
+				model.addAttribute("MyMoim", mymoim);
+				System.out.println(mymoim+"호호호");
+				if(mymoim.isEmpty()) {
+					return "meeting/MyMoim1";
+				}
+				
+				
+				
+				return "meeting/MyMoim";
+				
+			}
+				
+			
+			return "로그인요망";
+			
 		}
 		
 		

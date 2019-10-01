@@ -13,7 +13,7 @@
 function main_popup(){
  
  window.open("popup","new","width=420, height=500, resizable=no, scrollbars=no, status=no, location=no, directories=no;");
-}
+}	
 </script>
 <body onload="main_popup()">
 	
@@ -49,41 +49,11 @@ function main_popup(){
 	</div>
 	<div class="site-section site-section-sm site-blocks-1">
 		<div class="container">
-			<div class="row">
-				<div class="col-md-6 col-lg-4 d-lg-flex mb-4 mb-lg-0 pl-4"
-					data-aos="fade-up" data-aos-delay="">
-					<div class="icon mr-4 align-self-start">
-						<span class="icon-truck"></span>
-					</div>
-					<div class="text">
-						<h2 class="text-uppercase">Free Shipping</h2>
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-							Phasellus at iaculis quam. Integer accumsan tincidunt fringilla.</p>
-					</div>
-				</div>
-				<div class="col-md-6 col-lg-4 d-lg-flex mb-4 mb-lg-0 pl-4"
-					data-aos="fade-up" data-aos-delay="100">
-					<div class="icon mr-4 align-self-start">
-						<span class="icon-refresh2"></span>
-					</div>
-					<div class="text">
-						<h2 class="text-uppercase">Free Returns</h2>
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-							Phasellus at iaculis quam. Integer accumsan tincidunt fringilla.</p>
-					</div>
-				</div>
-				<div class="col-md-6 col-lg-4 d-lg-flex mb-4 mb-lg-0 pl-4"
-					data-aos="fade-up" data-aos-delay="200">
-					<div class="icon mr-4 align-self-start">
-						<span class="icon-help"></span>
-					</div>
-					<div class="text">
-						<h2 class="text-uppercase">Customer Support</h2>
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-							Phasellus at iaculis quam. Integer accumsan tincidunt fringilla.</p>
-					</div>
-				</div>
+		<div style="float: right;"><a href="<c:url value="/moimList" />">전체보기</a></div>
+			<div class="row" id="list">
+				
 			</div>
+			
 		</div>
 	</div>
 
@@ -268,7 +238,41 @@ function main_popup(){
         };
         
     </script>
+<script>
 
+$(document).ready(function(){
+
+	$.ajax({
+		url : 'http://localhost:8080/nm/meeting/mainlist',
+		type : 'GET',
+		success : function(data) {
+			
+			var html = '';
+			
+			//console.log(data);
+			for (var i = 0; i < data.length ; i++) {
+				
+				html += '<div id="mo" style="margin: 0 auto ;">';
+				html += '<div>';
+				html += '<a href="<c:url value="/moimInfo"/>?m_idx='+ data[i].m_idx +'"><img src="http://localhost:8080/nm/uploadfile/'+ data[i].m_img +'" style="width: 300px;height: 150px;"></a>';
+				html += '</div>';
+				html += '<div style="text-align: center;">';
+				html += '<h2 class="text-uppercase" style="margin-top: 15px;">'+ data[i].m_name +'</h2>';
+				html += '<span style="margin-right:10px;"><img src="http://localhost:8080/nm/uploadfile/like0.png"> '+ data[i].m_like +'</span>';
+				html += '<span> <img src="http://localhost:8080/nm/uploadfile/star1.png"> '+ (data[i].m_stotal/data[i].m_star).toFixed(1) +'</span>';
+				html += '</div>';
+				html += '</div>';
+				$('#list').html(html);
+				
+			} 
+				
+		}
+	});
+	
+	}); 
+
+
+</script>
 
 </body>
 </html>

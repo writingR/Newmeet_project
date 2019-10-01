@@ -22,6 +22,8 @@ public interface MeetingDao {
 	public List<MeetingInfo> LikeStarList(String likestar);
 	// 대분류 별 리스트 순
 	public List<CategoryList> LList(String category);
+	// 메인페이지 좋아요
+	public List<MeetingInfo> MainPage();
 	// 모임 생성
 	public int MeetingWrite(MeetingInfo meetingInfo);
 	// 모임 삭제
@@ -44,6 +46,8 @@ public interface MeetingDao {
 	public int MoimMember(int m_idx,int nidx);
 	// 모임장인지 그냥 회원인지 확인
 	public int MoimJang(int m_idx,int nidx);
+	// 마이페이지 자신이 만든 모임 보기
+	public List<MeetingInfo> MyMoim(int nidx);
 	// 검색 기능
 	public List<MeetingInfo> MoimSearch(String Keyword);
 	// 좋아요 조건
