@@ -135,6 +135,16 @@ public class RestMeetMemberController {
 		return new ResponseEntity<String>(deleteService.mmDelete(m_idx, mm_idx) > 0 ? "success" : "fail",
 				HttpStatus.OK);
 	}
+	
+	@CrossOrigin
+	@DeleteMapping("/outself/{m_idx}/{nidx}")
+	public ResponseEntity<String> mmDeleteSelf(
+			@PathVariable("m_idx") int m_idx,
+			@PathVariable("nidx") int nidx
+			) {
+		return new ResponseEntity<String>(deleteService.mmDeleteSelf(m_idx, nidx) > 0 ? "success" : "fail", HttpStatus.OK);
+		
+	}
 
 	// 모임을 개설할 때 모임장으로서 level값을 '1'로 주는 것
 	@CrossOrigin
@@ -143,6 +153,31 @@ public class RestMeetMemberController {
 
 		return new ResponseEntity<String>(levelService.levelUp(mm_idx) > 0 ? "success" : "fail", HttpStatus.OK);
 
+	}
+	
+	//특정 회원이 모임의 멤버인지 아닌지 판단해서 버튼을 다르게 주기
+	@CrossOrigin
+	@GetMapping("/submit/{m_idx}/{nidx}")
+	public ResponseEntity<Integer> getSubmit(
+			@PathVariable("m_idx") int m_idx,
+			@PathVariable("nidx") int nidx
+			) {
+		
+		ResponseEntity<Integer> result = null;
+		int rCnt = -1;
+		boolean check = checkService.MemberCheck(m_idx, nidx);
+		
+		if(check) {
+			rCnt = 1;
+		} else {
+			rCnt = 0;
+		}
+		if(rCnt==1) {
+			result = new ResponseEntity<Integer>(rCnt==1?1:0, HttpStatus.OK);
+		} else if(rCnt==0) {
+			result = new ResponseEntity<Integer>(rCnt==0?0:-1, HttpStatus.OK);
+		}
+		return result;
 	}
 
 }

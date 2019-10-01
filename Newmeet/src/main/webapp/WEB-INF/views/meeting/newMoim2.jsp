@@ -138,7 +138,7 @@ function m_name(){
 	}else{
 
 		sessionStorage.setItem("m_name",m_name);
-		location.href="/nm/newMoim3";
+		location.href="/nm/newMoim3?cnidx="+${cnidx};
 	}
 
 	

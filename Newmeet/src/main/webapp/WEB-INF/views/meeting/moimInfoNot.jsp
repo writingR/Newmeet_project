@@ -155,18 +155,18 @@
 
 						</table>
 		    			
-		    			<a style="height:52px; font-size:18px; border-radius:5px;" href="http://localhost:8080/nm/meetMember?m_idx=${m_idx}" class="btn btn-outline-primary btn-block">View more</a>
+		    			<a style="height:52px; font-size:18px; border-radius:5px;" href="${pageContext.request.contextPath}/meetMember?m_idx=${m_idx}" class="btn btn-outline-primary btn-block">View more</a>
 		    		
 		    		</div>
 		    		<hr>
 		    		<div>
 		    		<h2>Review</h2>	
-		    			<a style="height:52px; font-size:18px; border-radius:5px;" href="http://10.10.10.18:8080/nm/review?mNum=${m_idx}" class="btn btn-outline-primary btn-block">Review</a>
+		    			<a style="height:52px; font-size:18px; border-radius:5px;" href="${pageContext.request.contextPath}/review?mNum=${m_idx}" class="btn btn-outline-primary btn-block">Review</a>
 		    		</div>
 		    		<hr>
 		    		<div>	
 		    		<h2>Chat</h2>
-		    			<a style="height:52px; font-size:18px; border-radius:5px;" href="#" class="btn btn-outline-primary btn-block">Chat</a>
+		    			<a style="height:52px; font-size:18px; border-radius:5px;" href="${pageContext.request.contextPath}/chat/${m_idx}" class="btn btn-outline-primary btn-block">Chat</a>
 		    		</div>
 		    		<hr>
 		    		<div>
@@ -175,12 +175,16 @@
 								<input type="hidden" id="m_idx" name="m_idx">
 							</div>
 							<div class="form-group">
+<<<<<<< HEAD
+								<input type="hidden" id="nidx" name="nidx">
+=======
 								<input type="hidden" id="nidx" name="nidx" value="">
+>>>>>>> c73ad196c3818a6dab6f45f6493bc920a7b605b6
 							</div>
 							<div class="form-group">
 								<input type="hidden" id="mm_level" name="mm_level" value="0">
 							</div>
-							<input style="height:52px; font-size:18px; border-radius:5px;" type="submit" class="btn btn-outline-success btn-block" value="Participate in">
+							<input id="memIn" style="height:52px; font-size:18px; border-radius:5px;" type="submit" class="btn btn-outline-success btn-block" value="Participate in">
 						</form>
 		    		</div>
 		    		
@@ -285,11 +289,24 @@
   <script src="${pageContext.request.contextPath}/static/detail/js/main.js"></script>
   
   <script>
+  var m_idx = ${m_idx};
+  
   	$(document).ready(function(){
+ 	
+  		$('#m_idx').val(${m_idx});
+  			
+  		if(${empty nidx}) {
+  			$('#memIn').hide();
+  		} else {
+  			$('#nidx').val(${nidx});
+  			$('#memIn').show();
+  				
+  		}
+  		
+  		memberlist(${m_idx});
   		
   		var m_idx = ${m_idx};
   		
-  		list(m_idx);
   			var m_idx = ${m_idx};
   			$.ajax({
   				url : 'http://localhost:8080/nm/meeting/list/'+ m_idx,
@@ -439,28 +456,28 @@
   		
 
   	
-  	function list(i) {
-  		$.ajax({
-  			url: 'http://localhost:8080/nm/meetmember/'+i,
-			type: 'GET',
-			data: {},
-			success: function(data){
-				console.log(data);
-				var html = '';
-				if(data.mmList.length>=1) {
-					for (var i=0; i<data.mmList.length; i++) {
-						html += '<tr>';
-						html += '<td><img src="${pageContext.request.contextPath}/static/img/'+data.mmList[i].nphoto+'" alt="Image" style="height:50px; width:50px;"></td>';
-						html += '<td style="width:20%;">'+data.mmList[i].nnic+'</td>';
-						html += '<td style="width:60%;">'+data.mmList[i].nemail+'</td>';
-						html += '</tr>';
+  		function memberlist(i) {
+  			$.ajax({
+  				url: 'http://localhost:8080/nm/meetmember/'+i,
+				type: 'GET',
+				data: {},
+				success: function(data){
+					console.log(data);
+					var html = '';
+					if(data.mmList.length>=1) {
+						for (var i=0; i<data.mmList.length; i++) {
+							html += '<tr>';
+							html += '<td><img src="${pageContext.request.contextPath}/static/img/'+data.mmList[i].nphoto+'" alt="Image" style="height:50px; width:50px;"></td>';
+							html += '<td style="width:20%;">'+data.mmList[i].nnic+'</td>';
+							html += '<td style="width:60%;">'+data.mmList[i].nemail+'</td>';
+							html += '</tr>';
 					
-						$('#memlist').html(html);
+							$('#memlist').html(html);
+							}
 						}
 					}
-				}
-  		});
-  	}
+  			});
+  		}
   
   </script>
   

@@ -45,7 +45,6 @@
 		border: 1px solid black;
 		margin-right: 10px;
 	}
-	
 	input[type=submit]{
 		width: 100px;
 		background-color: black;
@@ -82,10 +81,6 @@
 	table{
 		margin: 0 auto;
 	}
-	.site-navbar .site-navbar-top {
-    display: none;
-}
-
 </style>
 </head>
 <body>
@@ -129,7 +124,7 @@
  </header>
  </div>
  <div id="cont">
-	<div id="select" style="height: 530px;">
+	<div id="select">
 	<h2><span style="background-color: #2d3436; opacity: 0.7;">IMAGE</span></h2>
 	<form id="form" enctype="multipart/form-data">
 		<div id="option">
@@ -137,7 +132,6 @@
 			<table>
 			<thead>
 			<tr>
-				<td><input type="file" id="m_img" name="m_img" value="null"></td>
 			</tr>
 				
 			</thead>
@@ -145,6 +139,8 @@
 			
 			</tbody>
 			</table>
+			
+			<h4 class="display-6">정말 개설하시겠어요?</h4>
 			
 		
     	 </div>           	
@@ -177,58 +173,37 @@
 <script>
 
 	$(document).ready(function() {
-			
-		var html = '';
-		html += '<tr>';
-		html += '<td><input type="hidden" id="small_idx" name="small_idx" value="' + sessionStorage.getItem("small_idx") + '"></td>';
-		html += '</tr>';
-		html += '<tr>';
-		html += '<td><input type="hidden" id="m_name" name="m_name" value="' + sessionStorage.getItem("m_name") + '"></td>';
-		html += '</tr>';
-		html += '<tr>';
-		html += '<td><input type="hidden" id="m_cont" name="m_cont" value="' + sessionStorage.getItem("m_cont").replace(/\"/g,'&quot;') + '"></td>';
-		html += '</tr>';
-
-		$('#moim').html(html);
+		
+		$('#memIn').hide();
+		$('#m_idx').val(sessionStorage.getItem("m_idx"));
+		$('#nidx').val(${cnidx});
+		
+		$('#meetLeader').submit(function(){
+  			alert($('#meetLeader').serialize());
+  			
+  			$.ajax({
+  				url : 'http://localhost:8080/nm/meetmember',
+  				type : 'POST',
+  				data : $('#meetLeader').serialize(),
+  				success : function(data) {
+  					alert('모임장으로 개설');
+  				}
+  			});
+  		return false;
+  		});
+		
 	});
-
 	
 	$('#form').submit(function(){
-		 // Get form
-     // var form = $('#form')[0];
-
-       // Create an FormData object 
-       var formData = new FormData();
-        formData.append("small_idx",$('#small_idx').val());
-        formData.append("m_name",$('#m_name').val());
-		formData.append("m_cont",$('#m_cont').val());
-		formData.append("m_img",$('#m_img')[0].files[0]);
-		if($('#m_img')[0].files[0] == null){
-			alert('사진을 선택해주세요');
-		}
-		
-		$.ajax({
-			url : 'http://localhost:8080/nm/meeting',
-			type : 'POST',
-			data : formData,
-           processData: false,
-           contentType: false,
-			success : function(data) {
-				sessionStorage.setItem("m_idx",data);
-				
-				alert(data+':정확하게 추출');
-				
-				location.href="/nm/newMoim5?cnidx="+${cnidx};
-				
-			}
-			
-		});
-		return false; 		
+		$('#meetLeader').submit();
+		location.href="/nm/moimList";
+		return false;
 	});
+
 	
 	function pre(){
 		
-		location.href="/nm/newMoim3";
+		location.href="/nm/newMoim4";
 	}
 </script>
 

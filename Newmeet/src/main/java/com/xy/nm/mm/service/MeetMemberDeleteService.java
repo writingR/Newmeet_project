@@ -31,4 +31,19 @@ public class MeetMemberDeleteService implements MeetMemberManagerService {
 		
 		return rCnt;
 	}
+	
+	public int mmDeleteSelf(int m_idx, int nidx) {
+		
+		dao = template.getMapper(MeetMemberSessionDao.class);
+		
+		int rCnt = 0;
+		
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("m_idx", m_idx);
+		params.put("nidx", nidx);
+		
+		rCnt = dao.mmDeleteSelf(params);
+		
+		return rCnt;
+	}
 }
