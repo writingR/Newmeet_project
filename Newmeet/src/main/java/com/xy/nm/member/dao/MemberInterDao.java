@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.xy.nm.member.domain.GoogleInfo;
 import com.xy.nm.member.domain.Member;
 
 public interface MemberInterDao {
@@ -16,6 +17,13 @@ public interface MemberInterDao {
    public Member selectByNic(String nnic);
    //로그인처리시 사용
    public Member selectById(String nemail);
+   
+   //구글 로그인처리시 사용
+   public GoogleInfo selectByGId(String nemail);
+   
+   public GoogleInfo selectByGIdx(int nidx);
+   
+   
    public Member selectByIdx(int nidx);
    
    public Member viewInfo(Member mem);
