@@ -851,14 +851,14 @@ input::placeholder {
 					var edate = (enddate.toLocaleString().slice(0,-3));
 					
 					/* document.write(sysdate.toISOString()); */
-					if(today>data[i].c_date || today>data[i].c_edate) {
+					if(today>data[i].c_date) {
 						html += '<div class="calList" id="calList" onclick="calDetail('+ data[i].c_idx + ')" style="background-color:#ddd; cursor:pointer">\n';
 						html += '<h4>종료 | ' + data[i].c_title +'</h4>\n';
 						html += '<h5>' + '일정\t' + dateArray[0]+'년'+dateArray[1]+'월'+dateArray[2]+'일'+dateArray[3]+'</h5>\n';
 						html += '<h6>' + '참가 인원 : ' + calJoinCount(data[i].c_idx) + '/' + data[i].c_count + '\t|\t신청마감일 : ' + edate + '</h6>\n';
 						html += '</div>\n'; 
 							
-					} else if(data[i].c_count/calJoinCount(data[i].c_idx)==1) {
+					} else if(data[i].c_count/calJoinCount(data[i].c_idx)==1 || today>data[i].c_edate) {
 						html += '<div class="calList" id="calList" onclick="calDetail('+ data[i].c_idx + ')" style="background-color:#f7f1e3; cursor:pointer">\n';
 						html += '<h4>마감 | ' + data[i].c_title +'</h4>\n';
 						html += '<h5>' + '일정\t' + dateArray[0]+'년'+dateArray[1]+'월'+dateArray[2]+'일'+dateArray[3]+'</h5>\n';
@@ -894,7 +894,7 @@ input::placeholder {
 	// 일정 등록/참여, 일정 수정,삭제/선택 버튼 구별
 	function CreateBtn(m_idx) {
 		
-		sessionStorage.setItem("MemberIdx", "100");
+		sessionStorage.setItem("MemberIdx", "107");
 		var nidx = sessionStorage.getItem("MemberIdx");
 		
 		var CheckBtn = 0;

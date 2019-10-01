@@ -6,9 +6,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class CalendarEdit {
 
-	// 유저 idx
+	// 일정 idx
 	private int c_idx;
-	
+	// 유저 idx
 	private int m_idx;
 	// 정모 이름
 	private String c_title;
@@ -21,10 +21,10 @@ public class CalendarEdit {
 	// 주소
 	private String c_address;
 	// 일정
-	@JsonFormat(pattern = "yyyy.MM.dd"+" "+"HH:mm")
+	@JsonFormat(pattern = "yyyy.MM.dd"+" "+"HH:mm", timezone = "Asia/Seoul")
 	private Date c_date;
 	// 신청마감일
-	@JsonFormat(pattern = "yyyy.MM.dd"+" "+"HH:mm")
+	@JsonFormat(pattern = "yyyy.MM.dd"+" "+"HH:mm", timezone = "Asia/Seoul")
 	private Date c_edate;
 	
 	
