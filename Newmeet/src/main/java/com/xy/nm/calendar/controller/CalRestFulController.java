@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.xy.nm.calendar.domain.CalendarEdit;
 import com.xy.nm.calendar.domain.CalendarInfo;
 import com.xy.nm.calendar.domain.RequestCalendar;
+import com.xy.nm.calendar.service.CalBtnService;
 import com.xy.nm.calendar.service.CalCreateService;
 import com.xy.nm.calendar.service.CalDeleteService;
 import com.xy.nm.calendar.service.CalDetailService;
@@ -43,6 +44,9 @@ public class CalRestFulController {
 	
 	@Autowired
 	private CalEditService editCalService;
+	
+	@Autowired
+	private CalBtnService btnCalService;
 	
 //	
 //	@RequestMapping(method = RequestMethod.GET)
@@ -117,4 +121,13 @@ public class CalRestFulController {
 	}
 	
 	
+	 // 모임멤버 레벨 가져오기 
+	 @CrossOrigin
+	 @GetMapping("/button/{m_idx}")
+	 public ResponseEntity<Integer> getBtnIndex(@PathVariable("m_idx") int m_idx, int nidx){
+		System.out.println(m_idx +"/" + nidx);
+		 int rCnt = btnCalService.getMemLevel(m_idx, nidx);
+		 
+		 return new ResponseEntity<Integer>(rCnt, HttpStatus.OK);
+	 }
 }

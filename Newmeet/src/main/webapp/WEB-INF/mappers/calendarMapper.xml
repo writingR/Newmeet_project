@@ -20,49 +20,68 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="c_edate" column="c_edate" />
 	</resultMap>
 	
-	
+	<!-- 일정 생성하기 -->
 	<insert id="createCalendar" parameterType="com.xy.nm.calendar.domain.CalendarInfo">
 		insert into Calendar (m_idx, c_title, c_pay, c_count, c_place, c_address, c_date, c_edate)
 		values (#{m_idx}, #{c_title}, #{c_pay}, #{c_count}, #{c_place}, #{c_address}, #{c_date}, #{c_edate})
 	</insert>
 
+	<!-- 모임 인덱스(m_idx)값으로 해당하는 일정 리스트 가져오기  -->
 	<select id="calList" resultMap="resultCalendarInfo">
 		select * from Calendar where m_idx=#{m_idx} order by c_date
 	</select>
 
-
+	<!-- 일정 인덱스값으로 특정 일정 조회 -->
 	<select id="selectCalByIdx" resultMap="resultCalendarInfo">
 		select * from Calendar where c_idx=#{c_idx}
 	</select>
 	
+	<!-- 일정 인덱스값으로 특정 일정 삭제 -->
 	<delete id="deleteCalendar">
 		delete from Calendar where c_idx=#{c_idx}
 	</delete>
 	
+	<!-- 일정 인덱스값으로 도메인 객체값으로 특정 일정 수정 -->
 	<update id="updateCalendar" parameterType="com.xy.nm.calendar.domain.CalendarEdit">
 		update Calendar set c_title=#{c_title}, c_pay=#{c_pay}, c_count=#{c_count}, c_place=#{c_place}, c_address=#{c_address}, c_date=#{c_date}, c_edate=#{c_edate}
 		where c_idx=#{c_idx}
 	</update>
 	
+ 	<!-- 일정참가 : 회원 인덱스와 일정 인덱스값으로 일정멤버 생성 -->
 	<insert id="createCalMember" parameterType="int">
 		insert into cMember (c_idx, nidx)
 		values (#{param1}, #{param2})
 	</insert>
 	
+	<!-- 일정 리스트의 현재 참가인원 가져오기 -->
 	<select id="countCalMember" resultType="int">
 		select count(*) from cMember where c_idx=#{c_idx}
 	</select>
 	
+	<!-- 일정멤버의 정보 가져오기 : 멤버와 일정멤버 조인 -->
 	<select id="joinCalMember" resultType="com.xy.nm.calendar.domain.CalJoinMember">
 		select * from Member m inner join cMember c on m.nidx=c.nidx where c.c_idx=#{c_idx}
 	</select>
 	
+	<!-- 일정 참가 시 멤버가 현재 참가중인지 조회 : 일정 인덱스, 멤버 인덱스 -->
 	<select id="selectCalMember" resultType="int">
 		select count(*) from cMember where c_idx=#{param1} and nidx=#{param2}
 	</select>
 	
+	<!-- 일정멤버 삭제 : 일정 멤버 추방 시 -->
 	<delete id="deleteCalMember">
 		delete from cMember where cm_idx=#{cm_idx}
 	</delete>
+	
+	<!-- 모임멤버 레벨 가져오기 : 일정 버튼 레벨에 따라 생성  -->
+	<select id="getMemLevel" resultType="int">
+		select mm_level from mMember where m_idx=#{param1} and nidx=#{param2}
+	</select>
+	
+	<!-- 일정멤버 삭제 : 일정 참가 취소 시 -->
+	<delete id="cancelCalMember">
+		delete from cMember where c_idx=#{param1} and nidx=#{param2}
+	</delete>
+	
 	
 </mapper>
