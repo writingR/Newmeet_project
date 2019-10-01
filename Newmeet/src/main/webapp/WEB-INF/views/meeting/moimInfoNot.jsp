@@ -2,10 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>	
-<%
-	session.setAttribute("MemberIdx", 107);
-	
-%>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -179,7 +175,7 @@
 								<input type="hidden" id="m_idx" name="m_idx">
 							</div>
 							<div class="form-group">
-								<input type="hidden" id="nidx" name="nidx" value="<%=(int)session.getAttribute("MemberIdx")%>">
+								<input type="hidden" id="nidx" name="nidx" value="">
 							</div>
 							<div class="form-group">
 								<input type="hidden" id="mm_level" name="mm_level" value="0">
@@ -292,8 +288,6 @@
   	$(document).ready(function(){
   		
   		var m_idx = ${m_idx};
-  		
-  		$('#m_idx').val(${m_idx}); 		
   		
   		list(m_idx);
   			var m_idx = ${m_idx};

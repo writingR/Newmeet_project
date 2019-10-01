@@ -44,4 +44,12 @@ public class MoimListService {
 		
 	}
 	
+	public List<MeetingInfo> getMain(){
+		dao = template.getMapper(MeetingDao.class);
+		List<MeetingInfo> main = dao.MainPage();
+		
+		return main;
+		
+	}
+	
 }

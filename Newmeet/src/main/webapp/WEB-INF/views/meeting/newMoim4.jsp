@@ -45,6 +45,7 @@
 		border: 1px solid black;
 		margin-right: 10px;
 	}
+	
 	input[type=submit]{
 		width: 100px;
 		background-color: black;
@@ -81,6 +82,10 @@
 	table{
 		margin: 0 auto;
 	}
+	.site-navbar .site-navbar-top {
+    display: none;
+}
+
 </style>
 </head>
 <body>
@@ -124,7 +129,7 @@
  </header>
  </div>
  <div id="cont">
-	<div id="select">
+	<div id="select" style="height: 530px;">
 	<h2><span style="background-color: #2d3436; opacity: 0.7;">IMAGE</span></h2>
 	<form id="form" enctype="multipart/form-data">
 		<div id="option">

@@ -185,6 +185,23 @@ public class MeetingController {
 					);
 		
 		}
+		// 메인 페이지 좋아요 리스트
+		@GetMapping("/mainlist")
+		@CrossOrigin
+		public ResponseEntity<List<MeetingInfo>> getmainlist(){
+			
+			List<MeetingInfo> list = moimListService.getMain();
+			
+			
+			
+			ResponseEntity<List<MeetingInfo>> entity =
+					new ResponseEntity<List<MeetingInfo>>(
+							list,
+							HttpStatus.OK);
+			return entity;
+		}
+		
+		
 		// 모임 리스트
 		@GetMapping("/list")
 		@CrossOrigin
