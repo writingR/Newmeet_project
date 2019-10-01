@@ -172,7 +172,7 @@
 				alert('카테고리를 선택해주세요');
 			}else{
 				sessionStorage.setItem("small_idx",idx);
-				location.href="/nm/newMoim2";
+				location.href="/nm/newMoim2?cnidx="+${cnidx};
 			}
 			
 			

@@ -202,7 +202,7 @@
  			alert('소개글을 작성해주세요');
  		}else{
  			sessionStorage.setItem("m_cont",m_cont);
- 	 		location.href="/nm/newMoim4";
+ 	 		location.href="/nm/newMoim4?cnidx="+${cnidx};
  		}
  	
  		

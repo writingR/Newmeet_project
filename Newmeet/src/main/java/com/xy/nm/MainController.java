@@ -3,6 +3,7 @@ package com.xy.nm;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -109,23 +110,54 @@ public class MainController {
 		
 		
 		@RequestMapping("/newMoim")
-		public String getMoim() {
+		public String getMoim(
+				HttpServletRequest request,
+				Model model
+				) {
+			
+			HttpSession session = request.getSession(false);
+			
+			int cnidx = -1;
+			
+			if(session != null && session.getAttribute("MemberIdx") != null) {
+				cnidx = (int)session.getAttribute("MemberIdx");
+			}
+			
+			model.addAttribute("cnidx", cnidx);
+			
 			return "meeting/newMoim";
 		}
 		
 		@RequestMapping("/newMoim2")
-		public String getMoim2() {
+		public String getMoim2(@RequestParam(value = "cnidx") int cnidx, Model model) {
+			
+			model.addAttribute("cnidx", cnidx);
+			
 			return "meeting/newMoim2";
 		}
 		
 		@RequestMapping("/newMoim3")
-		public String getMoim3() {
+		public String getMoim3(@RequestParam(value = "cnidx") int cnidx, Model model) {
+			
+			model.addAttribute("cnidx", cnidx);
+			
 			return "meeting/newMoim3";
 		}
 		
 		@RequestMapping("/newMoim4")
-		public String getMoim4() {
+		public String getMoim4(@RequestParam(value = "cnidx") int cnidx, Model model) {
+			
+			model.addAttribute("cnidx", cnidx);
+			
 			return "meeting/newMoim4";
+		}
+		
+		@RequestMapping("/newMoim5")
+		public String geetMoim5(@RequestParam(value = "cnidx") int cnidx, Model model) {
+			
+			model.addAttribute("cnidx", cnidx);
+			
+			return "meeting/newMoim5";
 		}
 		
 		@RequestMapping("/moimList")

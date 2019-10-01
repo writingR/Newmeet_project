@@ -26,6 +26,9 @@ public interface MeetMemberSessionDao {
 	//특정 회원 강퇴하기
 	public int mmDelete(Map<String, Object> params);
 	
+	//자기 스스로 모임 탈퇴하기
+	public int mmDeleteSelf(Map<String, Object> params);
+	
 	//모임장 승격
 	public int levelUp(int mm_idx);
 	
