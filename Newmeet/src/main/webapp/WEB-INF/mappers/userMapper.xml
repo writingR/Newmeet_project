@@ -34,12 +34,17 @@
    <select id="selectById" resultMap="Member" >
       select * from newMeet_RDS.Member where nemail = #{nemail}
    </select>
-
+   
+   
+   <select id="selectByGId" resultMap="Member" >
+      select * from newMeet_RDS.Member where nemail = #{nemail}
+   </select>
 
    <select id="selectByIdx" resultMap="Member" >
       select * from newMeet_RDS.Member where nidx = #{nidx}
       <!-- select * from bitcamp.mem where id like concat(#{id}, '%') -->
    </select>
+   
    
    <select id="selectByIdx2" resultMap="Member" >
       select * from newMeet_RDS.Member where nidx = #{nidx}
