@@ -59,6 +59,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		DELETE FROM newMeet_RDS.mMember WHERE m_idx = #{m_idx} AND mm_idx = #{mm_idx}
 	</delete>
 	
+	<!-- 자기 스스로 모임 탈퇴 -->
+   <delete id="mmDeleteSelf">
+      DELETE FROM newMeet_RDS.mMember WHERE m_idx = #{m_idx} AND nidx = #{nidx}
+   </delete>
+	
 	<!-- 모임장으로 승격 -->
 	<update id="levelUp">
 		UPDATE newMeet_RDS.mMember SET mm_level = '1' where mm_idx = #{mm_idx}

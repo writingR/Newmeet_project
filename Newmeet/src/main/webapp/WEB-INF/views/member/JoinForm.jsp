@@ -84,9 +84,8 @@
 
 		$(document).ready(function() {
 			$('#regForm').submit(function() {
-			 if($(this).val()==''){
-				 alert('내용을 입력해주세요.');
-			 }else{
+				
+			
 			 var regformData = new FormData();
 			 	regformData.append("nphoto",$('#nphoto')[0].files[0]);
 			 	regformData.append("nemail",$('#nemail').val());
@@ -113,7 +112,7 @@
 				
 				});
 				return false;
-			 }
+			
 				
 			});
 			

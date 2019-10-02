@@ -20,6 +20,7 @@
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
 	<resources mapping="/bootstrap/**" location="/bootstrap/" />
+	<resources mapping="/bootstrap1/**" location="/bootstrap1/" />
 	<resources mapping="/uploadfile/**" location="/uploadfile/" />
 	<resources mapping="/static/**" location="/static/" />
 	<resources mapping="/datetimepicker/**" location="/datetimepicker/" />

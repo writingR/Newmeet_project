@@ -392,8 +392,10 @@ public class MemberController {
    // 회원탈퇴
    @CrossOrigin
    @DeleteMapping("/{nidx}")
-   public ResponseEntity<String> newMeetOut(@PathVariable("nidx") int nidx) {
+   public ResponseEntity<String> newMeetOut(@PathVariable("nidx") int nidx, HttpSession session) {
 
+	   session.invalidate();
+	   
       return new ResponseEntity<String>(userDeleteService.newMeetOut(nidx) > 0 ? "SUCCESS" : "FAIL", HttpStatus.OK);
    }
 
