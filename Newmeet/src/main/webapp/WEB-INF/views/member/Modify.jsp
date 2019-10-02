@@ -155,7 +155,8 @@
 							url : '/nm/'+ nidx,
 							type : 'DELETE',
 							success : function(data) {
-								alert('삭제가 완료되었습니다.');
+								alert('탈퇴 되었습니다.');
+								sessionStorage.removeItem('MemberIdx');
 								/* location.reload(); */
 								location.replace('main');
 							}

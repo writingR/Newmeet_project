@@ -74,9 +74,17 @@
 		font-weight: bold;
 	}
 	.modal-backdrop{
-		width: 50px;
-		height: 50px;
+		width: 10px;
+		height: 10px;
 	}
+	.modal-content{
+		margin-top: 300px;	
+	}
+	
+	.site-navbar .site-navbar-top {
+    display: none;
+}
+	
 </style>
 </head>
 <body>
@@ -194,7 +202,7 @@
  			alert('소개글을 작성해주세요');
  		}else{
  			sessionStorage.setItem("m_cont",m_cont);
- 	 		location.href="/nm/newMoim4";
+ 	 		location.href="/nm/newMoim4?cnidx="+${cnidx};
  		}
  	
  		

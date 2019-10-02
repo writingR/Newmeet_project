@@ -2,9 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%
-	session.setAttribute("MemberIdx", 17);
-%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -101,18 +99,16 @@
 
 	<script>
 	
-	var memberidx = ${MemberIdx};
-	
 	$(document).ready(function(){
 		
 		var m_idx = ${m_idx};
-		var nidx = ${nidx};
+		var bnidx = ${bnidx};
 		
 		$('#meetingtable').hide();
 		$('#reviewtable').hide();
 		$('#commenttable').hide();
 		
-		list(m_idx,nidx);
+		list(m_idx,bnidx);
 	
 	});
 	
@@ -141,14 +137,14 @@
 	
 	function myMeeting(m_idx) {
 		var m_idx = m_idx;
-		var nidx = ${nidx};
+		var bnidx = ${bnidx};
 		
 		$('#commenttable').hide();
 		$('#reviewtable').hide();
 		$('#meetingtable').show();
 		
 		$.ajax({
-			url : 'http://localhost:8080/nm/meetmember/meeting/'+m_idx+'/'+nidx,
+			url : 'http://localhost:8080/nm/meetmember/meeting/'+m_idx+'/'+bnidx,
 			type : 'GET',
 			data : {},
 			success : function(data){
@@ -171,14 +167,14 @@
 	
 	function myReview(m_idx) {
 		var m_idx = m_idx;
-		var nidx = ${nidx};
+		var bnidx = ${bnidx};
 		
 		$('#meetingtable').hide();
 		$('#commenttable').hide();
 		$('#reviewtable').show();
 	
 		$.ajax({
-			url : 'http://localhost:8080/nm/meetmember/review/'+m_idx+'/'+nidx,
+			url : 'http://localhost:8080/nm/meetmember/review/'+m_idx+'/'+bnidx,
 			type : 'GET',
 			data : {},
 			success :  function(data){
@@ -213,14 +209,14 @@
 	
 	function myComment(m_idx) {
 		var m_idx = m_idx;
-		var nidx = ${nidx};
+		var bnidx = ${bnidx};
 		
 		$('#meetingtable').hide();
 		$('#reviewtable').hide();
 		$('#commenttable').show();
 		
 		$.ajax({
-			url : 'http://localhost:8080/nm/meetmember/comment/'+m_idx+'/'+nidx,
+			url : 'http://localhost:8080/nm/meetmember/comment/'+m_idx+'/'+bnidx,
 			type : 'GET',
 			data : {},
 			success : function(data){

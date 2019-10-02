@@ -25,13 +25,13 @@
             <div class="col-6 col-md-4 order-3 order-md-3 text-right">
               <div class="site-top-icons" style="width:300px;margin:0 700px;">
                 <ul>
-                  <li> 
+                  <li>
+                  <c:if test="${MemberIdx eq null}">	 
                   <a href="<c:url value="/Welcome" />" style="font-family: 'Nanum Gothic Coding', monospace;color:black;font-weight:bold;">회원가입</a></button></li>
                   <li>
-                  <c:if test="${MemberInfo eq null}">	  
                   <a href="<c:url value="/Login" />" style="font-family: 'Nanum Gothic Coding', monospace;color:black;font-weight:bold;">로그인</a></button></li>
                   </c:if>
-                  <c:if test="${MemberInfo ne null}">	  
+                  <c:if test="${MemberIdx ne null}">
                   <a href="<c:url value="logout" />" style="font-family: 'Nanum Gothic Coding', monospace;color:black;font-weight:bold;">로그아웃</a></button></li>
                   <li> 
                   <a href="<c:url value="/Mypage" />" style="font-family: 'Nanum Gothic Coding', monospace;color:black;font-weight:bold;">마이페이지</a></button></li> 

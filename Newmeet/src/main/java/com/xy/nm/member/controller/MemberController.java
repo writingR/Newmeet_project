@@ -27,6 +27,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.xy.nm.member.dao.MemberInterDao;
+import com.xy.nm.member.domain.GoogleInfo;
 import com.xy.nm.member.domain.Member;
 import com.xy.nm.member.domain.RequestMemberEdit;
 import com.xy.nm.member.domain.RequestMemberLogin;
@@ -331,6 +332,53 @@ public class MemberController {
       userfindPwService.find_pw(response, nemail, npw);
    }
    
+   @PostMapping(value = "/GoogleSociallogin")
+   public ResponseEntity<String> loginSocialOk(@RequestBody GoogleInfo mem, HttpServletRequest request) {
+
+      
+      System.out.println("일로왔음");
+      
+      String LoginResult = "";
+      String nemail = mem.getNemail();
+      String ntype = mem.getNtype();
+      String nnic = mem.getNnic();
+
+      //int loginChk = userLoginService.memberInfo(nemail, npw, request);
+      int loginChk = userLoginService.googleInfo(nemail, nnic,ntype, request);
+
+      switch (loginChk) {
+
+      // 0 - 오류
+      // 1 - 미인증회원
+      // 2 - 인증완료 !!
+      case 0:
+         LoginResult = "fail";
+         break;
+      case 1:
+         LoginResult = "yet";
+         break;
+      case 2:
+
+         int nidx = userEditService.getUser(nemail).getNidx();
+
+         LoginResult = String.valueOf(nidx);
+
+         System.out.println("LoginResult : " + loginChk);
+
+         break;
+
+      }
+   
+      System.out.println("일로왔음2");
+      HttpSession session = request.getSession();
+      return new ResponseEntity<String>(LoginResult, HttpStatus.OK);
+
+   }
+   
+   
+   
+   
+   
    
    //로그아웃
    @RequestMapping("/logout")
@@ -344,8 +392,10 @@ public class MemberController {
    // 회원탈퇴
    @CrossOrigin
    @DeleteMapping("/{nidx}")
-   public ResponseEntity<String> newMeetOut(@PathVariable("nidx") int nidx) {
+   public ResponseEntity<String> newMeetOut(@PathVariable("nidx") int nidx, HttpSession session) {
 
+	   session.invalidate();
+	   
       return new ResponseEntity<String>(userDeleteService.newMeetOut(nidx) > 0 ? "SUCCESS" : "FAIL", HttpStatus.OK);
    }
 

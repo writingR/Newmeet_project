@@ -20,33 +20,6 @@
 	<div class="container">
 		<h1 class="display-6">모임 회원 관리</h1>
 
-
-		<%-- <form id="meetLeader" method="post">
-			<div class="form-group">
-				<input type="hidden" id="m_idx" name="m_idx">
-			</div>
-			<div class="form-group">
-				<input type="hidden" id="nidx" name="nidx" value="<%=(int)session.getAttribute("MemberIdx")%>">
-			</div>
-			<div class="form-group">
-				<input type="hidden" id="mm_level" name="mm_level" value="1">
-			</div>
-			<input type="submit" class="btn btn-info" value="개설">
-		</form> --%>
-
-		<%-- <form id="meetCrew" method="post">
-			<div class="form-group">
-				<input type="hidden" id="m_idx2" name="m_idx">
-			</div>
-			<div class="form-group">
-				<input type="hidden" id="nidx" name="nidx" value="<%=(int)session.getAttribute("MemberIdx2")%>">
-			</div>
-			<div class="form-group">
-				<input type="hidden" id="mm_level" name="mm_level" value="0">
-			</div>
-			<input type="submit" class="btn btn-info" value="참가">
-		</form> --%>
-
 		<br>
 		<table class="table" style="width: 100%">
 			<thead class="thead-light">
@@ -72,55 +45,11 @@
 	<script>
 	var m_idx = ${m_idx};
 	var level = ${mm_level};
+	var anidx = ${anidx};
 	
 	$(document).ready(function(){
 		
 		list();
-		
-		/* $('#meetLeader').submit(function() {
-			alert($('#meetLeader').serialize());
-			
-			$.ajax({
-				url: 'http://localhost:8080/nm/meetmember',
-				type: 'POST',
-				data: $('#meetLeader').serialize(),
-				success: function(data) {
-					alert(data);
-					window.location.href='MeetMember.jsp';
-				}
-			});
-			return false;
-		}); */
-	
-		/* $('#meetCrew').submit(function() {
-			alert($('#meetCrew').serialize());
-			
-			$.ajax({
-				url: 'http://localhost:8080/nm/meetmember',
-				type: 'POST',
-				data: $('#meetCrew').serialize(),
-				success: function(data) {
-					alert(data);
-					
-				}
-			});
-			return false;
-		}); */
-		
-		/* $('#meetnew').submit(function() {
-			alert($('#meetnew').serialize());
-			
-			$.ajax({
-				url: 'http://localhost:8080/nm/meetmember',
-				type: 'POST',
-				data: $('#meetnew').serialize(),
-				success: function(data) {
-					alert(data);
-					
-				}
-			});
-			return false;
-		}); */
 			
 	});
 	
@@ -141,9 +70,9 @@
 					html += '<td style="width:20%;"><img src="${pageContext.request.contextPath}/static/img/'+data.mmList[i].nphoto+'" alt="Image" style="width:50px; height:50px;"></td>';
 					html += '<td style="width:20%;">'+data.mmList[i].nnic+'</td>';
 					html += '<td style="width:40%;"><button class="btn btn-link" onclick="detail('+data.mmList[i].nidx+')">'+data.mmList[i].nemail+'</button></td>';
-					if(data.mmList[i].nidx == ${nidx} && data.mmList[i].mm_level == 1) {
+					if(data.mmList[i].nidx == ${anidx} && data.mmList[i].mm_level == 1) {
 					html +=	'<td style="width: 20%;"><img src="${pageContext.request.contextPath}/static/img/leader.jpg" alt="leaderImg" style="width:50px; height:50px; margin-left:25px;""></td>'
-					} else if(${mm_level} == 1 && data.mmList[i].nidx != ${nidx}){
+					} else if(${mm_level} == 1 && data.mmList[i].nidx != ${anidx}){
 					html += '<td style="width:20%;"><button class="btn btn-primary" onclick="exile('+data.mmList[i].mm_idx+')">강퇴하기</button></td>';
 					}
 					
@@ -177,9 +106,9 @@
 					html += '<td style="width:20%;"><img src="${pageContext.request.contextPath}/static/img/'+data.mmList[i].nphoto+'" alt="Image" style="width:50px; height:50px;"></td>';
 					html += '<td style="width:20%;">'+data.mmList[i].nnic+'</td>';
 					html += '<td style="width:40%;"><button class="btn btn-link" onclick="detail('+data.mmList[i].nidx+')">'+data.mmList[i].nemail+'</button></td>';
-					if(data.mmList[i].nidx == ${nidx} && data.mmList[i].mm_level == 1) {
+					if(data.mmList[i].nidx == ${anidx} && data.mmList[i].mm_level == 1) {
 					html +=	'<td style="width: 20%;"><img src="${pageContext.request.contextPath}/static/img/leader.jpg" alt="leaderImg" style="width:50px; height:50px; margin-left:25px;"></td>'
-					} else if(${mm_level} == 1 && data.mmList[i].nidx != ${nidx}){
+					} else if(${mm_level} == 1 && data.mmList[i].nidx != ${anidx}){
 					html += '<td style="width:20%;"><button class="btn btn-primary" onclick="exile('+data.mmList[i].mm_idx+')">강퇴하기</button></td>';
 					}
 					html += '</tr>';
@@ -195,10 +124,10 @@
 		});
 	}
 	
-	function detail(nidx) {
-		var nidx = nidx;
+	function detail(bnidx) {
+		var bnidx = bnidx;
 		
-		location.href='${pageContext.request.contextPath}/meetMember/detail?m_idx='+m_idx+'&nidx='+nidx+'';
+		location.href='${pageContext.request.contextPath}/meetMember/detail?m_idx='+m_idx+'&bnidx='+bnidx+'';
 	}
 	
 

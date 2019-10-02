@@ -17,7 +17,6 @@ import com.xy.nm.mm.service.MeetMemberCheckService;
 import com.xy.nm.mm.service.MeetMemberListService;
 
 @Controller
-@SessionAttributes(value = "MemberIdx")
 public class MeetMemberController {
 
 	@Autowired
@@ -31,41 +30,33 @@ public class MeetMemberController {
 
 		int mm_level = -1;
 
-		int nidx = -1;
+		int anidx = -1;
 
 		HttpSession session = request.getSession(false);
 
-		if(session != null) {
-			session.setAttribute("MemberIdx", 107);
-		} 
 		if(session != null && session.getAttribute("MemberIdx") != null) {
-			nidx = (int)session.getAttribute("MemberIdx");
+			anidx = (int)session.getAttribute("MemberIdx");
 		}
 
-		MeetMemberInfo meetMemberInfo = listService.selectByidx(m_idx, nidx);
+		MeetMemberInfo meetMemberInfo = listService.selectByidx(m_idx, anidx);
 
 		if (meetMemberInfo != null) {
 			mm_level = meetMemberInfo.getMm_level();
 		}
 
 		model.addAttribute("m_idx", m_idx);
-		model.addAttribute("nidx", nidx);
+		model.addAttribute("anidx", anidx);
 		model.addAttribute("mm_level", mm_level);
-
-		System.out.println("m_idx:" + m_idx);
-		System.out.println("nidx:" + nidx);
-		System.out.println("mm_level" + mm_level);
-		System.out.println("mettMemberInfo:" + meetMemberInfo);
 
 		return "meetmember/meetMember";
 	}
 
 	@RequestMapping(value = "/meetMember/detail", method = RequestMethod.GET)
-	public String MemberDetail(@RequestParam(value = "m_idx") int m_idx, @RequestParam(value = "nidx") int nidx,
+	public String MemberDetail(@RequestParam(value = "m_idx") int m_idx, @RequestParam(value = "bnidx") int bnidx,
 			Model model) {
 
-		model.addAttribute("nidx", nidx);
 		model.addAttribute("m_idx", m_idx);
+		model.addAttribute("bnidx", bnidx);
 
 		return "meetmember/memberDetail";
 	}

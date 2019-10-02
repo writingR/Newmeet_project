@@ -33,6 +33,8 @@ public class MeetMemberCheckService {
 		
 		if(rCnt == 1) {
 			check = true;
+		} else if(rCnt == 0) {
+			check = false;
 		}
 		
 		return check;

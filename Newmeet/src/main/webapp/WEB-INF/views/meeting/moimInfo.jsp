@@ -2,10 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>	
-<%
-	session.setAttribute("MemberIdx", 107);
-	
-%>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -159,18 +155,18 @@
 
 						</table>
 		    			
-		    			<a style="height:52px; font-size:18px; border-radius:5px;" href="http://localhost:8080/nm/meetMember?m_idx=${m_idx}" class="btn btn-outline-primary btn-block">View more</a>
+		    			<a style="height:52px; font-size:18px; border-radius:5px;" href="${pageContext.request.contextPath}/meetMember?m_idx=${m_idx}" class="btn btn-outline-primary btn-block">View more</a>
 		    		
 		    		</div>
 		    		<hr>
 		    		<div>
 		    		<h2>Review</h2>	
-		    			<a style="height:52px; font-size:18px; border-radius:5px;" href="http://10.10.10.18:8080/nm/review?mNum=${m_idx}" class="btn btn-outline-primary btn-block">Review</a>
+		    			<a style="height:52px; font-size:18px; border-radius:5px;" href="${pageContext.request.contextPath}/review?mNum=${m_idx}" class="btn btn-outline-primary btn-block">Review</a>
 		    		</div>
 		    		<hr>
 		    		<div>	
 		    		<h2>Chat</h2>
-		    			<a style="height:52px; font-size:18px; border-radius:5px;" href="#" class="btn btn-outline-primary btn-block">Chat</a>
+		    			<a style="height:52px; font-size:18px; border-radius:5px;" href="${pageContext.request.contextPath}/chat/${m_idx}" class="btn btn-outline-primary btn-block">Chat</a>
 		    		</div>
 		    		<hr>
 		    		<div>
@@ -179,12 +175,14 @@
 								<input type="hidden" id="m_idx" name="m_idx">
 							</div>
 							<div class="form-group">
-								<input type="hidden" id="nidx" name="nidx" value="<%=(int)session.getAttribute("MemberIdx")%>">
+								<input type="hidden" id="nidx" name="nidx">
 							</div>
 							<div class="form-group">
 								<input type="hidden" id="mm_level" name="mm_level" value="0">
 							</div>
-							<input style="height:52px; font-size:18px; border-radius:5px;" type="submit" class="btn btn-outline-success btn-block" value="Participate in">
+							<div id="memShell" class="form-group">
+							<!-- <input id="memIn" style="height:52px; font-size:18px; border-radius:5px;" type="submit" class="btn btn-outline-success btn-block" value="Participate in"> -->
+							</div>
 						</form>
 		    		</div>
 		    		
@@ -289,12 +287,44 @@
   <script src="${pageContext.request.contextPath}/static/detail/js/main.js"></script>
   
   <script>
+  var m_idx = ${m_idx};
+  
+  if(${not empty nidx}) {
+	  var nidx = ${nidx};
+  }
+  
   	$(document).ready(function(){
+  			
+  		$('#m_idx').val(${m_idx});
   		
-  		var m_idx = ${m_idx};
+  		if(${empty nidx}) {
+  			$('#memIn').hide();
+  		} else {
+  			$('#nidx').val(${nidx});
+  			$('#memIn').show();
+  					
+  		}
   		
-  		list(m_idx);
-  			var m_idx = ${m_idx};
+  		getsubmit(m_idx, nidx);
+  		
+ 		memberlist(m_idx);
+  		
+  		$('#meetCrew').submit(function(){
+  			alert($('#meetCrew').serialize());
+  			
+  			$.ajax({
+  				url : 'http://localhost:8080/nm/meetmember',
+  				type : 'POST',
+  				data : $('#meetCrew').serialize(),
+  				success : function(data) {
+  					alert('모임에 참가했습니다.');
+  					memberlist(m_idx);
+  					location.reload();
+  				}
+  			});
+  		return false;
+  		});
+  		
   			$.ajax({
   				url : 'http://localhost:8080/nm/meeting/list/'+ m_idx,
   				type : 'GET',
@@ -332,12 +362,12 @@
   						$('#button').html(html);
   					}else if(data == 1){
   						//alert('넌 모임원');
-  						html += '<input type="button" id="sin" value="모임 탈퇴">';
+  						html += '<input type="button" id="sin" onclick="deletemember()" value="모임 탈퇴">';
   						
   						$('#button').html(html);
   					}else if(data == 0){
   						//alert('넌 비모임원');
-  						html += '<input type="button" id="sin" value="모임 신청">';
+  						html += '<input type="button" onclick="insertmember()" id="sin" value="모임 신청">';
   						
   						$('#button').html(html);
   					}else if(data == -1){
@@ -440,31 +470,74 @@
   				return false; 		
   			});
   			
-  		
-
   	
-  	function list(i) {
-  		$.ajax({
-  			url: 'http://localhost:8080/nm/meetmember/'+i,
-			type: 'GET',
-			data: {},
-			success: function(data){
-				console.log(data);
-				var html = '';
-				if(data.mmList.length>=1) {
-					for (var i=0; i<data.mmList.length; i++) {
-						html += '<tr>';
-						html += '<td><img src="${pageContext.request.contextPath}/static/img/'+data.mmList[i].nphoto+'" alt="Image" style="height:50px; width:50px;"></td>';
-						html += '<td style="width:20%;">'+data.mmList[i].nnic+'</td>';
-						html += '<td style="width:60%;">'+data.mmList[i].nemail+'</td>';
-						html += '</tr>';
+  		function memberlist(i) {
+  			$.ajax({
+  				url: 'http://localhost:8080/nm/meetmember/'+i,
+				type: 'GET',
+				data: {},
+				success: function(data){
+					console.log(data);
+					var html = '';
+					if(data.mmList.length>=1) {
+						for (var i=0; i<data.mmList.length; i++) {
+							html += '<tr>';
+							html += '<td><img src="${pageContext.request.contextPath}/static/img/'+data.mmList[i].nphoto+'" alt="Image" style="height:50px; width:50px;"></td>';
+							html += '<td style="width:20%;">'+data.mmList[i].nnic+'</td>';
+							html += '<td style="width:60%;">'+data.mmList[i].nemail+'</td>';
+							html += '</tr>';
 					
-						$('#memlist').html(html);
+							$('#memlist').html(html);
+							}
 						}
 					}
-				}
-  		});
-  	}
+  			});
+  		}
+  		
+  		function getsubmit(i, e) {
+  			
+  			$.ajax({
+  				url : 'http://localhost:8080/nm//meetmember/submit/'+i+'/'+e,
+  				type : 'GET',
+  				success : function(data) {
+  					var html = '';
+  					if(data == 1) {
+  						html += '<input id="memOut" style="height:52px; font-size:18px; border-radius:5px;" type="button" onclick="memberOut('+i+','+e+')" class="btn btn-outline-danger btn-block" value="Participate out">';
+  						$('#memShell').html(html);
+  					} else if(data == 0) {
+  						html += '<input id="memIn" style="height:52px; font-size:18px; border-radius:5px;" type="submit" class="btn btn-outline-success btn-block" value="Participate in">';
+  						$('#memShell').html(html);
+  					}
+  				}
+  			});
+  		}
+  		
+  		function memberOut(i,e) {
+  			
+  			if(confirm('모임을 탈퇴하시겠어요?')); {
+  				
+  				$.ajax({
+  					url : 'http://localhost:8080/nm/meetmember/outself/'+i+'/'+e,
+  					type : 'DELETE',
+  					success: function(data) {
+  						alert(data);
+  						if(data == 'success') {
+  							alert('모임을 탈퇴했습니다.');
+  							memberlist(m_idx);
+  							location.reload();
+  						}
+  					}
+  				});
+  			}
+  		}
+  		
+  		function insertmember() {
+  			$('#meetCrew').submit();
+  		}
+  		
+  		function deletemember() {
+  			memberOut(m_idx, nidx);
+  		}
   
   </script>
   

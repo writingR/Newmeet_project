@@ -49,7 +49,7 @@
 
 <!-- <button class="show" id="my" type="button" class="btn btn-light" onclick="">좋아요</button> -->
 <!-- <button class="show" id="my" type="button" class="btn btn-light" onclick="button_1();">내정보</button> -->
-<a id="my" href="<c:url value="/Like" />">좋아요</a></br>
+<a id="my" href="<c:url value="/newMoim" />">모임 생성</a></br>
 <a id="my" href="<c:url value="/Info" />">내정보</a></br>
 <!-- <button class="show1" id="my" type="button" class="btn btn-light" onclick="button_2();">프로필 관리</button> -->
 <a id="my" href="<c:url value="/Modi" />">프로필 관리</a></br>

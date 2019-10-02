@@ -32,12 +32,11 @@ public class LikeController {
 			@PathVariable(value = "m_idx")int m_idx){
 		HttpSession session = request.getSession(false);
 		
-		System.out.println("4444");
 		ResponseEntity<Integer> result = null;
 		
 		if(session != null & session.getAttribute("MemberIdx") != null) {
 			int nidx = (Integer)session.getAttribute("MemberIdx");
-			
+			System.out.println(nidx);
 			
 			int cnt = likeService.Like(m_idx, nidx);
 			int like = likeUpdateService.likeUpate(m_idx);			

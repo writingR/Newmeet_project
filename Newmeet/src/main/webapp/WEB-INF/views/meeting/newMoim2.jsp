@@ -66,6 +66,9 @@
 		font-weight: bold;
 		
 	}
+	.site-navbar .site-navbar-top {
+    display: none;
+}
 </style>
 </head>
 <body>
@@ -109,7 +112,7 @@
  </header>
  </div>
  <div id="cont">
-	<div id="select">
+	<div id="select" style="height: 530px;">
 	<h2>TITLE</h2>
 		<div id="option">
 		<input type="text" id="m_name" name="m_name">
@@ -135,7 +138,7 @@ function m_name(){
 	}else{
 
 		sessionStorage.setItem("m_name",m_name);
-		location.href="/nm/newMoim3";
+		location.href="/nm/newMoim3?cnidx="+${cnidx};
 	}
 
 	
