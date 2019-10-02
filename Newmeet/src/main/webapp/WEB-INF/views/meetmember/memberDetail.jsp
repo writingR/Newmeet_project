@@ -115,7 +115,7 @@
 	function list(i, e) {
 			
 		$.ajax({
-			url: 'http://localhost:8080/nm/meetmember/'+ i +'/'+ e,
+			url: '${pageContext.request.contextPath}/meetmember/'+ i +'/'+ e,
 			type: 'GET',
 			data: {},
 			success: function(data) {
@@ -144,7 +144,7 @@
 		$('#meetingtable').show();
 		
 		$.ajax({
-			url : 'http://localhost:8080/nm/meetmember/meeting/'+m_idx+'/'+bnidx,
+			url : '${pageContext.request.contextPath}/meetmember/meeting/'+m_idx+'/'+bnidx,
 			type : 'GET',
 			data : {},
 			success : function(data){
@@ -154,7 +154,7 @@
 				for (var i=0; i<data.mmList.length; i++) {
 					html += '<tr>';
 					html += '<td style="width:20%;"><img src="${pageContext.request.contextPath}/static/img/'+data.mmList[i].m_img+'" alt="Image" style="width=50px; height:50px;"></td>';
-					html += '<td style="width:80%;"><a href="localhost:8080/nm/detail?m_idx='+data.mmList[i].m_idx+'">'+data.mmList[i].m_name+'</a></td>';
+					html += '<td style="width:80%;"><a href="15.164.231.122:8080/nm/detail?m_idx='+data.mmList[i].m_idx+'">'+data.mmList[i].m_name+'</a></td>';
 					html += '</tr>';
 					
 					$('#meetinglist').html(html);
@@ -174,7 +174,7 @@
 		$('#reviewtable').show();
 	
 		$.ajax({
-			url : 'http://localhost:8080/nm/meetmember/review/'+m_idx+'/'+bnidx,
+			url : '${pageContext.request.contextPath}/meetmember/review/'+m_idx+'/'+bnidx,
 			type : 'GET',
 			data : {},
 			success :  function(data){
@@ -216,7 +216,7 @@
 		$('#commenttable').show();
 		
 		$.ajax({
-			url : 'http://localhost:8080/nm/meetmember/comment/'+m_idx+'/'+bnidx,
+			url : '${pageContext.request.contextPath}/meetmember/comment/'+m_idx+'/'+bnidx,
 			type : 'GET',
 			data : {},
 			success : function(data){

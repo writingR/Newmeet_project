@@ -167,7 +167,7 @@
     $(document).ready(function(){
 
 		$.ajax({
-			url : 'http://localhost:8080/nm/meeting/list',
+			url : '${pageContext.request.contextPath}/meeting/list',
 			type : 'GET',
 			success : function(data) {
 				
@@ -177,12 +177,12 @@
 				for (var i = 0; i < data.length ; i++) {
 					
 					html += '<div class="col-md-3 course ftco-animate fadeInUp ftco-animated">';
-					//html += '<div class="img" style="background-image: url(http://localhost:8080/nm/uploadfile/' + data[i].m_img+ ');width: 400px;height: 300px;"></div>';
-					html += '<img class="img" src="http://localhost:8080/nm/uploadfile/' + data[i].m_img+ '" style="width: 400px; height: 300px;"><br>';
+					//html += '<div class="img" style="background-image: url(${pageContext.request.contextPath}/uploadfile/' + data[i].m_img+ ');width: 400px;height: 300px;"></div>';
+					html += '<img class="img" src="${pageContext.request.contextPath}/uploadfile/' + data[i].m_img+ '" style="width: 400px; height: 300px;"><br>';
 					html += '<div class="text pt-4">';
 					html += '<p class="meta d-flex">';
-					html += '<span><img src="http://localhost:8080/nm/uploadfile/like0.png" style="margin-right: 10px;"> ' + data[i].m_like +'</span>';
-					html += '<span><img src="http://localhost:8080/nm/uploadfile/star1.png" style="margin-right: 10px;"> '+ (data[i].m_stotal/data[i].m_star).toFixed(1) +'</span>';
+					html += '<span><img src="${pageContext.request.contextPath}/uploadfile/like0.png" style="margin-right: 10px;"> ' + data[i].m_like +'</span>';
+					html += '<span><img src="${pageContext.request.contextPath}/uploadfile/star1.png" style="margin-right: 10px;"> '+ (data[i].m_stotal/data[i].m_star).toFixed(1) +'</span>';
 					html += '<span><i class="icon-calendar mr-2"></i>New meet</span>';
 					html += '</p>';
 					html += '<h3 style="text-align: center;"><a href="<c:url value="/moimInfo"/>?m_idx='+ data[i].m_idx +'">'+data[i].m_name+'</a></h3>';

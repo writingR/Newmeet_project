@@ -123,7 +123,7 @@
 	$(document).ready(function(){
 	
 		$.ajax({
-			url : 'http://localhost:8080/nm/meeting',
+			url : '${pageContext.request.contextPath}/meeting',
 			type : 'GET',
 			success : function(data) {
 				var html = '';
@@ -147,7 +147,7 @@
 		
 			
 			$.ajax({
-				url : 'http://localhost:8080/nm/meeting/'+ idx,
+				url : '${pageContext.request.contextPath}/meeting/'+ idx,
 				type : 'GET',
 				success : function(data) {
 					var html = '';

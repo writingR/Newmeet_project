@@ -138,7 +138,7 @@
 			<td ><h4 style="margin-top: 15px;">현재 모임 대표 사진</h4></td>
 		</tr>
 		<tr>
-			<td><img src="http://localhost:8080/nm/uploadfile/${m_img}" style="width: 300px;height: 200px; border-radius: 5px;"><input style="margin-left: 10px;"type="button" value="사진변경" onclick="photo(${m_idx})"><hr></td>
+			<td><img src="${pageContext.request.contextPath}/uploadfile/${m_img}" style="width: 300px;height: 200px; border-radius: 5px;"><input style="margin-left: 10px;"type="button" value="사진변경" onclick="photo(${m_idx})"><hr></td>
 		</tr>
 		<tr>
 			<td><h4 style="margin-top: 15px;">모임 제목</h4></td>
@@ -200,7 +200,7 @@
 $(document).ready(function(){
 	
 		$.ajax({
-			url : 'http://localhost:8080/nm/meeting',
+			url : '${pageContext.request.contextPath}/meeting',
 			type : 'GET',
 			success : function(data) {
 				var html = '';
@@ -237,7 +237,7 @@ $(document).ready(function(){
 		      $.ajax({
 		        data: form_data,
 		        type: "POST",
-		        url: 'http://localhost:8080/nm/meeting/photo',
+		        url: '${pageContext.request.contextPath}/meeting/photo',
 		        cache: false,
 		        contentType: false,
 		        enctype: 'multipart/form-data',
@@ -257,7 +257,7 @@ $(document).ready(function(){
 	var idx = $('#category').val();
 	
 	$.ajax({
-		url : 'http://localhost:8080/nm/meeting/'+ idx,
+		url : '${pageContext.request.contextPath}/meeting/'+ idx,
 		type : 'GET',
 		success : function(data) {
 			var html = '';
@@ -281,7 +281,7 @@ $(document).ready(function(){
 	 formData.append("m_idx",m_idx);
 	 
 	 $.ajax({
-			url : 'http://localhost:8080/nm/meeting/image',
+			url : '${pageContext.request.contextPath}/meeting/image',
 			type : 'POST',
 			data : formData,
 	        contentType: false,
@@ -311,7 +311,7 @@ $(document).ready(function(){
 		
 		
 	$.ajax({
-		url : 'http://localhost:8080/nm/meeting/'+ m_idx,
+		url : '${pageContext.request.contextPath}/meeting/'+ m_idx,
 		type : 'POST',
 		data : formData,
 		processData: false,

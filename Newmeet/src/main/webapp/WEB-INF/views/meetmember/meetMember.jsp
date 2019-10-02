@@ -56,7 +56,7 @@
 	function list() {
 		
 		$.ajax({
-			url: 'http://localhost:8080/nm/meetmember/'+ m_idx,
+			url: '${pageContext.request.contextPath}/meetmember/'+ m_idx,
 			type: 'GET',
 			data: {},
 			success: function(data) {
@@ -92,7 +92,7 @@
 	function page(index) {
 			
 		$.ajax({
-			url: 'http://localhost:8080/nm/meetmember/'+ m_idx,
+			url: '${pageContext.request.contextPath}/meetmember/'+ m_idx,
 			type: 'GET',
 			data: {p:index},
 			success: function(data) {
@@ -137,7 +137,7 @@
 		if(confirm('정말 추방하시겠어요?')) {
 			
 			$.ajax({
-				url:'http://localhost:8080/nm/meetmember/'+ m_idx +'/'+ mm_idx,
+				url:'${pageContext.request.contextPath}/meetmember/'+ m_idx +'/'+ mm_idx,
 				type: 'DELETE',
 				success: function(data) {
 					alert(data);

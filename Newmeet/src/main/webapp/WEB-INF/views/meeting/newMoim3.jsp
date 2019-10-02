@@ -175,7 +175,7 @@
 	    	      $.ajax({
 	    	        data: form_data,
 	    	        type: "POST",
-	    	        url: 'http://localhost:8080/nm/meeting/photo',
+	    	        url: '${pageContext.request.contextPath}/meeting/photo',
 	    	        cache: false,
 	    	        contentType: false,
 	    	        enctype: 'multipart/form-data',

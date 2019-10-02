@@ -208,7 +208,7 @@
 		}
 		
 		$.ajax({
-			url : 'http://localhost:8080/nm/meeting',
+			url : '${pageContext.request.contextPath}/meeting',
 			type : 'POST',
 			data : formData,
            processData: false,

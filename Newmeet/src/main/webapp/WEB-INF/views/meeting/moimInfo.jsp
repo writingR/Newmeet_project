@@ -76,7 +76,7 @@
 		    				<div class="project">
 		    					<div class="img">
 		    						<div class="vr"></div>
-				    				<a href="#"><img src="http://localhost:8080/nm/uploadfile/${m_img}" class="img-fluid" alt="Colorlib Template"></a>
+				    				<a href="#"><img src="${pageContext.request.contextPath}/uploadfile/${m_img}" class="img-fluid" alt="Colorlib Template"></a>
 			    				</div>
 			    				<div class="text">
 			    					<h4 class="price">New Meet</h4>
@@ -113,7 +113,7 @@
 			    				<span id="button" ></span>
 				                <span id="button2"></span>
 				                </div>
-			    				<a href="http://localhost:8080/nm/uploadfile/${m_img}" class="icon image-popup d-flex justify-content-center align-items-center">
+			    				<a href="${pageContext.request.contextPath}/uploadfile/${m_img}" class="icon image-popup d-flex justify-content-center align-items-center">
 			    					<span class="icon-expand"></span>
 			    				</a>
 		    				</div>
@@ -313,7 +313,7 @@
   			alert($('#meetCrew').serialize());
   			
   			$.ajax({
-  				url : 'http://localhost:8080/nm/meetmember',
+  				url : '${pageContext.request.contextPath}/meetmember',
   				type : 'POST',
   				data : $('#meetCrew').serialize(),
   				success : function(data) {
@@ -326,20 +326,20 @@
   		});
   		
   			$.ajax({
-  				url : 'http://localhost:8080/nm/meeting/list/'+ m_idx,
+  				url : '${pageContext.request.contextPath}/meeting/list/'+ m_idx,
   				type : 'GET',
   				success : function(data) {
   					var html = '';
   					var like = '';
   					
-  						html += (data.m_stotal/data.m_star).toFixed(1)+' <img src="http://localhost:8080/nm/uploadfile/star0.png">';
+  						html += (data.m_stotal/data.m_star).toFixed(1)+' <img src="${pageContext.request.contextPath}/uploadfile/star0.png">';
   						$('.rate2').html(html);
   						like +=  data.m_like ;
   						like += '<c:if test="${l_like == 0}">';
-  						like += ' <img onclick="like(${m_idx})" src="http://localhost:8080/nm/uploadfile/like0.png">';
+  						like += ' <img onclick="like(${m_idx})" src="${pageContext.request.contextPath}/uploadfile/like0.png">';
   						like += '</c:if>';
   						like += '<c:if test="${l_like == 1}">';
-  						like += ' <img onclick="like(${m_idx})" src="http://localhost:8080/nm/uploadfile/like1.png">';
+  						like += ' <img onclick="like(${m_idx})" src="${pageContext.request.contextPath}/uploadfile/like1.png">';
   						like += '</c:if>';
   						
   						$('.rate').html(like);
@@ -349,7 +349,7 @@
   			});
   			
   			$.ajax({
-  				url : 'http://localhost:8080/nm/meeting/button/'+ m_idx,
+  				url : '${pageContext.request.contextPath}/meeting/button/'+ m_idx,
   				type : 'GET',
   				success : function(data) {
   					var html = '';
@@ -388,7 +388,7 @@
   				if(confirm('모임을 삭제하시겠습니까 ?')){
   					$.ajax({
   	  					
-  	  					url : 'http://localhost:8080/nm/meeting/'+ m_idx,
+  	  					url : '${pageContext.request.contextPath}/meeting/'+ m_idx,
   	  					type : 'DELETE',
   	  					success : function(data) {
   	  						
@@ -423,7 +423,7 @@
   				var m_idx = ${m_idx};
   				
   				$.ajax({
-  					url : 'http://localhost:8080/nm/like/'+ m_idx,
+  					url : '${pageContext.request.contextPath}/like/'+ m_idx,
   					type : 'GET',
   					success : function(data) {
   						
@@ -450,7 +450,7 @@
   			$('#form').submit(function(){
   				
   				$.ajax({
-  					url : 'http://localhost:8080/nm/star',
+  					url : '${pageContext.request.contextPath}/star',
   					type : 'POST',
   					data : $('#form').serialize(),
   					success : function(data) {
@@ -473,7 +473,7 @@
   	
   		function memberlist(i) {
   			$.ajax({
-  				url: 'http://localhost:8080/nm/meetmember/'+i,
+  				url: '${pageContext.request.contextPath}/meetmember/'+i,
 				type: 'GET',
 				data: {},
 				success: function(data){
@@ -497,7 +497,7 @@
   		function getsubmit(i, e) {
   			
   			$.ajax({
-  				url : 'http://localhost:8080/nm//meetmember/submit/'+i+'/'+e,
+  				url : '${pageContext.request.contextPath}//meetmember/submit/'+i+'/'+e,
   				type : 'GET',
   				success : function(data) {
   					var html = '';
@@ -517,7 +517,7 @@
   			if(confirm('모임을 탈퇴하시겠어요?')); {
   				
   				$.ajax({
-  					url : 'http://localhost:8080/nm/meetmember/outself/'+i+'/'+e,
+  					url : '${pageContext.request.contextPath}/meetmember/outself/'+i+'/'+e,
   					type : 'DELETE',
   					success: function(data) {
   						alert(data);

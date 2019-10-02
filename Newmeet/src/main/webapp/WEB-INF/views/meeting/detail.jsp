@@ -64,7 +64,7 @@
 		    				<div class="project">
 		    					<div class="img">
 		    						<div class="vr"></div>
-				    				<a href="#"><img src="http://localhost:8080/nm/uploadfile/${m_img}" class="img-fluid" alt="Colorlib Template"></a>
+				    				<a href="#"><img src="${pageContext.request.contextPath}/uploadfile/${m_img}" class="img-fluid" alt="Colorlib Template"></a>
 			    				</div>
 			    				<div class="text">
 			    					<h4 class="price">New Meet</h4>
@@ -101,7 +101,7 @@
 			    				<span id="button" ></span>
 				                <span id="button2"></span>
 				                </div>
-			    				<a href="http://localhost:8080/nm/uploadfile/${m_img}" class="icon image-popup d-flex justify-content-center align-items-center">
+			    				<a href="${pageContext.request.contextPath}/uploadfile/${m_img}" class="icon image-popup d-flex justify-content-center align-items-center">
 			    					<span class="icon-expand"></span>
 			    				</a>
 		    				</div>
@@ -143,7 +143,7 @@
 
 						</table>
 		    			
-		    			<a style="height:52px; font-size:18px; border-radius:5px;" href="http://localhost:8080/nm/meetMember?m_idx=${m_idx}" class="btn btn-outline-primary btn-block">View more</a>
+		    			<a style="height:52px; font-size:18px; border-radius:5px;" href="${pageContext.request.contextPath}/meetMember?m_idx=${m_idx}" class="btn btn-outline-primary btn-block">View more</a>
 		    		
 		    		</div>
 		    		<hr>
@@ -283,20 +283,20 @@
   		list(m_idx);
   			var m_idx = ${m_idx};
   			$.ajax({
-  				url : 'http://localhost:8080/nm/meeting/list/'+ m_idx,
+  				url : '${pageContext.request.contextPath}/meeting/list/'+ m_idx,
   				type : 'GET',
   				success : function(data) {
   					var html = '';
   					var like = '';
   					
-  						html += (data.m_stotal/data.m_star).toFixed(1)+' <img src="http://localhost:8080/nm/uploadfile/star0.png">';
+  						html += (data.m_stotal/data.m_star).toFixed(1)+' <img src="${pageContext.request.contextPath}/uploadfile/star0.png">';
   						$('.rate2').html(html);
   						like +=  data.m_like ;
   						like += '<c:if test="${l_like == 0}">';
-  						like += ' <img onclick="like(${m_idx})" src="http://localhost:8080/nm/uploadfile/like0.png">';
+  						like += ' <img onclick="like(${m_idx})" src="${pageContext.request.contextPath}/uploadfile/like0.png">';
   						like += '</c:if>';
   						like += '<c:if test="${l_like == 1}">';
-  						like += ' <img onclick="like(${m_idx})" src="http://localhost:8080/nm/uploadfile/like1.png">';
+  						like += ' <img onclick="like(${m_idx})" src="${pageContext.request.contextPath}/uploadfile/like1.png">';
   						like += '</c:if>';
   						
   						$('.rate').html(like);
@@ -306,7 +306,7 @@
   			});
   			
   			$.ajax({
-  				url : 'http://localhost:8080/nm/meeting/button/'+ m_idx,
+  				url : '${pageContext.request.contextPath}/meeting/button/'+ m_idx,
   				type : 'GET',
   				success : function(data) {
   					var html = '';
@@ -345,7 +345,7 @@
   				if(confirm('선택한 영화를 삭제할꺼예요?')){
   					$.ajax({
   	  					
-  	  					url : 'http://localhost:8080/nm/meeting/'+ m_idx,
+  	  					url : '${pageContext.request.contextPath}/meeting/'+ m_idx,
   	  					type : 'DELETE',
   	  					success : function(data) {
   	  						
@@ -380,7 +380,7 @@
   				var m_idx = ${m_idx};
   				
   				$.ajax({
-  					url : 'http://localhost:8080/nm/like/'+ m_idx,
+  					url : '${pageContext.request.contextPath}/like/'+ m_idx,
   					type : 'GET',
   					success : function(data) {
   						
@@ -407,7 +407,7 @@
   			$('#form').submit(function(){
   				
   				$.ajax({
-  					url : 'http://localhost:8080/nm/star',
+  					url : '${pageContext.request.contextPath}/star',
   					type : 'POST',
   					data : $('#form').serialize(),
   					success : function(data) {
@@ -432,7 +432,7 @@
   	
   	function list(i) {
   		$.ajax({
-  			url: 'http://localhost:8080/nm/meetmember/'+i,
+  			url: '${pageContext.request.contextPath}/meetmember/'+i,
 			type: 'GET',
 			data: {},
 			success: function(data){

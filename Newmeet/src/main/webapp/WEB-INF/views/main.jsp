@@ -243,7 +243,7 @@ function main_popup(){
 $(document).ready(function(){
 
 	$.ajax({
-		url : 'http://localhost:8080/nm/meeting/mainlist',
+		url : '${pageContext.request.contextPath}/meeting/mainlist',
 		type : 'GET',
 		success : function(data) {
 			
@@ -254,12 +254,12 @@ $(document).ready(function(){
 				
 				html += '<div id="mo" style="margin: 0 auto ;">';
 				html += '<div>';
-				html += '<a href="<c:url value="/moimInfo"/>?m_idx='+ data[i].m_idx +'"><img src="http://localhost:8080/nm/uploadfile/'+ data[i].m_img +'" style="width: 300px;height: 150px;"></a>';
+				html += '<a href="<c:url value="/moimInfo"/>?m_idx='+ data[i].m_idx +'"><img src="${pageContext.request.contextPath}/uploadfile/'+ data[i].m_img +'" style="width: 300px;height: 150px;"></a>';
 				html += '</div>';
 				html += '<div style="text-align: center;">';
 				html += '<h2 class="text-uppercase" style="margin-top: 15px;">'+ data[i].m_name +'</h2>';
-				html += '<span style="margin-right:10px;"><img src="http://localhost:8080/nm/uploadfile/like0.png"> '+ data[i].m_like +'</span>';
-				html += '<span> <img src="http://localhost:8080/nm/uploadfile/star1.png"> '+ (data[i].m_stotal/data[i].m_star).toFixed(1) +'</span>';
+				html += '<span style="margin-right:10px;"><img src="${pageContext.request.contextPath}/uploadfile/like0.png"> '+ data[i].m_like +'</span>';
+				html += '<span> <img src="${pageContext.request.contextPath}/uploadfile/star1.png"> '+ (data[i].m_stotal/data[i].m_star).toFixed(1) +'</span>';
 				html += '</div>';
 				html += '</div>';
 				$('#list').html(html);

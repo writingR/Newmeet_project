@@ -352,7 +352,7 @@ input::placeholder {
 		    				<div class="project">
 		    					<div class="img">
 		    						<div class="vr"></div>
-				    				<a href="#"><img src="http://localhost:8080/nm/uploadfile/${m_img}" class="img-fluid" alt="Colorlib Template"></a>
+				    				<a href="#"><img src="${pageContext.request.contextPath}/uploadfile/${m_img}" class="img-fluid" alt="Colorlib Template"></a>
 			    				</div>
 			    				<div class="text">
 			    					<h4 class="price">New Meet</h4>
@@ -389,7 +389,7 @@ input::placeholder {
 			    				<span id="button" ></span>
 				                <span id="button2"></span>
 				                </div>
-			    				<a href="http://localhost:8080/nm/uploadfile/${m_img}" class="icon image-popup d-flex justify-content-center align-items-center">
+			    				<a href="${pageContext.request.contextPath}/uploadfile/${m_img}" class="icon image-popup d-flex justify-content-center align-items-center">
 			    					<span class="icon-expand"></span>
 			    				</a>
 		    				</div>
@@ -431,13 +431,13 @@ input::placeholder {
 
 						</table>
 		    			
-		    			<a style="height:52px; font-size:18px; border-radius:5px;" href="http://localhost:8080/nm/meetMember?m_idx=${m_idx}" class="btn btn-outline-primary btn-block">View more</a>
+		    			<a style="height:52px; font-size:18px; border-radius:5px;" href="${pageContext.request.contextPath}/meetMember?m_idx=${m_idx}" class="btn btn-outline-primary btn-block">View more</a>
 		    		
 		    		</div>
 		    		<hr>
 		    		<div>
 		    		<h2>Review</h2>	
-		    			<a style="height:52px; font-size:18px; border-radius:5px;" href="http://localhost:8080/nm/review?mNum=${m_idx}" class="btn btn-outline-primary btn-block">Review</a>
+		    			<a style="height:52px; font-size:18px; border-radius:5px;" href="${pageContext.request.contextPath}/review?mNum=${m_idx}" class="btn btn-outline-primary btn-block">Review</a>
 		    		</div>
 		    		<hr>
 		    		<div>	
@@ -809,7 +809,7 @@ input::placeholder {
   				alert($('#meetCrew').serialize());
   			
   				$.ajax({
-  					url : 'http://localhost:8080/nm/meetmember',
+  					url : '${pageContext.request.contextPath}/meetmember',
   					type : 'POST',
   					data : $('#meetCrew').serialize(),
   					success : function(data) {
@@ -822,20 +822,20 @@ input::placeholder {
   			});
   			
   			$.ajax({
-  				url : 'http://localhost:8080/nm/meeting/list/'+ m_idx,
+  				url : '${pageContext.request.contextPath}/meeting/list/'+ m_idx,
   				type : 'GET',
   				success : function(data) {
   					var html = '';
   					var like = '';
   					
-  						html += (data.m_stotal/data.m_star).toFixed(1)+' <img src="http://localhost:8080/nm/uploadfile/star0.png">';
+  						html += (data.m_stotal/data.m_star).toFixed(1)+' <img src="${pageContext.request.contextPath}/uploadfile/star0.png">';
   						$('.rate2').html(html);
   						like +=  data.m_like ;
   						like += '<c:if test="${l_like == 0}">';
-  						like += ' <img onclick="like(${m_idx})" src="http://localhost:8080/nm/uploadfile/like0.png">';
+  						like += ' <img onclick="like(${m_idx})" src="${pageContext.request.contextPath}/uploadfile/like0.png">';
   						like += '</c:if>';
   						like += '<c:if test="${l_like == 1}">';
-  						like += ' <img onclick="like(${m_idx})" src="http://localhost:8080/nm/uploadfile/like1.png">';
+  						like += ' <img onclick="like(${m_idx})" src="${pageContext.request.contextPath}/uploadfile/like1.png">';
   						like += '</c:if>';
   						
   						$('.rate').html(like);
@@ -845,7 +845,7 @@ input::placeholder {
   			});
   			
   			$.ajax({
-  				url : 'http://localhost:8080/nm/meeting/button/'+ m_idx,
+  				url : '${pageContext.request.contextPath}/meeting/button/'+ m_idx,
   				type : 'GET',
   				success : function(data) {
   					var html = '';
@@ -884,7 +884,7 @@ input::placeholder {
   				if(confirm('모임을 삭제하시겠습니까 ?')){
   					$.ajax({
   	  					
-  	  					url : 'http://localhost:8080/nm/meeting/'+ m_idx,
+  	  					url : '${pageContext.request.contextPath}/meeting/'+ m_idx,
   	  					type : 'DELETE',
   	  					success : function(data) {
   	  						
@@ -919,7 +919,7 @@ input::placeholder {
   				var m_idx = ${m_idx};
   				
   				$.ajax({
-  					url : 'http://localhost:8080/nm/like/'+ m_idx,
+  					url : '${pageContext.request.contextPath}/like/'+ m_idx,
   					type : 'GET',
   					success : function(data) {
   						
@@ -946,7 +946,7 @@ input::placeholder {
   			$('#form').submit(function(){
   				
   				$.ajax({
-  					url : 'http://localhost:8080/nm/star',
+  					url : '${pageContext.request.contextPath}/star',
   					type : 'POST',
   					data : $('#form').serialize(),
   					success : function(data) {
@@ -971,7 +971,7 @@ input::placeholder {
   	
   			function memberlist(i) {
   	  			$.ajax({
-  	  				url: 'http://localhost:8080/nm/meetmember/'+i,
+  	  				url: '${pageContext.request.contextPath}/meetmember/'+i,
   					type: 'GET',
   					data: {},
   					success: function(data){
@@ -995,7 +995,7 @@ input::placeholder {
   	  		function getsubmit(i, e) {
   	  			
   	  			$.ajax({
-  	  				url : 'http://localhost:8080/nm//meetmember/submit/'+i+'/'+e,
+  	  				url : '${pageContext.request.contextPath}//meetmember/submit/'+i+'/'+e,
   	  				type : 'GET',
   	  				success : function(data) {
   	  					var html = '';
@@ -1015,7 +1015,7 @@ input::placeholder {
   	  			if(confirm('모임을 탈퇴하시겠어요?')); {
   	  				
   	  				$.ajax({
-  	  					url : 'http://localhost:8080/nm/meetmember/outself/'+i+'/'+e,
+  	  					url : '${pageContext.request.contextPath}/meetmember/outself/'+i+'/'+e,
   	  					type : 'DELETE',
   	  					success: function(data) {
   	  						alert(data);
@@ -1118,7 +1118,7 @@ input::placeholder {
 		
 		$.ajax({
 			
-			url: 'http://localhost:8080/nm/cal',
+			url: '${pageContext.request.contextPath}/cal',
 			type: 'post',
 			data: {
 				m_idx : m_idx,
@@ -1156,7 +1156,7 @@ input::placeholder {
 		
 		$.ajax({
 			
-			url: 'http://localhost:8080/nm/cal/'+m_idx,
+			url: '${pageContext.request.contextPath}/cal/'+m_idx,
 			type: 'get',
 			dataType: 'json',
 			success: function(data) {
@@ -1221,7 +1221,7 @@ input::placeholder {
 		
 		$.ajax({
 			
-			url: 'http://localhost:8080/nm/cal/button/'+m_idx,
+			url: '${pageContext.request.contextPath}/cal/button/'+m_idx,
 			type: 'get',
 			data: {
 				nidx : nidx
@@ -1248,7 +1248,7 @@ input::placeholder {
 
 		$.ajax({
 			
-			url: 'http://localhost:8080/nm/calMember/count/'+c_idx,
+			url: '${pageContext.request.contextPath}/calMember/count/'+c_idx,
 			type: 'get',
 			dataType: 'json',
 			async: false,
@@ -1277,7 +1277,7 @@ input::placeholder {
 		
 		$.ajax({
 			
-			url: 'http://localhost:8080/nm/cal/ByIdx/'+c_idx,
+			url: '${pageContext.request.contextPath}/cal/ByIdx/'+c_idx,
 			type: 'get',
 			dataType: 'json',
 			success: function(data) {
@@ -1390,7 +1390,7 @@ input::placeholder {
 		
 		$.ajax({
 			
-			url: 'http://localhost:8080/nm/calMember/'+c_idx,
+			url: '${pageContext.request.contextPath}/calMember/'+c_idx,
 			type: 'get',
 			dataType: 'json',
 			success: function(data) {
@@ -1430,7 +1430,7 @@ input::placeholder {
 		
 		$.ajax({
 			
-			url: 'http://localhost:8080/nm/calMember/'+cm_idx,
+			url: '${pageContext.request.contextPath}/calMember/'+cm_idx,
 			type: 'delete',
 			/* dataType: 'json', */
 			success: function(data) {
@@ -1452,7 +1452,7 @@ input::placeholder {
 		
 		$.ajax({
 			
-			url: 'http://localhost:8080/nm/calMember/'+c_idx+'/'+nidx,
+			url: '${pageContext.request.contextPath}/calMember/'+c_idx+'/'+nidx,
 			type: 'get',
 			/* dataType: 'json', */
 			async: false,
@@ -1471,7 +1471,7 @@ input::placeholder {
 		
 		$.ajax({
 			
-			url: 'http://localhost:8080/nm/calMember/'+c_idx+'/'+nidx,
+			url: '${pageContext.request.contextPath}/calMember/'+c_idx+'/'+nidx,
 			type: 'delete',
 			/* dataType: 'json', */
 			success: function(data) {
@@ -1496,7 +1496,7 @@ input::placeholder {
 			
 			$.ajax({
 			
-				url: 'http://localhost:8080/nm/cal/'+c_idx,
+				url: '${pageContext.request.contextPath}/cal/'+c_idx,
 				type: 'delete',
 				/* dataType: 'json', */
 				success: function(data) {
@@ -1525,7 +1525,7 @@ input::placeholder {
 		
 		$.ajax({
 			
-			url: 'http://localhost:8080/nm/cal/ByIdx/'+c_idx,
+			url: '${pageContext.request.contextPath}/cal/ByIdx/'+c_idx,
 			type: 'get',
 			dataType: 'json',
 			success: function(data) {
@@ -1576,7 +1576,7 @@ input::placeholder {
 		
 		$.ajax({
 			
-			url: 'http://localhost:8080/nm/cal',
+			url: '${pageContext.request.contextPath}/cal',
 			type: 'put',
 			data: JSON.stringify({
 				c_idx : $('#c_Eidx').val(),
@@ -1651,7 +1651,7 @@ input::placeholder {
 			
 			$.ajax({
 			
-				url: 'http://localhost:8080/nm/calMember',
+				url: '${pageContext.request.contextPath}/calMember',
 				type: 'post',
 				data: {
 					c_idx : c_idx,

@@ -66,11 +66,11 @@
 				
 					<c:forEach var="info" items="${AllList}" step="1">
 						<div class="col-md-3 course ftco-animate fadeInUp ftco-animated">
-						<div class="img" style="background-image: url(http://localhost:8080/nm/uploadfile/${info.m_img});width: 400px;height: 300px;"></div>
+						<div class="img" style="background-image: url(${pageContext.request.contextPath}/uploadfile/${info.m_img});width: 400px;height: 300px;"></div>
 						<div class="text pt-4">
 						<p class="meta d-flex">
-						<span><img src="http://localhost:8080/nm/uploadfile/like0.png" style="margin-right: 10px;">${info.m_like}</span>
-						<span><img src="http://localhost:8080/nm/uploadfile/star1.png" style="margin-right: 10px;">${info.m_stotal/info.m_star}</span>
+						<span><img src="${pageContext.request.contextPath}/uploadfile/like0.png" style="margin-right: 10px;">${info.m_like}</span>
+						<span><img src="${pageContext.request.contextPath}/uploadfile/star1.png" style="margin-right: 10px;">${info.m_stotal/info.m_star}</span>
 						<span><i class="icon-calendar mr-2"></i>New meet</span>
 						</p>
 						<h3 style="text-align: center;"><a href="<c:url value="/moimInfo"/>?m_idx=${info.m_idx}">${info.m_name}</a></h3>

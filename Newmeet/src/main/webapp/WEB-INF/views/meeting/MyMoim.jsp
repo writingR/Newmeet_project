@@ -33,7 +33,7 @@
 		<tbody id="moim">
 			<c:forEach var="info" items="${MyMoim}" step="1">
 				<tr style="padding-bottom: 10px;">
-					<td style="padding-right: 120px; padding-bottom: 10px;"><img src="http://localhost:8080/nm/uploadfile/${info.m_img}" style="width: 200px; height: 150px;"></td>
+					<td style="padding-right: 120px; padding-bottom: 10px;"><img src="${pageContext.request.contextPath}/uploadfile/${info.m_img}" style="width: 200px; height: 150px;"></td>
 					<td style="padding-right: 120px; padding-bottom: 10px;">${info.m_name}</td>
 					<td style="padding-right: 120px; padding-bottom: 10px;">${info.m_like}</td>
 					<td style="padding-right: 120px; padding-bottom: 10px;">${info.m_stotal/info.m_star}</td>
@@ -49,7 +49,7 @@
 			if(confirm('모임을 삭제하시겠습니까 ?')){
 				$.ajax({
 					
-					url : 'http://localhost:8080/nm/meeting/'+ m_idx,
+					url : '${pageContext.request.contextPath}/meeting/'+ m_idx,
 					type : 'DELETE',
 					success : function(data) {
 						

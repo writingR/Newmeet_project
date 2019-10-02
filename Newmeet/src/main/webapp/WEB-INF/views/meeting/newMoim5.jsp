@@ -145,7 +145,7 @@
   			alert($('#meetLeader').serialize());
   			
   			$.ajax({
-  				url : 'http://localhost:8080/nm/meetmember',
+  				url : '${pageContext.request.contextPath}/meetmember',
   				type : 'POST',
   				data : $('#meetLeader').serialize(),
   				success : function(data) {

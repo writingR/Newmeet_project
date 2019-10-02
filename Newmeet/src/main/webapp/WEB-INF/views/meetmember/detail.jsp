@@ -87,7 +87,7 @@
 
 						</table>
 		    			
-		    			<a style="height:52px; font-size:18px; border-radius:5px;" href="http://localhost:8080/nm/meetMember?m_idx=${m_idx}" class="btn btn-outline-primary btn-block">View more</a>
+		    			<a style="height:52px; font-size:18px; border-radius:5px;" href="${pageContext.request.contextPath}/meetMember?m_idx=${m_idx}" class="btn btn-outline-primary btn-block">View more</a>
 		    		
 		    		</div>
 		    		<hr>
@@ -229,7 +229,7 @@
   	
   	function list(i) {
   		$.ajax({
-  			url: 'http://localhost:8080/nm/meetmember/'+i,
+  			url: '${pageContext.request.contextPath}/meetmember/'+i,
 			type: 'GET',
 			data: {},
 			success: function(data){
