@@ -209,8 +209,8 @@
  	}
 
 	 function pre(){
-			
-			location.href="/nm/newMoim2";
+
+			location.href="/nm/newMoim2?cnidx="+${cnidx};
 		}
 
 

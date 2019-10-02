@@ -6,9 +6,7 @@
 <html>
 
 
-<%
-	session.setAttribute("MemberIdx", 17);
-%>
+
 
 <head>
 <title>뉴밋</title>

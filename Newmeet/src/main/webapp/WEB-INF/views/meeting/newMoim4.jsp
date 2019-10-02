@@ -155,20 +155,6 @@
 		</div>
 		</form>
 	</div>
-	<form id="meetLeader" method="post">
-		<div class="form-group">
-			<input type="hidden" id="m_idx" name="m_idx">
-		</div>
-		<div class="form-group">
-			<input type="hidden" id="nidx" name="nidx">
-		</div>
-		<div class="form-group">
-			<input type="hidden" id="mm_level" name="mm_level" value="1">
-		</div>
-		<div id="memShell" class="form-group">
-			<input id="memIn" style="height:52px; font-size:18px; border-radius:5px;" type="submit" class="btn btn-outline-success btn-block" value="Participate in">
-		</div>
-	</form>
  </div>
 
                 	
@@ -216,7 +202,7 @@
 			success : function(data) {
 				sessionStorage.setItem("m_idx",data);
 				
-				alert(data+':정확하게 추출');
+				
 				
 				location.href="/nm/newMoim5?cnidx="+${cnidx};
 				
@@ -228,7 +214,9 @@
 	
 	function pre(){
 		
-		location.href="/nm/newMoim3";
+
+		location.href="/nm/newMoim3?cnidx="+${cnidx};
+		
 	}
 </script>
 

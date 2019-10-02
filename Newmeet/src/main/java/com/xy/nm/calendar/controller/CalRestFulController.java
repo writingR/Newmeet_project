@@ -24,6 +24,7 @@ import com.xy.nm.calendar.service.CalDeleteService;
 import com.xy.nm.calendar.service.CalDetailService;
 import com.xy.nm.calendar.service.CalEditService;
 import com.xy.nm.calendar.service.CalListService;
+import com.xy.nm.calendar.service.CalMMChkService;
 
 @RestController
 @RequestMapping("/cal")
@@ -48,6 +49,8 @@ public class CalRestFulController {
 	@Autowired
 	private CalBtnService btnCalService;
 	
+	@Autowired
+	private CalMMChkService mmChk;
 //	
 //	@RequestMapping(method = RequestMethod.GET)
 //	public String calForm() {
@@ -127,6 +130,17 @@ public class CalRestFulController {
 	 public ResponseEntity<Integer> getBtnIndex(@PathVariable("m_idx") int m_idx, int nidx){
 		System.out.println(m_idx +"/" + nidx);
 		 int rCnt = btnCalService.getMemLevel(m_idx, nidx);
+		 
+		 return new ResponseEntity<Integer>(rCnt, HttpStatus.OK);
+	 }
+	 
+	 // 모임멤버 레벨 가져오기 
+	 @CrossOrigin
+	 @GetMapping("/mmChk/{m_idx}")
+	 public ResponseEntity<Integer> mmChk(@PathVariable("m_idx") int m_idx, int nidx){
+		 
+		System.out.println(m_idx +"/" + nidx);
+		 int rCnt = mmChk.mmChk(m_idx, nidx);
 		 
 		 return new ResponseEntity<Integer>(rCnt, HttpStatus.OK);
 	 }

@@ -145,8 +145,8 @@ function m_name(){
 }
 
 function pre(){
-	
-	location.href="/nm/newMoim";
+
+	location.href="/nm/newMoim?cnidx="+${cnidx};
 }
 
 </script>

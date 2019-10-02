@@ -45,7 +45,7 @@ public class MailSenderService {
 
          String body = "뉴밋에서 보내는 인증확인 메일입니다. 서비스를 원하시면 확인버튼을 눌러주세요 :><br>\n";
 
-         body += "<a href=\"http://localhost:8080/nm/verify?nemail="+nemail+"&code="+code+"\">인증하러가기!</a>";
+         body += "<a href=\"/nm/verify?nemail="+nemail+"&code="+code+"\">인증하러가기!</a>";
 
          msg.setText(body, "utf-8", "html");
 

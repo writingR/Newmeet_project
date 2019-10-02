@@ -78,6 +78,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select mm_level from mMember where m_idx=#{param1} and nidx=#{param2}
 	</select>
 	
+	<!-- 모임멤버인지 체크 -->
+	<select id="mMemChk" resultType="int">
+		select count(*) from mMember where m_idx=#{param1} and nidx=#{param2}
+	</select>
+	
 	<!-- 일정멤버 삭제 : 일정 참가 취소 시 -->
 	<delete id="cancelCalMember">
 		delete from cMember where c_idx=#{param1} and nidx=#{param2}

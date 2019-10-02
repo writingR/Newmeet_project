@@ -105,7 +105,7 @@
 <div id="select" style="height: 530px;">
 <h2><span style="background-color: #2d3436; opacity: 0.7;"> CATEGORY </span></h2>
 <div id="option">
-<select id="category" name="category" onclick="category()" class="category">	</select>
+<select id="category" name="category" onchange="category()" class="category">	</select>
                 	<select id="scategory" name="scategory" class="category">
                 	<option selected>소분류 선택</option>
                 	</select>
@@ -180,7 +180,6 @@
 		}
 		
 		function pre(){
-			
 			location.href="/nm/Mypage";
 		}
 

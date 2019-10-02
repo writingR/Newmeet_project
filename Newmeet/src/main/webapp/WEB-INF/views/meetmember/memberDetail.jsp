@@ -154,7 +154,7 @@
 				for (var i=0; i<data.mmList.length; i++) {
 					html += '<tr>';
 					html += '<td style="width:20%;"><img src="${pageContext.request.contextPath}/static/img/'+data.mmList[i].m_img+'" alt="Image" style="width=50px; height:50px;"></td>';
-					html += '<td style="width:80%;"><a href="15.164.231.122:8080/nm/detail?m_idx='+data.mmList[i].m_idx+'">'+data.mmList[i].m_name+'</a></td>';
+					html += '<td style="width:80%;"><a href="${pageContext.request.contextPath}/moimInfo?m_idx='+data.mmList[i].m_idx+'">'+data.mmList[i].m_name+'</a></td>';
 					html += '</tr>';
 					
 					$('#meetinglist').html(html);
@@ -188,7 +188,7 @@
 					for (var i=0; i<data.mmList.length; i++) {
 						html += '<tr>';
 						html += '<td style="width:20%;"><img src="'+data.mmList[i].r_img+'" alt="Image" style="width=50px; height:50px;"></td>';
-						html += '<td style="width:60%;"><a href="http://10.10.10.18:8080/nm/review/'+data.mmList[i].r_idx+'?mNum='+data.mmList[i].m_idx+'">'+data.mmList[i].r_title+'</a></td>';
+						html += '<td style="width:60%;"><a href="${pageContext.request.contextPath}/review/'+data.mmList[i].r_idx+'?mNum='+data.mmList[i].m_idx+'">'+data.mmList[i].r_title+'</a></td>';
 						html += '<td style="width:20%;">'+data.mmList[i].r_date+'</td>';
 						html += '</tr>';
 					
@@ -229,7 +229,7 @@
 				} else if (data.mmList.length>=1) {
 					for (var i =0; i<data.mmList.length; i++) {
 						html += '<tr>';
-						html += '<td style="width:80%;"><a href="http://10.10.10.18:8080/nm/review/'+data.mmList[i].r_idx+'?mNum='+data.mmList[i].m_idx+'">'+data.mmList[i].rd_content+'</td>';
+						html += '<td style="width:80%;"><a href="${pageContext.request.contextPath}/review/'+data.mmList[i].r_idx+'?mNum='+data.mmList[i].m_idx+'">'+data.mmList[i].rd_content+'</td>';
 						html += '<td style="width:20%;">'+data.mmList[i].rd_date+'</td>';
 						html += '</tr>';
 						

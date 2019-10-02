@@ -457,7 +457,7 @@ input::placeholder {
 								<input type="hidden" id="mm_level" name="mm_level" value="0">
 							</div>
 							<div id="memShell" class="form-group">
-							<!-- <input id="memIn" style="height:52px; font-size:18px; border-radius:5px;" type="submit" class="btn btn-outline-success btn-block" value="Participate in"> -->
+							
 							</div>
 						</form>
 		    		</div>
@@ -783,12 +783,15 @@ input::placeholder {
   <script>
 	var m_idx = ${m_idx};
   
-  	if(${not empty nidx}) {
-		  var nidx = ${nidx};
-  	}
+	var nidx = ${nidx};
   	
   	$(document).ready(function(){
   		
+  			getsubmit(m_idx, nidx);
+  		
+			memberlist(m_idx);
+			
+			calList(m_idx);
   		$('#m_idx').val(${m_idx});
   		
   			if(${empty nidx}) {
@@ -799,11 +802,7 @@ input::placeholder {
   					
   			}
   		
-  			getsubmit(m_idx, nidx);
-  		
- 			memberlist(m_idx);
   			
-  			calList(m_idx);
   		
   			$('#meetCrew').submit(function(){
   				alert($('#meetCrew').serialize());
@@ -980,7 +979,7 @@ input::placeholder {
   						if(data.mmList.length>=1) {
   							for (var i=0; i<data.mmList.length; i++) {
   								html += '<tr>';
-  								html += '<td><img src="${pageContext.request.contextPath}/static/img/'+data.mmList[i].nphoto+'" alt="Image" style="height:50px; width:50px;"></td>';
+  								html += '<td><img src="${pageContext.request.contextPath}/uploadfile/'+data.mmList[i].nphoto+'" alt="Image" style="height:50px; width:50px;"></td>';
   								html += '<td style="width:20%;">'+data.mmList[i].nnic+'</td>';
   								html += '<td style="width:60%;">'+data.mmList[i].nemail+'</td>';
   								html += '</tr>';
@@ -995,11 +994,12 @@ input::placeholder {
   	  		function getsubmit(i, e) {
   	  			
   	  			$.ajax({
-  	  				url : '${pageContext.request.contextPath}//meetmember/submit/'+i+'/'+e,
+  	  				url : '${pageContext.request.contextPath}/meetmember/submit/'+i+'/'+e,
   	  				type : 'GET',
   	  				success : function(data) {
   	  					var html = '';
   	  					if(data == 1) {
+  	  						
   	  						html += '<input id="memOut" style="height:52px; font-size:18px; border-radius:5px;" type="button" onclick="memberOut('+i+','+e+')" class="btn btn-outline-danger btn-block" value="Participate out">';
   	  						$('#memShell').html(html);
   	  					} else if(data == 0) {
@@ -1213,12 +1213,12 @@ input::placeholder {
 	// 일정 등록/참여, 일정 수정,삭제/선택 버튼 구별
 	function CreateBtn(m_idx) {
 		
-		
 		var nidx = ${nidx};
-		
 		
 		var CheckBtn = 0;
 		
+		if((mmChk(m_idx))==1) {
+			
 		$.ajax({
 			
 			url: '${pageContext.request.contextPath}/cal/button/'+m_idx,
@@ -1229,7 +1229,7 @@ input::placeholder {
 			dataType: 'json',
 			async: false,
 			success: function(data) {
-				console.log(data);
+				
 				CheckBtn = data;
 			}
 			
@@ -1237,8 +1237,36 @@ input::placeholder {
 
 		return CheckBtn;
 		
+		}
 		
 	}
+	
+	function mmChk(m_idx) {
+		
+		var nidx = ${nidx};
+		
+		var chk = 0;
+		
+		$.ajax({
+			
+			url: '${pageContext.request.contextPath}/cal/mmChk/'+m_idx,
+			type: 'get',
+			data: {
+				nidx : nidx
+			},
+			dataType: 'json',
+			async: false,
+			success: function(data) {
+				
+				chk = data;
+			}
+			
+		});
+
+		return chk;
+		
+	}
+	 
 	 
 	/* 리스트에 현재 참가중인 인원 수를 구해오는 기능
 	return 으로 count를 전달받기때문에 동기 방식으로 구현 */

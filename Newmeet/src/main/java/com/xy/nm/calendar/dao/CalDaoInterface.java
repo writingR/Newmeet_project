@@ -44,7 +44,9 @@ public interface CalDaoInterface {
 	// 모임멤버 레벨에 따라 일정 버튼 출력
 	public int getMemLevel(int m_idx,int nidx);
 	
-	
+	// 모임멤버인지 확인
+	public int mMemChk(int m_idx,int nidx);
+
 	
 	
 }

@@ -45,6 +45,7 @@
 		border: 1px solid black;
 		margin-right: 10px;
 	}
+	
 	input[type=submit]{
 		width: 100px;
 		background-color: black;
@@ -81,6 +82,15 @@
 	table{
 		margin: 0 auto;
 	}
+	.site-navbar .site-navbar-top {
+    display: none;
+}
+
+#meetLeader {
+	display: none;
+}
+
+
 </style>
 </head>
 <body>
@@ -88,33 +98,11 @@
 
  </div>
  <div id="cont">
-	<div id="select">
-	<form id="form" enctype="multipart/form-data">
-		<div id="option">
+	<div id="select" style="height: 530px;">
 		
-			<table>
-			<thead>
-			<tr>
-			</tr>
-				
-			</thead>
-			<tbody id="moim">
-			
-			</tbody>
-			</table>
-			
-			<h4 class="display-6">정말 개설하시겠어요?</h4>
-			
+		<h4 class="display-6">모임이 생성되었습니다.</h4>
 		
-    	 </div>           	
-                	
-		<div id="but">
-		<input type="button" onclick="pre()" value="Pre">
-		<input type="submit" value="Create">
-		</div>
-		</form>
-	</div>
-	<form id="meetLeader" method="post">
+		<form id="meetLeader" method="post">
 		<div class="form-group">
 			<input type="hidden" id="m_idx" name="m_idx">
 		</div>
@@ -127,7 +115,12 @@
 		<div id="memShell" class="form-group">
 			<input id="memIn" style="height:52px; font-size:18px; border-radius:5px;" type="submit" class="btn btn-outline-success btn-block" value="Participate in">
 		</div>
+		
+
 	</form>
+		
+	</div>
+
  </div>
 
                 	
@@ -137,11 +130,9 @@
 
 	$(document).ready(function() {
 		
-		$('#memIn').hide();
 		$('#m_idx').val(sessionStorage.getItem("m_idx"));
 		$('#nidx').val(${cnidx});
 		
-		$('#meetLeader').submit(function(){
   			alert($('#meetLeader').serialize());
   			
   			$.ajax({
@@ -150,24 +141,16 @@
   				data : $('#meetLeader').serialize(),
   				success : function(data) {
   					alert('모임장으로 개설');
+  					location.href="/nm/main"
   				}
   			});
-  		return false;
-  		});
 		
 	});
 	
-	$('#form').submit(function(){
-		$('#meetLeader').submit();
-		location.href="/nm/moimList";
-		return false;
-	});
+
 
 	
-	function pre(){
-		
-		location.href="/nm/newMoim4";
-	}
+
 </script>
 
 
