@@ -47,10 +47,19 @@
 <!--         <input type="text" style="width:320px;padding:10px;border:2px solid black;border-radius:5px;" placeholder="원하시는 모임을 검색해주세요.">
         <i class="material-icons" style="font-size:26px;display:inline-block;">search</i> -->
         <div class="col-6 col-md-4 order-2 order-md-1 site-search-icon text-left" style="width: 150px;margin:0 auto;">
-              <form action="" class="site-block-top-search">
-                <span class="icon icon-search2"></span>
-                <input type="text" class="form-control border-0" placeholder="Search">
+              <form action="moimSearch" class="site-block-top-search" method="get">
+                <span class="icon icon-search2" onclick="keyword()" style="cursor: pointer;"></span>
+                <input type="text" id="Keyword" name="Keyword" class="form-control border-0" placeholder="Search">
               </form>
          </div>
         
       </div> 
+      
+       <script>
+      	function keyword(){
+      		var keyword = $('#Keyword').val();
+      		
+      		location.href="moimSearch?Keyword="+keyword;
+      		
+      	}
+      </script>
