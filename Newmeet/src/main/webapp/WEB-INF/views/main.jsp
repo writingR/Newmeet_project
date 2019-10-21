@@ -44,7 +44,6 @@ function main_popup(){
 	</div>
 	<div>
 	<img src="static/img/main1.png">
-	<span style="color:black;">모임보러가기</span>
 	<span style="font-size:55px;font-weight:bold;color:black;font-family: 'Anton', sans-serif;"><a href="#" style="color:black;">  go!</a></span>
 	</div>
 	<div class="site-section site-section-sm site-blocks-1">
@@ -58,9 +57,8 @@ function main_popup(){
 		</div>
 	</div>
 
-	<div class="site-section site-blocks-2">
+	<%-- <div class="site-section site-blocks-2">
 		<div class="container">
-		<div><h2 style="text-align: center; color: black;">모임보러가기</h2></div>
 			<div class="row">
 				<div class="col-sm-6 col-md-6 col-lg-4 mb-4 mb-lg-0" data-aos="fade"
 					data-aos-delay="">
@@ -98,7 +96,7 @@ function main_popup(){
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> --%>
 
 	
 	<%@include file="/WEB-INF/views/frame/footer.jsp"%>
